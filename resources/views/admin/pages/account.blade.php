@@ -7,10 +7,11 @@
             <div class="content-box-wrapper">
                 <div class="row">
                     <h3 id="h3" class="col-sm-7">Danh sách Tài khoản</h3>
-                    <form class="col-sm-5">
-                        <input class="sb-search-input" placeholder="Enter your search term..." type="search" id="search">
-                        <input class="sb-search-submit" type="submit" value="">
-                        <span class="sb-icon-search"> </span>
+                    <form class="col-sm-5" method="post" active="{{route('admin.account.postFind')}}">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <input class="sb-search-input" placeholder="Nhập tên tài khoản cần tìm kiếm" type="text" name="data" value="">
+                        <input class="sb-icon-search" type="submit" value="Search">
+                        
                     </form>
                 </div>
                 <div class="table-responsive">
@@ -34,7 +35,7 @@
                             <?php
                                 $a_name = DB::select('select name from users where id = ?', [$a->user_id]);
                             ?>
-                            <td><a href="{{route('admin.profile', $a->user_id)}}">{{$a_name[0]->name}}<a></td>
+                            <td><a href="{{route('admin.pages.profile', $a->user_id)}}">{{$a_name[0]->name}}<a></td>
                             <td>
                                 @if ($a->state == 0)
                                     {{"Bị khóa"}}

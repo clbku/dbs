@@ -18,37 +18,49 @@ Route::group(['prefix'=>'admin'],  function() {
     Route::group(['prefix' => 'account'], function () {
         Route::get('list', [
             'as' => 'admin.account.getList',
-            'uses' => 'AccountController@getList'
-        ]);
-        Route::get('add', [
-            'as' => 'admin.account.getAdd',
-            'uses' => 'AccountController@getAdd'
-        ]);
-        Route::post('add', [
-            'as' => 'admin.account.postAdd',
-            'uses' => 'AccountController@postAdd'
-        ]);
-        Route::get('delete/{id}', [
-            'as' => 'admin.account.getDelete',
-            'uses' => 'AccountController@getDelete'
-        ]);
-        Route::get('edit/{id}', [
-            'as' => 'admin.account.getEdit',
-            'uses' => 'AccountController@getEdit'
-        ]);
-        Route::post('edit/{id}', [
-            'as' => 'admin.account.postEdit',
-            'uses' => 'AccountController@postEdit'
+            'uses' => 'AdminController@getAccountList'
         ]);
         Route::get('lock/{id}', [
             'as' => 'admin.account.getLock',
-            'uses' => 'AccountController@getLock'
+            'uses' => 'AdminController@getLock'
+        ]);
+        Route::post('list',[
+            'as'=>'admin.account.postFind',
+            'uses'=>'AdminController@postAccountFind'
         ]);
     });
     Route::get('/profile/{id}', [
-        'as' => "admin.profile",
-        'uses' => "UserController@getProfile"
+        'as' => "admin.pages.profile",
+        'uses' => "AdminController@getProfile"
+    ]); 
+
+
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('list',[
+            'as'=>'admin.user.getList',
+            'uses'=>'AdminController@getUserList'
+        ]);
+        Route::post('list',[
+            'as'=>'admin.user.postFind',
+            'uses'=>'AdminController@postUserFind'
+        ]);
+    });
+
+
+    /* route này để load lại trang admin */
+    Route::get('/Admin',[   
+        'as'=>'admin.pages.index',
+        'uses'=>'AdminController@getHomePage'
     ]);
+    Route::get('/subjects',[
+        'as'=> 'admin.subjects.getList',
+        'uses'=>'AdminController@getSubjectsList'
+    ]);
+    Route::post('/subjects', [
+        'as'=> 'admin.subjects.postFind',
+        'uses'=> "AdminController@postSubjectFind"
+    ]);
+
 });
 
 

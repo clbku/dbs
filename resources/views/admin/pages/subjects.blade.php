@@ -2,14 +2,14 @@
 @section('content')
 		<div id="page-wrapper">
             <div class="graphs">
-                Người dùng(ID, Họ tên , Ngày sinh, Địa chỉ, Quê quán, Giới tính, SĐT, Email, Avatar, Mã tài khoản)
+                
                 <div class="content-box-wrapper">
                     <div class="row">
                         <h3 id="h3" class="col-sm-7">Danh sách môn học</h3>
-                        <form class="col-sm-5">
-                            <input class="sb-search-input" placeholder="Enter your search term..." type="search" id="search">
-                            <input class="sb-search-submit" type="submit" value="">
-                            <span class="sb-icon-search"> </span>
+                        <form class="col-sm-5" method="post" action="{{route('admin.subjects.postFind')}}">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input class="sb-search-input" type="text" name="data" value="" placeholder="Nhập tên môn học cần tìm kiếm">
+                            <input class="sb-icon-search" type="submit" name="submit" value="Search">
                         </form>
                     </div>
                     <div class="table-responsive">
@@ -18,38 +18,28 @@
                             <tr>
                                 <th>Mã môn học</th>
                                 <th>Tên môn học</th>
-                                <th>Thời gian học</th>
+                                <th>Thời gian tạo</th>
                                 <th>Trạng thái</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($subject as $a)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{$a->id}}</th>
 
-                                <td>Toán 5</td>
-                                <td>4 tháng</td>
-                                <td>Còn Dạy</td>
+                                <td>{{$a->name}}</td>
+                                <td>{{$a->created_at}}</td>
+
+                                <td>
+                                    @if ($a->state==1)
+                                        {{'Còn mở'}}
+                                    @else {{'Đã đóng'}}
+                                    @endif
+                                </td>
 
 
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-
-                                <td>Vật lý 10</td>
-                                <td>4 tháng</td>
-                                <td>Đã hủy</td>
-
-
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-
-                                <td>Anh Văn 10</td>
-                                <td>4 tháng</td>
-                                <td>Còn Dạy</td>
-
-
-                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->
