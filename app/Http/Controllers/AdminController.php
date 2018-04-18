@@ -59,8 +59,8 @@ class AdminController extends Controller
         return view('admin.pages.tutor', compact('tutor'));
     }
     public function postFindTutor (Request $request) {
-        $user_id = DB::select('select id from users where name like "%' . $request->txtFind . '%"');
-        $tutor = DB::select('select * from tutors where id = ?', [$user_id[0]->id]);
+        $tutor = DB::select('select * from users as U, tutors as T where U.id = T.user_id and U.name like "%' . $request->txtFind . '%"  ');
+//        $tutor = DB::select('select * from tutors  where id = ?', [$user_id[0]->id]);
 
         return view('admin.pages.tutor', compact('tutor'));
     }
