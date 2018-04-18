@@ -53,4 +53,15 @@ class AdminController extends Controller
     public function getClassPage(){
     	return view('admin.pages.class');
     }
+
+    public function getTutorList() {
+        $tutor = DB::select('select * from tutors');
+        return view('admin.pages.tutor', compact('tutor'));
+    }
+    public function postFindTutor (Request $request) {
+        $user_id = DB::select('select id from users where name like "%' . $request->txtFind . '%"');
+        $tutor = DB::select('select * from tutors where id = ?', [$user_id[0]->id]);
+
+        return view('admin.pages.tutor', compact('tutor'));
+    }
 }

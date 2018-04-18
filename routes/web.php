@@ -61,6 +61,14 @@ Route::group(['prefix'=>'admin'],  function() {
         'uses'=> "AdminController@postSubjectFind"
     ]);
 
+    Route::get('/tutor' , [
+        'as' => "admin.tutor",
+        'uses' => "AdminController@getTutorList"
+    ]);
+    Route::post('/tutor', [
+        'as' => "admim.post",
+        'uses' => "AdminController@postFindTutor"
+    ]);
 });
 
 
