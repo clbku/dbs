@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Account;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\RegisterRequest;
 class AdminController extends Controller
 {
     public function getUserList(){
@@ -50,7 +51,18 @@ class AdminController extends Controller
         $account =DB::select('select * from accounts where username LIKE "%' . $request->data . '%"');
         return view('admin.pages.account',compact('account'));
     }
-    public function getClassPage(){
-    	return view('admin.pages.class');
+
+
+    public function getClassList(){
+        $class = DB::select('select * from classes');
+    	return view('admin.pages.class',compact('class'));
+    }
+
+    public function getRegister(){
+        return view('admin.pages.sign-up');
+    }
+    public function postRegister(RegisterRequest $request){
+            echo $request->name;
+            //echo $request->sex;
     }
 }

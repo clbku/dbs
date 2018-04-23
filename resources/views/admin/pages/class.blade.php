@@ -2,7 +2,7 @@
 @section('content')
         <div id="page-wrapper">
             <div class="graphs">
-                Người dùng(ID, Họ tên , Ngày sinh, Địa chỉ, Quê quán, Giới tính, SĐT, Email, Avatar, Mã tài khoản)
+                
                 <div class="content-box-wrapper">
                     <div class="row">
                         <h3 id="h3" class="col-sm-7">Danh sách Lớp học</h3>
@@ -25,70 +25,31 @@
                                 <th>Cấp độ</th>
                                 <th>Ca học</th>
                                 <th>Gia sư</th>
-                                <th>Học sinh</th>
+                            
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach ($class as $a)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{$a->id}}</th>
 
-                                <td>Công Viên LVT</td>
-                                <td>10</td>
-                                <td>10-10-2010</td>
-                                <td>10-01-2011</td>
-                                <td>2</td>
-                                <td>Cơ bản</td>
-                                <td>19h-21h, 3-5-7</td>
-                                <td><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
+                                <td>{{$a->study_address}}</td>
+                                <td>{{$a->level}}</td>
+                                <td>{{$a->begin_at}}</td>
+                                <td></td>
+                                <td>{{$a->student_num}}</td>
+                                <td></td>
+                                <td>{{$a->shift}}</td>
 
-                                        <a href="profile.html">Nguyễn Văn D</a><br>
-                                        <a href="profile.html">Nguyễn Văn E</a>
-
-                                </td>
+                                <?php 
+                                    $b=DB::select('select name from tutors where id = ?',[$a->tutor_id]);
+                                ?>
+                                <td><a href="{{route('admin.tutors.getProfile',$a->tutor_id)}}">{{$b[0]->name}}</a></td>
+                             
 
 
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-
-                                <td>Công Viên LVT</td>
-                                <td>10</td>
-                                <td>10-10-2010</td>
-                                <td>10-01-2011</td>
-                                <td>2</td>
-                                <td>Cơ bản</td>
-                                <td>19h-21h, 3-5-7</td>
-                                <td><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-
-                                    <a href="profile.html">Nguyễn Văn D</a><br>
-                                    <a href="profile.html">Nguyễn Văn E</a>
-
-                                </td>
-
-
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-
-                                <td>Công Viên LVT</td>
-                                <td>10</td>
-                                <td>10-10-2010</td>
-                                <td>10-01-2011</td>
-                                <td>2</td>
-                                <td>Cơ bản</td>
-                                <td>19h-21h, 3-5-7</td>
-                                <td><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-
-                                    <a href="profile.html">Nguyễn Văn D</a><br>
-                                    <a href="profile.html">Nguyễn Văn E</a>
-
-                                </td>
-
-
-                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->

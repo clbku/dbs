@@ -60,7 +60,30 @@ Route::group(['prefix'=>'admin'],  function() {
         'as'=> 'admin.subjects.postFind',
         'uses'=> "AdminController@postSubjectFind"
     ]);
-
+    Route::get('class',[
+        'as'=>'admin.class.getList',
+        'uses'=>'AdminController@getClassList'
+    ]);
+    Route::get('tutors/{id}',[
+        'as'=>'admin.tutors.getProfile',
+        'uses'=>'AdminController@getProfile'
+    ]);
+    Route::get('authen/register',[
+        'as'=>'admin.register.getRegister',
+        'uses'=>'Auth\RegisterController@getRegister'
+    ]);
+    Route::post('authen/postregister',[
+        'as'=>'admin.register.postCreateAcc',
+        'uses'=>'Auth\RegisterController@postCreateAcc'
+    ]);
+    Route::get('authen/stu-register',[
+        'as'=>'admin.stu-register.getStuRegister',
+        'uses'=>'Auth\RegisterController@getStuRegister'
+    ]);
+    Route::post('authen/poststu-register',[
+        'as'=>'admin.stu-register.postStuCreateAcc',
+        'uses'=>'Auth\RegisterController@postStuCreateAcc'
+    ]);
 });
 
 
