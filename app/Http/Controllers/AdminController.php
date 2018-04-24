@@ -36,7 +36,9 @@ class AdminController extends Controller
     	return view('admin.pages.users');
     }
     public function getSubjectsList(){
-    	$subject = DB::select('select * from subjects');
+    	$subject = DB::select('select s.id, s.name as subjectName, t.name as typeName, s.created_at, s.state
+                                      from subjects as s, subject_types as t 
+                                      where s.subject_type = t.id');
     	return view('admin.pages.subjects',compact('subject'));
     }
     public function postSubjectFind(Request $request) {
@@ -48,13 +50,15 @@ class AdminController extends Controller
     	return view('admin.pages.users',compact('user'));
     }
     public function postAccountFind(Request $request){
-        $account =DB::select('select * from accounts where username LIKE "%' . $request->data . '%"');
+        $account =DB::select('select a.id, a.username, a.password, a.user_id, a.state
+                                    from accounts as a, users as u 
+                                    where a.user_id = u.id and u.name LIKE "%' . $request->data . '%"');
         return view('admin.pages.account',compact('account'));
     }
 
 
     public function getClassList(){
-        $class = DB::select('select * from classes');
+        $class = DB::select('select * from class_s');
     	return view('admin.pages.class',compact('class'));
     }
 
