@@ -11,6 +11,17 @@
 |
 */
 
+Route::get('/' , ["as"=>"homepage", function () {
+    return view('main.pages.index');
+}]);
+Route::get('/about', [
+    "as" => 'about',
+    function () {
+        return view('main.pages.about');
+    }
+]);
+
+
 Route::get('/admin', function () {
     return view('admin.pages.index');
 });

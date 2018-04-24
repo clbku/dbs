@@ -1,0 +1,306 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    width: 50%;
+    margin:  auto;
+}
+
+.form {
+    margin: 100px;
+}
+.forum-content {
+    border: 1px solid darkgrey;
+    padding: 10px;
+    margin: 100px 0;
+}
+.comment-list .comment-author {
+    color:  green;
+    font-size:  17px;
+}
+
+.comment-list ul {
+    list-style:  none;
+}
+
+.comment-list ul li {
+    margin:  22px;
+}
+
+.content form {
+    margin: 84px 0;
+}
+
+.content .tutor-list .num {
+    /* color: white; */
+    /* width:  10px; */
+    /* height:  10px; */
+    /* background: red; */
+}
+
+.tutor-list .num {
+    color: white;
+    height: 21px;
+    background: green;
+    text-align: center;
+    margin: 0;
+    padding:  0;
+    border-radius: 10px;
+    width:  30px;
+}
+
+.content-main .row {
+    margin-bottom: 80px;
+}
+
+.tutor-achievements span, .tutor-point span, .tutor-specializes span {
+    color:  green;
+    font-weight: 900;
+}
+
+.content .tutor-name {
+    font-size:  23px;
+    color:  green;
+    margin: 10px auto;
+    text-align:  center;
+    font-weight: bold;
+}
+
+.tutor-avatar {
+    width: 200px;
+    height: 200px;
+    overflow:  hidden;
+    border-radius: 100px;
+    text-align:  center;
+    margin:  auto;
+}
+
+.content .tutor-item {
+    width:  100%;
+}
+
+.fanpage {
+    width:  100%;
+    height:  200px;
+    background:  green;
+}
+
+.content {
+    border-right: 1px solid #80808026;
+}
+
+.right-side {
+    /* border-left: 1px solid #80808033; */
+}
+
+.right-side ul li {
+    padding:  10px;
+    margin: 0 10px;
+    cursor:  pointer;
+    transition:  all 0.4s;
+}
+
+.tutor-list ul li:hover {
+    background: green;
+    color:  white;
+}
+
+div.right-title {
+    font-size:  25px;
+    color:  green;
+    margin:  10px 30px;
+}
+
+.right-side ul {
+    list-style:  none;
+}
+
+.content-calender {margin-bottom:  60px;}
+
+.content-title {
+    margin-top:  60px;
+    font-size:  40px;
+}
+
+.news .black {
+    position:  absolute;
+    width: 500px;
+    height:  700px;
+    background: #000000ad;
+    visibility:  hidden;
+}
+
+.news .line {
+    width:  100px;
+    height: 5px;
+    background:  red;
+    position:  absolute;
+    top: 162px;
+    left:  35px;
+}
+
+.news span.description {
+    position:  absolute;
+    color:  white;
+    right: 10px;
+    text-align: right;
+    bottom: 83px;
+}
+
+.news span.title {
+    position: absolute;
+    right: 0;
+    bottom:  100px;
+    font-size: 19px;
+    text-align:  right;
+    margin: 35px 10px;
+    color: white;
+}
+
+.new-item {
+    width: 90%;
+    height: 350;
+    background: #3498db;
+    position:  relative;
+    overflow:  hidden;
+}
+
+.new-item:hover .black {
+    visibility: visible;
+}
+
+.news {
+    padding:  100px;
+}
+
+div#scrolling li {
+    width: 240px;
+    height: 300px;
+    background: url('../images/course-img1.png') no-repeat;
+    background-size: cover;
+    margin:  10px;
+    position:  relative;
+}
+
+div#scrolling li a {
+    position:  absolute;
+    bottom:  46px;
+    left:  19px;
+}
+
+div#scrolling li h2 {
+    color: white;
+}
+
+li.itemslide-active div {
+}
+
+.our-cources {
+    padding: 100px;
+    height: 600px;
+    background:  #3498db;
+    position:  relative;
+}
+
+.our-cources a {
+    position:  absolute;
+    bottom:  50px;
+    left: 200px;
+}
+
+.about {
+    margin:  100px;
+}
+
+.our-link.text-center {background:  #3498db;color: white;}
+
+.our-link.text-center .bg-color-green {background:  #2ecc71;}
+
+.our-link.text-center .icon {
+    font-size: 88px;
+    margin: 30px 0px;
+    color: white;
+}
+
+.header-top .row {
+}
+
+.header-top .dropdown-menu {
+    background: #3498db;
+}
+
+.header-top .dropdown-item {
+    display:  block;
+}
+
+.header-bottom {
+    background:  #2ecc71;
+    padding:  13px;
+    padding-bottom:  0px;
+}
+
+.header-bottom a {
+    color: white;
+    font-size:  20px;
+    text-decoration:  none;
+}
+
+.header-bottom .dropdown-menu {
+    color: white;
+    background: #2ecc71;
+    width: 240px;
+}
+
+.header-bottom a.dropdown-item {
+    display: block;
+    margin:  10px;
+}
+
+.header-bottom ul li> ul {
+    position:  absolute;
+    z-index:  10;
+    width:  200px;
+    background: #2ecc71;
+    padding: 9px 0px 28px 8px;
+    margin: 9px 0px;
+    opacity:  0;
+}
+
+.header-bottom ul li> ul li {
+    margin:  10px;
+}
+
+.header-bottom a:hover {
+    cursor:  pointer;
+    color: antiquewhite;
+}
+
+.header-bottom ul li {
+    list-style:  none;
+    position:  relative;
+}
+
+.header-bottom ul li:hover {background:  #27ae60;}
+
+.header-logo {
+    margin-top:  -60px;
+}
+
+.header-middle {
+    margin-top:  60px;
+}
+
+.header-top {
+    background: #3498db;
+    padding: 7px;
+    font-size: 19px;
+    color: white;
+}
+
+.header-top a {
+    padding:  8px;
+    color: white;
+    font-size:  13px;
+}
