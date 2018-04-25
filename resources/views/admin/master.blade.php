@@ -39,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- Meters graphs -->
     <script src="{{ url('assets/js/jquery-1.10.2.min.js') }}"></script>
     <!-- Placed js at the end of the document so the pages load faster -->
-
+    <script src="{{url('assets/ckeditor/ckeditor.js')}}"></script>
 </head>
 
 <body class="sticky-header left-side-collapsed"  onload="initMap()">

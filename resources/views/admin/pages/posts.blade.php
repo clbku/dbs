@@ -24,42 +24,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Chứng nhận trung tâm xuất sắc</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Chứng nhận trung tâm xuất sắc</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Chứng nhận trung tâm xuất sắc</td>
-                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                            @foreach($post as $p)
+                                @if ($p->type == 0)
+                                <tr>
+                                    <th scope="row">{{$p->id}}</th>
+                                    <td>{{$p->date}}</td>
+                                    <td>{{$p->title}}</td>
+                                    <td>{!! $p->content !!}</td>
+                                    <?php
+                                        $name = DB::select('select u.name
+                                                            from users as u,  accounts as a
+                                                            where a.id = ? and u.id = a.user_id
+                                                           ', [$p->author_id])
+                                    ?>
+                                    {{--<td><a href="form-detail.html"></a></td>--}}
+                                    <td><a href="profile.html">{{$name[0]->name}}</a></td>
+                                    <td>
+                                        <a><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('admin.post.getDelete', $p->id)}}"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
+
                             </tbody>
                         </table>
-                        <a href="add-post.html" class="btn btn-success">Thêm Tin tức</a>
+                        <a href="{{route('admin.post.getAdd', 0)}}" class="btn btn-success">Thêm Tin tức</a>
                     </div><!-- /.table-responsive -->
                 </div>
                 <div class="content-box-wrapper">
@@ -84,39 +74,28 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Ôn tập chương 1</td>
-                                <td><a href="de-bai-tap.html">Xem chi tiết</a></td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Ôn tập chương 1</td>
-                                <td><a href="de-bai-tap.html">Xem chi tiết</a></td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Ôn tập chương 1</td>
-                                <td><a href="de-bai-tap.html">Xem chi tiết</a></td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                            @foreach($post as $p)
+                                @if ($p->type == 1)
+                                    <tr>
+                                        <th scope="row">{{$p->id}}</th>
+                                        <td>{{$p->date}}</td>
+                                        <td>{{$p->title}}</td>
+                                        <td>{!! $p->content !!}</td>
+                                        <?php
+                                        $name = DB::select('select u.name
+                                                        from users as u,  accounts as a
+                                                        where a.id = ? and u.id = a.user_id
+                                                       ', [$p->author_id])
+                                        ?>
+                                        {{--<td><a href="form-detail.html"></a></td>--}}
+                                        <td><a href="profile.html">{{$name[0]->name}}</a></td>
+                                        <td>
+                                            <a><i class="fa fa-edit"></i></a>
+                                            <a><i class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                             </tbody>
                         </table>
                         <a href="add-post.html" class="btn btn-success">Thêm Bài tập</a>
@@ -138,48 +117,34 @@
                                 <th>#</th>
                                 <th>Thời gian</th>
                                 <th>Tiêu đề</th>
-                                <th>Nội dung</th>
+                                <th>Mô tả</th>
                                 <th>Người đăng</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Giải phương trình bậc 2</td>
-                                <td>Mọi người chỉ em cách giải phương trình bậc 2 với ạ?</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                    <a><i class="fa fa-reply"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Giải phương trình bậc 2</td>
-                                <td>Mọi người chỉ em cách giải phương trình bậc 2 với ạ?</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                    <a><i class="fa fa-reply"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Giải phương trình bậc 2</td>
-                                <td>Mọi người chỉ em cách giải phương trình bậc 2 với ạ?</td>
-                                <td><a href="form-detail.html"></a><a href="profile.html">Nguyễn Văn A</a></td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                    <a><i class="fa fa-reply"></i></a>
-                                </td>
-                            </tr>
+                            @foreach($post as $p)
+                                @if ($p->type == 1)
+                                    <tr>
+                                        <th scope="row">{{$p->id}}</th>
+                                        <td>{{$p->date}}</td>
+                                        <td>{{$p->title}}</td>
+                                        <td>{!! $p->description !!}</td>
+                                        <?php
+                                        $name = DB::select('select u.name
+                                                        from users as u,  accounts as a
+                                                        where a.id = ? and u.id = a.user_id
+                                                       ', [$p->author_id])
+                                        ?>
+                                        {{--<td><a href="form-detail.html"></a></td>--}}
+                                        <td><a href="profile.html">{{$name[0]->name}}</a></td>
+                                        <td>
+                                            <a><i class="fa fa-edit"></i></a>
+                                            <a><i class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->

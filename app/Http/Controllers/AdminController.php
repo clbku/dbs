@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddNewsReq;
+use App\Post;
 use Illuminate\Http\Request;
 use App\Account;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Session;
+
 class AdminController extends Controller
 {
     public function getUserList(){
@@ -79,5 +83,40 @@ class AdminController extends Controller
 //        $tutor = DB::select('select * from tutors  where id = ?', [$user_id[0]->id]);
 
         return view('admin.pages.tutor', compact('tutor'));
+    }
+
+    public function getListPost() {
+        $post = DB::select('select * from posts');
+
+        return view('admin.pages.posts', compact('post'));
+    }
+    public function getAddPost($id) {
+
+        return view('admin.pages.add-post',  compact('id'));
+    }
+    public function postAddPost(AddNewsReq $request) {
+        $post = new Post();
+        $post->date = now();
+        $post->author_id = 1;
+        $post->title = $request->txtTitle;
+        $post->description = $request->txtDescription;
+        $post->content = $request->txtContent;
+        $file = $request->txtFile;
+        $post->images = $file->move('upload/images/post/news',$file->getClientOriginalName());
+        $post->type = 0;
+        $post->save();
+        Session::flash('deleted_user','The user has been deleted');
+        return redirect()->route('admin.post.list');
+    }
+    public function getDeletePost($id) {
+        $post = DB::table('posts')->where('id', $id)->first();
+
+        if (file_exists(public_path() . '/' . $post->images)) {
+            unlink(public_path() . '/' . $post->images );
+        };
+        DB::table('posts')->where('id', $id)->delete();
+
+
+        return redirect()->route('admin.post.list');
     }
 }

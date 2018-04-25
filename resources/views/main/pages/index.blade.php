@@ -107,50 +107,16 @@
             <h1>Bạn cần gia sư cho môn học nào</h1>
             <div id="scrolling">
                 <ul>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
+                    @foreach($courses as $c)
+                        <li>
+                            <div>
+                                <div class="mo"></div>
+                                <h2>{{$c->specialize}}</h2>
+                                <a class="btn btn-success" href="#">Xem chi tiết</a>
+                            </div>
 
-                    </li>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="mo"></div>
-                            <h2>Gia sư tiếng anh</h2>
-                            <a class="btn btn-success" href="#">Xem chi tiết</a>
-                        </div>
-                    </li>
-
+                        </li>
+                    @endforeach()
 
                 </ul>
             </div>

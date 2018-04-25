@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/' , ["as"=>"homepage", function () {
-    return view('main.pages.index');
-}]);
+Route::get('/' , [
+    "as"=>"homepage",
+    "uses" => 'MainController@getHomePage'
+]);
 Route::get('/about', [
     "as" => 'about',
     function () {
@@ -107,6 +108,27 @@ Route::group(['prefix'=>'admin'],  function() {
         'uses' => "AdminController@postFindTutor"
 
     ]);
+
+
+//    insert post
+    Route::group(['prefix'=>'post'],function() {
+        Route::get('list', [
+            'as' => "admin.post.list",
+            'uses' => 'AdminController@getListPost'
+        ]);
+        Route::get('add/{id}', [
+            'as' => "admin.post.getAdd",
+            'uses' => 'AdminController@getAddPost'
+        ]);
+        Route::post('add', [
+            'as' => "admin.post.postAdd",
+            'uses' => 'AdminController@postAddPost'
+        ]);
+        Route::get('delete/{id}', [
+            'as' => "admin.post.getDelete",
+            'uses' => 'AdminController@getDeletePost'
+        ]);
+    });
 });
 
 
