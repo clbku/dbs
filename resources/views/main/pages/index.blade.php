@@ -121,51 +121,36 @@
                 </ul>
             </div>
 
-            <!--<div class="row">-->
-            <!--<div class="col-sm-3">-->
-            <!--<div class="cource-item">-->
-            <!---->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-sm-3">-->
-            <!--<div class="cource-item">-->
-            <!---->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-sm-3">-->
-            <!--<div class="cource-item">-->
-            <!--<h2>Gia sư tiếng anh</h2>-->
-            <!--<a class="btn btn-default" href="#">Xem chi tiết</a>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-sm-3">-->
-            <!--<div class="cource-item">-->
-            <!--<h2>Gia sư tiếng anh</h2>-->
-            <!--<a class="btn btn-default" href="#">Xem chi tiết</a>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <a class="btn btn-default" href="#">Các khóa khác</a>
         </div>
     </div>
     <div class="news">
         <div class="container">
             <h2>Tin tức - News</h2>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="new-item">
-                        <div class="black"></div>
-                        <div class="line">
+            <?php $i = 0?>
+            @foreach($news as $n)
+                @if ($i%3 == 0)
+                <div class="row">
+                @endif
+                    <div class="col-sm-4">
+                        <div class="new-item">
+                            <div class="new-img">
+                                <img src="{{$n->images}}">
+                            </div>
+                            <div class="black"></div>
+                            <div class="line">
+                            </div>
+                            <span class="title">{!! $n->title !!}</span>
+                            <span class="description">
+                                {!! $n->description !!}
+                            </span>
 
                         </div>
-                        <span class="title">Câu lạc bộ văn học cho trẻ em</span>
-                        <span class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </span>
-
                     </div>
-                </div>
-            </div>
+                    <?php $i++ ?>
+                @if ($i%3 == 0)
+                    </div>
+                @endif
+            @endforeach
         </div>
     </div>
 @endsection

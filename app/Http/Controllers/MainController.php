@@ -9,7 +9,7 @@ class MainController extends Controller
 {
     public function getHomePage() {
         $courses = DB::select('select * from specializes');
-
-        return view('main.pages.index', compact('courses'));
+        $news = DB::select('select * from posts where type = 0');
+        return view('main.pages.index', compact('courses', 'news'));
     }
 }
