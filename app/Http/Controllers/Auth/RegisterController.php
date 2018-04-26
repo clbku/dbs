@@ -71,9 +71,10 @@ class RegisterController extends Controller
         $stu->sex=$request->sex;
         $stu->phone=$request->phone;
         $stu->school=$request->school;
-        $stu->achievements=$request->achievements;
-        $stu->email=$request->email;
-        $stu->specializes=$request->specializes;
+        $stu->free_time=$request->free_time;
+        $stu->subject_id=$request->subject_id;
+        $stu->tutor_id=$request->tutor_id;
+        $stu->class=$request->class;
         $stu->save();
         return view('admin.pages.regist-success');
     }

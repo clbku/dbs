@@ -85,6 +85,30 @@ class AdminController extends Controller
 
         return view('admin.pages.tutor', compact('tutor'));
     }
+<<<<<<< HEAD
+    public function getForm(){
+        $tutorform = DB::select('select * from tutor_registers');
+        $stuform = DB::select('select * from study_registers');
+        return view('admin.pages.form',compact('tutorform','stuform'));
+    }
+    public function getTutorFormDetail($id){
+        $tutorform = DB::select('select * from tutor_registers where id = ?',[$id]);
+        $stuform="";
+        $ideaform="";
+        return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
+    }
+    public function getStuFormDetail($id){
+        $stuform = DB::select('select * from study_registers where id = ?',[$id]);
+        $tutorform = "";
+        $ideaform = "";
+        return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
+    }
+    public function getIdeaFormDetail($id){
+        $stuform = "";
+        $tutorform = "";
+        $ideaform = "";
+        return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
+=======
 
     public function getListPost() {
         $post = DB::select('select * from posts');
@@ -142,5 +166,6 @@ class AdminController extends Controller
         $post->save();
         Session::flash('deleted_user','The user has been deleted');
         return redirect()->route('admin.post.list');
+>>>>>>> 35bac2ff66822c8038c7e3119938783a92d23e75
     }
 }

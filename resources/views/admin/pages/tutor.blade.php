@@ -19,10 +19,10 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>T^^en gia sư</th>
-                                <th>Chuy^^en m^^on</th>
-                                <th>Th``anh tích</th>
-                                <th>Đi^^ểm đánh giá</th>
+                                <th>Tên gia sư</th>
+                                <th>Chuyên môn</th>
+                                <th>Thành tích</th>
+                                <th>Điểm đánh giá</th>
 
                             </tr>
                             </thead>

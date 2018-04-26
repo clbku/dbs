@@ -144,18 +144,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="clearfix"> </div>
 							</div>
 
-							<div class="sign-u">
-								<div class="sign-up1">
-									<h4>Địa chỉ Email :</h4>
-
-								</div>
-								<div class="sign-up2">
-										
-										<input type="text" placeholder=" " name="email" required=" "/>
-										
-								</div>
-								<div class="clearfix"> </div>
-							</div>
+							
 
 							<div class="sign-u">
 								<div class="sign-up1">
@@ -201,16 +190,57 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							<div class="sign-u">
 								<div class="sign-up1">
-									<h4>Thành tích từng đạt được :</h4>
+									<h4>Thời gian rảnh :</h4>
 
 								</div>
 								<div class="sign-up2">
 										
-										<input type="text" placeholder=" " name="achievements" required=" "/>
-										<p>(Nếu không có thì ghi "Không có") </p>
+										<input type="text" placeholder=" " name="free_time" required=" "/>
+										<p>(Nhập vào các ngày giờ rảnh trong tuần)</p>
+										
 								</div>
 								<div class="clearfix"> </div>
 							</div>
+
+							<div class="sign-u">
+								<div class="sign-up1">
+									<h4>Muốn đăng kí học gia sư :</h4>
+
+								</div>
+								<div class="sign-up2">
+										
+										<input type="text" placeholder=" " name="tutor_id" required=" "/>
+										<p>(Nhập vào mã gia sư) </p>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+
+							<div class="sign-u">
+								<div class="sign-up1">
+									<h4>Đăng kí học môn :</h4>
+
+								</div>
+								<div class="sign-up2">
+										
+										<br><br>
+										
+										<select name="subject_id">
+										  <option value="1">Toán</option>
+										  <option value="2">Vật Lý</option>
+										  <option value="3">Hóa học</option>
+										  <option value="4">Ngữ Văn</option>
+										  <option value="5">Anh văn</option>
+										  <option value="6">Sinh học</option>
+										  <option value="7">Lịch Sử</option>
+										  <option value="8">Địa lí</option>
+										  <option value="9">Tin học</option>
+										</select>
+										<br><br>
+										
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+
 							<!--<h6>Login Information</h6>
 							<div class="sign-u">
 								<div class="sign-up1">
