@@ -85,7 +85,7 @@ class AdminController extends Controller
 
         return view('admin.pages.tutor', compact('tutor'));
     }
-<<<<<<< HEAD
+
     public function getForm(){
         $tutorform = DB::select('select * from tutor_registers');
         $stuform = DB::select('select * from study_registers');
@@ -108,7 +108,7 @@ class AdminController extends Controller
         $tutorform = "";
         $ideaform = "";
         return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
-=======
+    }
 
     public function getListPost() {
         $post = DB::select('select * from posts');
@@ -130,9 +130,9 @@ class AdminController extends Controller
         $post->images = $file->move('upload/images/post/news',$file->getClientOriginalName());
         $post->type = $id;
         $file = $request->txtAsss;
-        $post->images = $file->move('upload/file/post',$file->getClientOriginalName());
+        if ($file) $post->file = $file->move('upload/file/post',$file->getClientOriginalName());
         $post->save();
-        Session::flash('deleted_user','The user has been deleted');
+ 
         return redirect()->route('admin.post.list');
     }
     public function getDeletePost($id) {
@@ -166,6 +166,6 @@ class AdminController extends Controller
         $post->save();
         Session::flash('deleted_user','The user has been deleted');
         return redirect()->route('admin.post.list');
->>>>>>> 35bac2ff66822c8038c7e3119938783a92d23e75
+
     }
 }
