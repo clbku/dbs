@@ -33,7 +33,7 @@
                             <td>{{$a->username}}</td>
                             <td>{{$a->password}}</td>
                             <?php
-                                $a_name = DB::select('select name from users where id = ?', [$a->user_id]);
+                                $a_name = DB::select('CALL getUserNameByID(?)', [$a->user_id]);
                             ?>
                             <td><a href="{{route('admin.pages.profile', $a->user_id)}}">{{$a_name[0]->name}}<a></td>
                             <td>

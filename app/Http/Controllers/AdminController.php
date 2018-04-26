@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function getUserList(){
-        $user = DB::select('select * from users');
+        $user = DB::select('CALL getAllUser()');
         return view('admin.pages.users',compact('user'));
     }
     public function getProfile($id) {
