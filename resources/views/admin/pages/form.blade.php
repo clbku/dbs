@@ -23,28 +23,30 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach ($tutorform as $a)
+
                             <tr>
-                                <th scope="row">1</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Nguyễn Văn G</td>
-                                <td>Xin gia sư</td>
-                                <td><a href="form-detail.html">Xem chi tiết</a></td>
+                                <th scope="row">{{$a->id}}</th>
+                                <td>{{$a->created_at}}</td>
+                                <td>{{$a->name}}</td>
+                                <td>Đăng kí gia sư</td>
+                                <td><a href="{{route('admin.tutorform-detail.getTutorFormDetail',$a->id)}}">Xem chi tiết</a></td>
 
                             </tr>
+                            @endforeach
+                            
+                             
+                            @foreach ($stuform as $b)
+
                             <tr>
-                                <th scope="row">2</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Nguyễn Văn G</td>
-                                <td>Xin gia sư</td>
-                                <td><a href="form-detail.html">Xem chi tiết</a></td>
+                                <th scope="row">{{$b->id}}</th>
+                                <td>{{$b->created_at}}</td>
+                                <td>{{$b->name}}</td>
+                                <td>Đăng kí học viên</td>
+                                <td><a href="{{route('admin.stuform-detail.getStuFormDetail',$b->id)}}">Xem chi tiết</a></td>
+
                             </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>11:23:45 11-2-2003</td>
-                                <td>Nguyễn Văn G</td>
-                                <td>Xin gia sư</td>
-                                <td><a href="form-detail.html">Xem chi tiết</a></td>
-                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->
