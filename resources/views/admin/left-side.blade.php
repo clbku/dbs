@@ -22,7 +22,11 @@
 
             <li><a href="class.html"><i class="lnr lnr-enter"></i> <span>Class</span></a></li>
             <li><a href="{{route('admin.tutor')}}"><i class="lnr lnr-enter"></i> <span>Tutor</span></a></li>
+<<<<<<< HEAD
             <li><a href="{{route("admin.account.getList")}}"><i class="lnr lnr-users"></i> <span>Account</span></a></li>
+=======
+            {{--<li><a href="{{route("admin.account.getList")}}"><i class="lnr lnr-users"></i> <span>Account</span></a></li>--}}
+>>>>>>> 35bac2ff66822c8038c7e3119938783a92d23e75
 
             <li><a href="student.html"><i class="lnr lnr-user"></i><span>Student</span></a></li>
             <li><a href="kiem-tra.html"><i class="lnr lnr-page-break"></i><span>Test list</span></a></li>

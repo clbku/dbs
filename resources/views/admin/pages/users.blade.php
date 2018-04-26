@@ -22,7 +22,7 @@
                                 <th>Ngày sinh</th>
                                 <th>Địa chỉ</th>
                                 <th>Quên quán</th>
-                                <th>Giói tính</th>
+                                <th>Giới tính</th>
                                 <th>SĐT</th>
                                 <th>Email</th>
                                 <th>Loại người dùng</th>
@@ -37,10 +37,25 @@
                                 <td>{{$a->dob}}</td>
                                 <td>{{$a->address}}</td>
                                 <td>{{$a->hometown}}</td>
-                                <td>{{$a->sex}}</td>
+                                <td>
+                                    @if ($a->sex)
+                                        {{"Nam"}}
+                                    @else
+                                        {{"Nữ"}}
+                                    @endif
+                                </td>
                                 <td>{{$a->phone}}</td>
                                 <td>{{$a->email}}</td>
-                                <td>{{$a->type}}</td>
+                                <td>
+                                    @if ($a->type == 0)
+                                        {{"Gia sư"}}
+                                    @elseif ($a->type == 1)
+                                        {{"Admin"}}
+                                    @else
+                                        {{"Thành viên"}}
+
+                                    @endif
+                                </td>
 
                             </tr>
                             @endforeach           

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 15, 2018 lúc 06:21 PM
+-- Thời gian đã tạo: Th4 24, 2018 lúc 09:17 PM
 -- Phiên bản máy phục vụ: 10.1.30-MariaDB
 -- Phiên bản PHP: 7.1.14
 
@@ -34,7 +34,6 @@ CREATE TABLE `accounts` (
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(1) NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -43,19 +42,23 @@ CREATE TABLE `accounts` (
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'congly1311', 'qwe123', 1, 1, '0987654321poiuytrewq', NULL, '2018-04-15 16:19:58');
+INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'kyduyen_23', 'ahihi', 1, 5, NULL, NULL),
+(2, 'vanquang.13', 'ahihi', 1, 4, NULL, '2018-04-24 19:10:44'),
+(3, 'vana_123_deptrai', 'vana_123_deptrai', 1, 1, NULL, NULL),
+(4, 'vanb_hocgioi', 'vanb_hocgioi', 1, 2, NULL, NULL),
+(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `classes`
+-- Cấu trúc bảng cho bảng `class_s`
 --
 
-CREATE TABLE `classes` (
+CREATE TABLE `class_s` (
   `id` int(10) UNSIGNED NOT NULL,
-  `study_address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` int(11) DEFAULT NULL,
   `begin_at` date NOT NULL,
   `student_num` int(11) NOT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -74,8 +77,9 @@ CREATE TABLE `classes` (
 
 CREATE TABLE `comments` (
   `id` int(10) UNSIGNED NOT NULL,
-  `account_id` int(10) UNSIGNED NOT NULL,
-  `comment` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author_id` int(10) UNSIGNED NOT NULL,
+  `post_id` int(10) UNSIGNED NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -88,9 +92,9 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `customer_reviews` (
   `id` int(10) UNSIGNED NOT NULL,
-  `datetime` datetime NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -104,31 +108,10 @@ CREATE TABLE `customer_reviews` (
 
 CREATE TABLE `exams` (
   `id` int(10) UNSIGNED NOT NULL,
-  `class_id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
-  `exam_code` int(10) UNSIGNED NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `question` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `exercises`
---
-
-CREATE TABLE `exercises` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `author_id` int(10) UNSIGNED NOT NULL,
-  `datetime` datetime NOT NULL,
-  `subject_id` int(10) UNSIGNED NOT NULL,
-  `level` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `link` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -150,46 +133,25 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2018_04_15_121948_create_accounts_table', 1),
-(4, '2018_04_15_122319_create_customer_reviews_table', 1),
-(5, '2018_04_15_122536_create_tutor_registers_table', 1),
-(6, '2018_04_15_122552_create_subjects_table', 1),
-(7, '2018_04_15_122622_create_question_banks_table', 1),
-(8, '2018_04_15_122824_create_tutors_table', 1),
-(9, '2018_04_15_122844_create_students_table', 1),
-(10, '2018_04_15_122902_create_parents_table', 1),
-(11, '2018_04_15_123151_create_scores_table', 1),
-(12, '2018_04_15_123202_create_comments_table', 1),
-(13, '2018_04_15_123212_create_posts_table', 1),
-(14, '2018_04_15_123227_create_news_table', 1),
-(15, '2018_04_15_123239_create_classes_table', 1),
-(16, '2018_04_15_123250_create_studies_table', 1),
-(17, '2018_04_15_123323_create_question_lists_table', 1),
-(18, '2018_04_15_123337_create_exams_table', 1),
-(19, '2018_04_15_123400_create_results_table', 1),
-(20, '2018_04_15_123415_create_study_registers_table', 1),
-(21, '2018_04_15_123432_create_exercises_table', 1);
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `news`
---
-
-CREATE TABLE `news` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `datetime` datetime NOT NULL,
-  `author_id` int(10) UNSIGNED NOT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(20, '2014_10_12_000000_create_users_table', 1),
+(21, '2014_10_12_100000_create_password_resets_table', 1),
+(22, '2018_04_24_235030_create_accounts_table', 1),
+(23, '2018_04_25_001647_create_posts_table', 1),
+(24, '2018_04_25_002747_create_comments_table', 1),
+(25, '2018_04_25_003026_create_specializes_table', 1),
+(26, '2018_04_25_003236_create_tutors_table', 1),
+(27, '2018_04_25_004314_create_students_table', 1),
+(28, '2018_04_25_005121_create_parents_table', 1),
+(29, '2018_04_25_005739_create_subject_types_table', 1),
+(30, '2018_04_25_005952_create_subjects_table', 1),
+(31, '2018_04_25_010445_create_class_s_table', 1),
+(32, '2018_04_25_011328_create_studies_table', 1),
+(33, '2018_04_25_011551_create_scores_table', 1),
+(34, '2018_04_25_011848_create_question_banks_table', 1),
+(35, '2018_04_25_012224_create_exams_table', 1),
+(36, '2018_04_25_012544_create_study_registers_table', 1),
+(37, '2018_04_25_012911_create_tutor_registers_table', 1),
+(38, '2018_04_25_013257_create_customer_reviews_table', 1);
 
 -- --------------------------------------------------------
 
@@ -199,9 +161,9 @@ CREATE TABLE `news` (
 
 CREATE TABLE `parents` (
   `id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `student_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -226,12 +188,14 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `posts` (
   `id` int(10) UNSIGNED NOT NULL,
-  `datetime` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment_id` int(10) UNSIGNED NOT NULL,
+  `images` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `files` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -244,62 +208,13 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `question_banks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `type` int(11) NOT NULL,
+  `subject_id` int(10) UNSIGNED NOT NULL,
   `question` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correct` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `wrong_1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `wrong_2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `wrong_3` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correct_answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `incorrect_answer1` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `incorrect_answer2` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `incorrect_answer3` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `explain` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `question_lists`
---
-
-CREATE TABLE `question_lists` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `tn1` int(10) UNSIGNED NOT NULL,
-  `tn2` int(10) UNSIGNED NOT NULL,
-  `tn3` int(10) UNSIGNED NOT NULL,
-  `tn4` int(10) UNSIGNED NOT NULL,
-  `tn5` int(10) UNSIGNED NOT NULL,
-  `tn6` int(10) UNSIGNED NOT NULL,
-  `tn7` int(10) UNSIGNED NOT NULL,
-  `tn8` int(10) UNSIGNED NOT NULL,
-  `tn9` int(10) UNSIGNED NOT NULL,
-  `tn10` int(10) UNSIGNED NOT NULL,
-  `tl1` int(10) UNSIGNED NOT NULL,
-  `tl2` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `results`
---
-
-CREATE TABLE `results` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `exam_id` int(10) UNSIGNED NOT NULL,
-  `tn1` int(11) NOT NULL,
-  `tn2` int(11) NOT NULL,
-  `tn3` int(11) NOT NULL,
-  `tn4` int(11) NOT NULL,
-  `tn5` int(11) NOT NULL,
-  `tn6` int(11) NOT NULL,
-  `tn7` int(11) NOT NULL,
-  `tn8` int(11) NOT NULL,
-  `tn9` int(11) NOT NULL,
-  `tn10` int(11) NOT NULL,
-  `tl1` int(11) NOT NULL,
-  `tl2` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -314,9 +229,22 @@ CREATE TABLE `scores` (
   `id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
-  `avr1` double(8,2) UNSIGNED DEFAULT NULL,
-  `avr2` double(8,2) UNSIGNED DEFAULT NULL,
-  `avr3` double(8,2) UNSIGNED DEFAULT NULL,
+  `avg1` double(8,2) DEFAULT NULL,
+  `avg2` double(8,2) DEFAULT NULL,
+  `avg3` double(8,2) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `specializes`
+--
+
+CREATE TABLE `specializes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `specialize` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -332,11 +260,11 @@ CREATE TABLE `students` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `school` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `class` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `class_s` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -350,8 +278,8 @@ CREATE TABLE `students` (
 
 CREATE TABLE `studies` (
   `id` int(10) UNSIGNED NOT NULL,
-  `class_id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -367,14 +295,14 @@ CREATE TABLE `study_registers` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `school` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `class` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `free_time` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `class_s` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
-  `tutor_id` int(10) UNSIGNED NOT NULL,
+  `tutor_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -388,10 +316,42 @@ CREATE TABLE `study_registers` (
 CREATE TABLE `subjects` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` int(10) UNSIGNED NOT NULL,
   `state` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `name`, `subject_type`, `state`, `created_at`, `updated_at`) VALUES
+(1, 'Toán 1', 1, 1, NULL, NULL),
+(2, 'Toán 5', 1, 1, NULL, NULL),
+(3, 'Văn 5', 2, 0, NULL, NULL),
+(4, 'Văn 12', 2, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `subject_types`
+--
+
+CREATE TABLE `subject_types` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `subject_types`
+--
+
+INSERT INTO `subject_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Toán', NULL, NULL),
+(2, 'Văn', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -401,10 +361,11 @@ CREATE TABLE `subjects` (
 
 CREATE TABLE `tutors` (
   `id` int(10) UNSIGNED NOT NULL,
-  `specialize` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `achievements` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_id` int(10) UNSIGNED NOT NULL,
+  `achievement` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `point` int(11) NOT NULL,
+  `point` double(8,2) NOT NULL,
+  `count` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -420,13 +381,13 @@ CREATE TABLE `tutor_registers` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `school` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `specializes` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `achievements` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `specialize_id` int(10) UNSIGNED NOT NULL,
+  `achievements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -442,12 +403,12 @@ CREATE TABLE `users` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sex` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sex` int(11) NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -457,7 +418,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `created_at`, `updated_at`) VALUES
-(1, 'Hoàng Công Lý', '2018-04-02', 'HCM', 'Lâm Đồng', 'Nam', '0987654321', 'congly@gmail.com', '1.png', 'Gia sư', NULL, NULL);
+(1, 'Nguyễn Văn A', '2018-04-01', 'KTX khu A', 'Lâm Đồng', 1, '0987654321', 'asd@gmail.com', 'default.jpg', 0, NULL, NULL),
+(2, 'Nguyễn Văn B', '2018-04-02', 'KTX khu B', 'Nha Trang', 1, '032566988747', 'kli@gmail.com', 'default.jpg', 1, NULL, NULL),
+(3, 'Nguyễn Văn C', '2018-04-03', 'Nguyễn Văn Cừ', 'Hồ Chí Minh', 0, '09986225446', 'poii@gmail.com', 'default.jpg', 2, NULL, NULL),
+(4, 'Cao Văn Quang', '2018-04-05', 'Củ Chi', 'Củ Chi', 0, '0987998665', 'quang@yahoo.com', 'default.com', 1, NULL, NULL),
+(5, 'Nguyễn Kỳ Duyên', '2018-04-03', 'Dĩ An, Bình Dương', 'Quảng Nam', 0, '01665554449', 'duong@gmail.com', 'default.jpg', 0, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -471,19 +436,20 @@ ALTER TABLE `accounts`
   ADD KEY `accounts_user_id_foreign` (`user_id`);
 
 --
--- Chỉ mục cho bảng `classes`
+-- Chỉ mục cho bảng `class_s`
 --
-ALTER TABLE `classes`
+ALTER TABLE `class_s`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `classes_tutor_id_foreign` (`tutor_id`),
-  ADD KEY `classes_subject_id_foreign` (`subject_id`);
+  ADD KEY `class_s_tutor_id_foreign` (`tutor_id`),
+  ADD KEY `class_s_subject_id_foreign` (`subject_id`);
 
 --
 -- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `comments_account_id_foreign` (`account_id`);
+  ADD KEY `comments_author_id_foreign` (`author_id`),
+  ADD KEY `comments_post_id_foreign` (`post_id`);
 
 --
 -- Chỉ mục cho bảng `customer_reviews`
@@ -496,32 +462,14 @@ ALTER TABLE `customer_reviews`
 --
 ALTER TABLE `exams`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `exams_class_id_foreign` (`class_id`),
   ADD KEY `exams_student_id_foreign` (`student_id`),
-  ADD KEY `exams_exam_code_foreign` (`exam_code`);
-
---
--- Chỉ mục cho bảng `exercises`
---
-ALTER TABLE `exercises`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `exercises_author_id_foreign` (`author_id`),
-  ADD KEY `exercises_subject_id_foreign` (`subject_id`),
-  ADD KEY `exercises_comment_id_foreign` (`comment_id`);
+  ADD KEY `exams_class_id_foreign` (`class_id`);
 
 --
 -- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `news`
---
-ALTER TABLE `news`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `news_author_id_foreign` (`author_id`),
-  ADD KEY `news_comment_id_foreign` (`comment_id`);
 
 --
 -- Chỉ mục cho bảng `parents`
@@ -541,39 +489,14 @@ ALTER TABLE `password_resets`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `posts_author_id_foreign` (`author_id`),
-  ADD KEY `posts_comment_id_foreign` (`comment_id`);
+  ADD KEY `posts_author_id_foreign` (`author_id`);
 
 --
 -- Chỉ mục cho bảng `question_banks`
 --
 ALTER TABLE `question_banks`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `question_lists`
---
-ALTER TABLE `question_lists`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `question_lists_tn1_foreign` (`tn1`),
-  ADD KEY `question_lists_tn2_foreign` (`tn2`),
-  ADD KEY `question_lists_tn3_foreign` (`tn3`),
-  ADD KEY `question_lists_tn4_foreign` (`tn4`),
-  ADD KEY `question_lists_tn5_foreign` (`tn5`),
-  ADD KEY `question_lists_tn6_foreign` (`tn6`),
-  ADD KEY `question_lists_tn7_foreign` (`tn7`),
-  ADD KEY `question_lists_tn8_foreign` (`tn8`),
-  ADD KEY `question_lists_tn9_foreign` (`tn9`),
-  ADD KEY `question_lists_tn10_foreign` (`tn10`),
-  ADD KEY `question_lists_tl1_foreign` (`tl1`),
-  ADD KEY `question_lists_tl2_foreign` (`tl2`);
-
---
--- Chỉ mục cho bảng `results`
---
-ALTER TABLE `results`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `results_exam_id_foreign` (`exam_id`);
+  ADD KEY `question_banks_subject_id_foreign` (`subject_id`);
 
 --
 -- Chỉ mục cho bảng `scores`
@@ -582,6 +505,12 @@ ALTER TABLE `scores`
   ADD PRIMARY KEY (`id`),
   ADD KEY `scores_student_id_foreign` (`student_id`),
   ADD KEY `scores_subject_id_foreign` (`subject_id`);
+
+--
+-- Chỉ mục cho bảng `specializes`
+--
+ALTER TABLE `specializes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `students`
@@ -594,8 +523,8 @@ ALTER TABLE `students`
 --
 ALTER TABLE `studies`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `studies_class_id_foreign` (`class_id`),
-  ADD KEY `studies_student_id_foreign` (`student_id`);
+  ADD KEY `studies_student_id_foreign` (`student_id`),
+  ADD KEY `studies_class_id_foreign` (`class_id`);
 
 --
 -- Chỉ mục cho bảng `study_registers`
@@ -609,6 +538,13 @@ ALTER TABLE `study_registers`
 -- Chỉ mục cho bảng `subjects`
 --
 ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subjects_subject_type_foreign` (`subject_type`);
+
+--
+-- Chỉ mục cho bảng `subject_types`
+--
+ALTER TABLE `subject_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -616,13 +552,15 @@ ALTER TABLE `subjects`
 --
 ALTER TABLE `tutors`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `tutors_s_id_foreign` (`s_id`),
   ADD KEY `tutors_user_id_foreign` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tutor_registers_specialize_id_foreign` (`specialize_id`);
 
 --
 -- Chỉ mục cho bảng `users`
@@ -638,12 +576,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `classes`
+-- AUTO_INCREMENT cho bảng `class_s`
 --
-ALTER TABLE `classes`
+ALTER TABLE `class_s`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -665,22 +603,10 @@ ALTER TABLE `exams`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `exercises`
---
-ALTER TABLE `exercises`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT cho bảng `news`
---
-ALTER TABLE `news`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT cho bảng `parents`
@@ -701,21 +627,15 @@ ALTER TABLE `question_banks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `question_lists`
---
-ALTER TABLE `question_lists`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `results`
---
-ALTER TABLE `results`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `specializes`
+--
+ALTER TABLE `specializes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -740,7 +660,13 @@ ALTER TABLE `study_registers`
 -- AUTO_INCREMENT cho bảng `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `subject_types`
+--
+ALTER TABLE `subject_types`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `tutors`
@@ -758,7 +684,7 @@ ALTER TABLE `tutor_registers`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -771,40 +697,25 @@ ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Các ràng buộc cho bảng `classes`
+-- Các ràng buộc cho bảng `class_s`
 --
-ALTER TABLE `classes`
-  ADD CONSTRAINT `classes_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `classes_tutor_id_foreign` FOREIGN KEY (`tutor_id`) REFERENCES `tutors` (`id`) ON DELETE CASCADE;
+ALTER TABLE `class_s`
+  ADD CONSTRAINT `class_s_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `class_s_tutor_id_foreign` FOREIGN KEY (`tutor_id`) REFERENCES `tutors` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_account_id_foreign` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `comments_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `exams`
 --
 ALTER TABLE `exams`
-  ADD CONSTRAINT `exams_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `exams_exam_code_foreign` FOREIGN KEY (`exam_code`) REFERENCES `question_lists` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `exams_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `class_s` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `exams_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `exercises`
---
-ALTER TABLE `exercises`
-  ADD CONSTRAINT `exercises_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `exercises_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `exercises_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `news`
---
-ALTER TABLE `news`
-  ADD CONSTRAINT `news_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `news_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `parents`
@@ -816,31 +727,13 @@ ALTER TABLE `parents`
 -- Các ràng buộc cho bảng `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `posts_comment_id_foreign` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `posts_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Các ràng buộc cho bảng `question_lists`
+-- Các ràng buộc cho bảng `question_banks`
 --
-ALTER TABLE `question_lists`
-  ADD CONSTRAINT `question_lists_tl1_foreign` FOREIGN KEY (`tl1`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tl2_foreign` FOREIGN KEY (`tl2`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn10_foreign` FOREIGN KEY (`tn10`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn1_foreign` FOREIGN KEY (`tn1`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn2_foreign` FOREIGN KEY (`tn2`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn3_foreign` FOREIGN KEY (`tn3`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn4_foreign` FOREIGN KEY (`tn4`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn5_foreign` FOREIGN KEY (`tn5`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn6_foreign` FOREIGN KEY (`tn6`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn7_foreign` FOREIGN KEY (`tn7`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn8_foreign` FOREIGN KEY (`tn8`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_lists_tn9_foreign` FOREIGN KEY (`tn9`) REFERENCES `question_banks` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `results`
---
-ALTER TABLE `results`
-  ADD CONSTRAINT `results_exam_id_foreign` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`) ON DELETE CASCADE;
+ALTER TABLE `question_banks`
+  ADD CONSTRAINT `question_banks_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `scores`
@@ -853,7 +746,7 @@ ALTER TABLE `scores`
 -- Các ràng buộc cho bảng `studies`
 --
 ALTER TABLE `studies`
-  ADD CONSTRAINT `studies_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `studies_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `class_s` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `studies_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
@@ -864,10 +757,23 @@ ALTER TABLE `study_registers`
   ADD CONSTRAINT `study_registers_tutor_id_foreign` FOREIGN KEY (`tutor_id`) REFERENCES `tutors` (`id`) ON DELETE CASCADE;
 
 --
+-- Các ràng buộc cho bảng `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `subjects_subject_type_foreign` FOREIGN KEY (`subject_type`) REFERENCES `subject_types` (`id`) ON DELETE CASCADE;
+
+--
 -- Các ràng buộc cho bảng `tutors`
 --
 ALTER TABLE `tutors`
+  ADD CONSTRAINT `tutors_s_id_foreign` FOREIGN KEY (`s_id`) REFERENCES `specializes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `tutors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `tutor_registers`
+--
+ALTER TABLE `tutor_registers`
+  ADD CONSTRAINT `tutor_registers_specialize_id_foreign` FOREIGN KEY (`specialize_id`) REFERENCES `specializes` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

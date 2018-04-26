@@ -18,7 +18,8 @@
                             <tr>
                                 <th>Mã môn học</th>
                                 <th>Tên môn học</th>
-                                <th>Thời gian tạo</th>
+                                <th>Thư mục</th>
+                                <th>Ngày thêm</th>
                                 <th>Trạng thái</th>
                             </tr>
                             </thead>
@@ -27,7 +28,8 @@
                             <tr>
                                 <th scope="row">{{$a->id}}</th>
 
-                                <td>{{$a->name}}</td>
+                                <td>{{$a->subjectName}}</td>
+                                <td>{{$a->typeName}}</td>
                                 <td>{{$a->created_at}}</td>
 
                                 <td>

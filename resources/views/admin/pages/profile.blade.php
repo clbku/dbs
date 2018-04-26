@@ -10,7 +10,7 @@
                                     <span style="background:url(images/bill-gates.jpg) no-repeat center"> </span>
                                 </div>
                                 <!--account info -->
-                                <form action="#" style="width: 100%;">
+                                <form action="" style="width: 100%;">
                                     <?php
                                         $account = DB::select("select * from accounts where user_id = ?", [$user[0]->id]);
 
