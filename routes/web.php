@@ -98,8 +98,11 @@ Route::group(['prefix'=>'admin'],  function() {
         'uses'=>'Auth\RegisterController@postStuCreateAcc'
     ]);
 
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> b312bc14341ad7bd27cb41598623334a2d998147
 
     Route::get('/tutor' , [
         'as' => "admin.tutor",
@@ -108,6 +111,10 @@ Route::group(['prefix'=>'admin'],  function() {
     Route::post('/tutor', [
         'as' => "admim.post",
         'uses' => "AdminController@postFindTutor"
+<<<<<<< HEAD
+=======
+
+>>>>>>> b312bc14341ad7bd27cb41598623334a2d998147
     ]);
     Route::get('/form',[
         'as'=>'admin.form.getForm',
@@ -124,6 +131,10 @@ Route::group(['prefix'=>'admin'],  function() {
     Route::get('/ideaform-detail/{id}',[
         'as'=>'admin.ideaform-detail.getIdeaFormDetail',
         'uses'=>'AdminController@getIdeaFormDetail'
+<<<<<<< HEAD
+=======
+
+>>>>>>> b312bc14341ad7bd27cb41598623334a2d998147
     ]);
 
 

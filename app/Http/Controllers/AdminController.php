@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function getUserList(){
-        $user = DB::select('select * from users');
+        $user = DB::select('CALL getAllUser()');
         return view('admin.pages.users',compact('user'));
     }
     public function getProfile($id) {
@@ -103,11 +103,16 @@ class AdminController extends Controller
         $ideaform = "";
         return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
     }
-    public function getIdeaFormDetail($id){
+    public function getIdeaFormDetail($id)
+    {
         $stuform = "";
         $tutorform = "";
         $ideaform = "";
+<<<<<<< HEAD
         return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
+=======
+        return view('admin.pages.form-detail', compact('tutorform', 'stuform', 'ideaform'));
+>>>>>>> b312bc14341ad7bd27cb41598623334a2d998147
     }
 
     public function getListPost() {
