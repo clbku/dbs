@@ -10,6 +10,8 @@ use App\Account;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\PasswordRequest;
+
 
 class AdminController extends Controller
 {
@@ -108,11 +110,11 @@ class AdminController extends Controller
         $stuform = "";
         $tutorform = "";
         $ideaform = "";
-<<<<<<< HEAD
+
         return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
-=======
+
         return view('admin.pages.form-detail', compact('tutorform', 'stuform', 'ideaform'));
->>>>>>> b312bc14341ad7bd27cb41598623334a2d998147
+
     }
 
     public function getListPost() {
@@ -171,6 +173,17 @@ class AdminController extends Controller
         $post->save();
         Session::flash('deleted_user','The user has been deleted');
         return redirect()->route('admin.post.list');
+
+    }
+    public function postUpdatePass(PasswordRequest $request,$id){
+        $account = Account::find($id);
+       
+        if($account->password==$request->oldpassword){
+            $account->password=$request->password;
+            $account->save();
+            echo "thành công";    
+        }
+        else return redirect()->route('admin.pages.profile',[$account->user_id]);
 
     }
 }

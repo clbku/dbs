@@ -7,25 +7,41 @@
                         <row>
                             <div class="content-box-wrapper position-center" style="width: 100%;">
                                 <div class="profile_img_profile position-center">
-                                    <span style="background:url(images/bill-gates.jpg) no-repeat center"> </span>
+                                    @if (count($errors)>0)
+                                        <div class="alert alert-danger">
+                                        <strong>Lỗi ! </strong>Vui lòng kiểm tra lại thông tin :
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{$error}}</li>
+                                            @endforeach
+                                        </ul>
+                                        </div>
+                                    @endif ()
+
                                 </div>
                                 <!--account info -->
-                                <form action="" style="width: 100%;">
-                                    <?php
-                                        $account = DB::select("select * from accounts where user_id = ?", [$user[0]->id]);
+                                <?php
+                                    $account = DB::select("select * from accounts where user_id = ?", [$user[0]->id]);
+                                ?>
+                                
+                                <form method="post" action="{{route('admin.update-password.postUpdatePass',[$account[0]->id])}}" style="width: 100%;">
 
-                                    ?>
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <div class="form-group">
                                         <label>Tên tài khoản</label>
-                                        <input class="form-control1" type="text" placeholder="Your name here" value="{{$account[0]->username}}">
+                                        <input class="form-control1" type="text" name="name" placeholder="Your name here" value="{{$account[0]->username}}">
                                     </div>
                                     <div class="form-group">
-                                        <label>Mật khẩu</label>
-                                        <input class="form-control1" type="password" placeholder="" value="{{$account[0]->password}}">
+                                        <label>Mật khẩu hiện tại</label>
+                                        <input class="form-control1" type="password" name="oldpassword" placeholder="" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nhập mật khẩu mới</label>
+                                        <input class="form-control1" type="password" name="password" placeholder="" value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Nhập lại mật khẩu</label>
-                                        <input class="form-control1" type="text" placeholder="" value="">
+                                        <input class="form-control1" type="password" name="password_comfirmation" placeholder="" value="">
                                     </div>
 
                                     <input class="form-control1" type="submit" value="Cập nhật">

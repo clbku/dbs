@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label>Chuyên môn</label>
-                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="{{$a->specializes}}">
+                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="{{$a->specialize_id}}">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">
@@ -118,7 +118,7 @@
                         </div>
                         <div class="form-group">
                             <label>Lớp</label>
-                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="{{$b->class}}">
+                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="{{$b->class_s}}">
                         </div>
                         <div class="form-group">
                             <label>Thời gian học</label>
@@ -140,8 +140,9 @@
                             <label>Đăng ký gia sư</label>
                             <?php
                                 $temp2 = DB::select('select * from tutors where id = ?',[$b->tutor_id]);
+                                $user = DB::select('select * from users where id = ?',[$temp2[0]->user_id]);
                             ?>
-                            <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$temp2[0]->name}}">
+                            <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$user[0]->name}}">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">

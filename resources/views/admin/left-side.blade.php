@@ -31,7 +31,7 @@
             <li><a href="student.html"><i class="lnr lnr-user"></i><span>Student</span></a></li>
             <li><a href="kiem-tra.html"><i class="lnr lnr-page-break"></i><span>Test list</span></a></li>
             <li><a href="question-bank.html"><i class="lnr lnr-database"></i> <span>Question Bank</span></a></li>
-            <li><a href="posts.html"><i class="lnr lnr-database"></i> <span>Post</span></a></li>
+            <li><a href="{{route('admin.post.list')}}"><i class="lnr lnr-database"></i> <span>Post</span></a></li>
             <li><a href="{{route('admin.form.getForm')}}"><i class="lnr lnr-database"></i> <span>Request</span></a></li>
             <li class="menu-list act"><a href="#"><i class="lnr lnr-book"></i>  <span>Pages</span></a>
                 <ul class="sub-menu-list">

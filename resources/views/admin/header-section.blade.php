@@ -15,36 +15,26 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="notification_header">
-                                    <h3>You have 3 new messages</h3>
+                                    <h3>Có 3 bài viết mới được đăng</h3>
                                 </div>
                             </li>
-                            <li><a href="#">
+                            <?php
+                                $post = DB::select('select * from posts where new = 1');
+                            ?>
+                            @foreach ($post as $a)
+                            <li><a href="{{route('admin.post.list')}}">
                                     <div class="user_img"><img src="assets/images/1.png" alt=""></div>
                                     <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                        <p><span>1 hour ago</span></p>
+                                        <p>{{$a->title}}</p>
+                                        <p><span>{{$a->created_at}}</span></p>
                                     </div>
                                     <div class="clearfix"></div>
-                                </a></li>
-                            <li class="odd"><a href="#">
-                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
-                                    <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet </p>
-                                        <p><span>1 hour ago</span></p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a></li>
-                            <li><a href="#">
-                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
-                                    <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet </p>
-                                        <p><span>1 hour ago</span></p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a></li>
-                            <li>
+                                </a>
+                            </li>
+                            @endforeach
+                            
                                 <div class="notification_bottom">
-                                    <a href="#">See all messages</a>
+                                    <a href="{{route('admin.post.list')}}">See all messages</a>
                                 </div>
                             </li>
                         </ul>
@@ -72,93 +62,45 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="notification_header">
-                                    <h3>You have 3 new notification</h3>
+                                    <h3>Có 3 biểu mẫu chưa được xác nhận</h3>
                                 </div>
                             </li>
-                            <li><a href="#">
-                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
-                                    <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                        <p><span>1 hour ago</span></p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a></li>
-                            <li class="odd"><a href="#">
-                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
-                                    <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet </p>
-                                        <p><span>1 hour ago</span></p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a></li>
-                            <li><a href="#">
-                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
-                                    <div class="notification_desc">
-                                        <p>Lorem ipsum dolor sit amet </p>
-                                        <p><span>1 hour ago</span></p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a></li>
-                            <li>
-                                <div class="notification_bottom">
-                                    <a href="#">See all notification</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">22</span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="notification_header">
-                                    <h3>You have 8 pending task</h3>
-                                </div>
-                            </li>
-                            <li><a href="#">
-                                    <div class="task-info">
-                                        <span class="task-desc">Database update</span><span class="percentage">40%</span>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="progress progress-striped active">
-                                        <div class="bar yellow" style="width:40%;"></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="#">
-                                    <div class="task-info">
-                                        <span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-                                        <div class="clearfix"></div>
-                                    </div>
+                            <?php 
+                                $tutor = DB::select('select * from tutor_registers');
+                                $student = DB::select('select * from study_registers');
+                            ?>
+                            @foreach($tutor as $a)
+                            <li><a href="{{route('admin.tutorform-detail.getTutorFormDetail',[$a->id])}}">
 
-                                    <div class="progress progress-striped active">
-                                        <div class="bar green" style="width:90%;"></div>
+                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>{{$a->name}} đăng kí làm gia sư</p>
+                                        <p><span>{{$a->created_at}}</span></p>
                                     </div>
-                                </a></li>
-                            <li><a href="#">
-                                    <div class="task-info">
-                                        <span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-                                        <div class="clearfix"></div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            @endforeach
+                            @foreach($student as $b)
+                            <li class="odd"><a href="{{route('admin.stuform-detail.getStuFormDetail',[$b->id])}}">
+                                    <div class="user_img"><img src="assets/images/1.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>{{$b->name}} Đăng kí học</p>
+                                        <p><span>{{$b->created_at}}</span></p>
                                     </div>
-                                    <div class="progress progress-striped active">
-                                        <div class="bar red" style="width: 33%;"></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="#">
-                                    <div class="task-info">
-                                        <span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="progress progress-striped active">
-                                        <div class="bar  blue" style="width: 80%;"></div>
-                                    </div>
-                                </a></li>
-                            <li>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            @endforeach
+                            
                                 <div class="notification_bottom">
-                                    <a href="#">See all pending task</a>
+                                    <a href="{{route('admin.form.getForm')}}">See all notification</a>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <div class="clearfix"></div>
+                        
+                    
                 </ul>
             </div>
             <div class="profile_details">
