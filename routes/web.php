@@ -115,6 +115,7 @@ Route::group(['prefix'=>'admin'],  function() {
         'uses' => "AdminController@postFindTutor"
 
     ]);
+
     Route::get('/form',[
         'as'=>'admin.form.getForm',
         'uses'=>'AdminController@getForm'
@@ -123,9 +124,17 @@ Route::group(['prefix'=>'admin'],  function() {
         'as'=>'admin.tutorform-detail.getTutorFormDetail',
         'uses'=>'AdminController@getTutorFormDetail'
     ]);
+    Route::post('/tutorform-detail/{id}',[
+        'as' => 'admin.tutorform-detail.postTutorFormDetail',
+        'uses' => 'AdminController@postTutorFormDetail'
+    ]);
     Route::get('/stuform-detail/{id}',[
         'as'=>'admin.stuform-detail.getStuFormDetail',
         'uses'=>'AdminController@getStuFormDetail'
+    ]);
+    Route::post('/stuform-detail/{id}',[
+        'as'=>'admin.stuform-detail.postStuFormDetail',
+        'uses'=>'AdminController@postStuFormDetail'
     ]);
     Route::get('/ideaform-detail/{id}',[
         'as'=>'admin.ideaform-detail.getIdeaFormDetail',
@@ -159,6 +168,24 @@ Route::group(['prefix'=>'admin'],  function() {
         Route::get('delete/{id}', [
             'as' => "admin.post.getDelete",
             'uses' => 'AdminController@getDeletePost'
+        ]);
+    });
+    Route::group(['prefix'=>'student'], function() {
+        Route::get('list', [
+            'as' => 'admin.students.getList',
+            'uses' => 'AdminController@getStudentList'
+        ]);
+    });
+    Route::group(['prefix'=>'test'], function() {
+        Route::get('list', [
+            'as' => 'admin.tests.getList',
+            'uses' => 'AdminController@getTestList'
+        ]);
+    });
+    Route::group(['prefix'=>'questions'], function() {
+        Route::get('list', [
+            'as' => 'admin.question.getList',
+            'uses' => 'AdminController@getQuestionList'
         ]);
     });
 });

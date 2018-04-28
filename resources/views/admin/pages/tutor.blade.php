@@ -36,8 +36,13 @@
                                     //var_dump($name);
                                 ?>
                                 <td><a href="{{route('admin.pages.profile', $item->user_id )}}">{{ $name[0]->name  }}</a></td>
-                                <td>{{$item->specialize }}</td>
-                                <td>{{$item->achievements }}</td>
+                                <td>
+                                    <?php
+                                        $a = DB::select('CALL getSpecializeBySID(?)', [$item->s_id]);
+                                        echo($a[0]->specialize);
+                                    ?>
+                                </td>
+                                <td>{{$item->achievement }}</td>
                                 <td>{{$item->point}}</td>
 
                             </tr>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 27, 2018 lúc 05:19 AM
+-- Thời gian đã tạo: Th4 28, 2018 lúc 10:06 PM
 -- Phiên bản máy phục vụ: 10.1.30-MariaDB
 -- Phiên bản PHP: 7.1.14
 
@@ -34,8 +34,36 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getById` (IN `idVal` INT(11))  BEGI
     SELECT * FROM users WHERE id = idVal;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPostNumber` ()  NO SQL
+BEGIN
+	SELECT COUNT(*) as number FROM posts;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSpecializeBySID` (IN `sid` INT)  NO SQL
+BEGIN
+	SELECT * FROM specializes WHERE id = sid;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  NO SQL
+BEGIN
+	SELECT COUNT(*) as number
+    FROM students;
+  
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorNumber` ()  NO SQL
+BEGIN
+	SELECT COUNT(*) as number FROM tutors;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNameByID` (IN `idVal` INT(10))  BEGIN
 	SELECT name FROM users WHERE id = idVal; 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNumber` ()  NO SQL
+BEGIN
+	SELECT COUNT(*) as number FROM users;
 END$$
 
 DELIMITER ;
@@ -63,9 +91,10 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, 'kyduyen_23', 'ahihi', 1, 5, NULL, NULL),
 (2, 'vanquang.13', 'ahihi', 1, 4, NULL, '2018-04-24 19:10:44'),
-(3, 'vana_123_deptrai', 'vana_123_deptrai', 1, 1, NULL, NULL),
+(3, 'vana_123_deptrai', '123456', 1, 1, NULL, '2018-04-27 06:59:17'),
 (4, 'vanb_hocgioi', 'vanb_hocgioi', 1, 2, NULL, NULL),
-(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL);
+(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL),
+(8, 'dang_hoang_an', '$2y$10$dXKzlXn9/KfvIDOBdpZoRutMWd0tc1b0SKkcliWuH4pqYi0b.Say2', 1, 30, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -77,7 +106,7 @@ CREATE TABLE `class_s` (
   `id` int(10) UNSIGNED NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` int(11) DEFAULT NULL,
-  `begin_at` date NOT NULL,
+  `begin_at` date DEFAULT NULL,
   `student_num` int(11) NOT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tutor_id` int(10) UNSIGNED NOT NULL,
@@ -86,6 +115,13 @@ CREATE TABLE `class_s` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `class_s`
+--
+
+INSERT INTO `class_s` (`id`, `address`, `level`, `begin_at`, `student_num`, `shift`, `tutor_id`, `subject_id`, `state`, `created_at`, `updated_at`) VALUES
+(1, 'Sài Gòn', 2, NULL, 1, '2-4-6 17h-21h', 3, 4, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -214,6 +250,7 @@ CREATE TABLE `posts` (
   `images` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `files` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` int(11) NOT NULL,
+  `new` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -222,9 +259,9 @@ CREATE TABLE `posts` (
 -- Đang đổ dữ liệu cho bảng `posts`
 --
 
-INSERT INTO `posts` (`id`, `date`, `author_id`, `title`, `description`, `content`, `images`, `files`, `type`, `created_at`, `updated_at`) VALUES
-(9, '2018-04-25 20:45:40', 1, 'Chào Mừng năm học mới', '<h2>Đ&atilde; sửa</h2>', '<h3><strong>The standard Lorem Ipsum passage, used since the 1500s</strong></h3>\r\n\r\n<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>\r\n\r\n<h3><strong>Section 1.10.32 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?&quot;</p>\r\n\r\n<h3><strong>Section 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.&quot;</p>', 'upload/images/post/news\\2.jpg', NULL, 0, '2018-04-25 13:45:40', '2018-04-25 15:12:43'),
-(10, '2018-04-25 23:40:49', 1, 'Bài tập làm thêm toán 1', '<p>&aacute;dđ&acirc;sdasdasdsad</p>', '<p>B&agrave;i tập ở file đ&iacute;nh k&egrave;m nh&eacute;</p>', 'upload/file/post\\Favorites.vssx', NULL, 1, '2018-04-25 16:40:49', '2018-04-25 16:40:49');
+INSERT INTO `posts` (`id`, `date`, `author_id`, `title`, `description`, `content`, `images`, `files`, `type`, `new`, `created_at`, `updated_at`) VALUES
+(9, '2018-04-25 20:45:40', 1, 'Chào Mừng năm học mới', '<h2>Đ&atilde; sửa</h2>', '<h3><strong>The standard Lorem Ipsum passage, used since the 1500s</strong></h3>\r\n\r\n<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>\r\n\r\n<h3><strong>Section 1.10.32 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?&quot;</p>\r\n\r\n<h3><strong>Section 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.&quot;</p>', 'upload/images/post/news\\2.jpg', NULL, 0, 1, '2018-04-25 13:45:40', '2018-04-25 15:12:43'),
+(10, '2018-04-25 23:40:49', 1, 'Bài tập làm thêm toán 1', '<p>&aacute;dđ&acirc;sdasdasdsad</p>', '<p>B&agrave;i tập ở file đ&iacute;nh k&egrave;m nh&eacute;</p>', 'upload/file/post\\Favorites.vssx', NULL, 1, 1, '2018-04-25 16:40:49', '2018-04-25 16:40:49');
 
 -- --------------------------------------------------------
 
@@ -261,6 +298,13 @@ CREATE TABLE `scores` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `scores`
+--
+
+INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, `created_at`, `updated_at`) VALUES
+(3, 4, 4, 5.50, 5.40, 0.00, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -307,6 +351,13 @@ CREATE TABLE `students` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `students`
+--
+
+INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avatar`, `created_at`, `updated_at`) VALUES
+(4, 'Nguyễn Kiều Mai', '2018-04-18', 'Sài Gòn', 'Huế', 'Nữ', '0147852369', 'Huỳnh Thúc Kháng', '10', 'index.png', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -320,6 +371,13 @@ CREATE TABLE `studies` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `studies`
+--
+
+INSERT INTO `studies` (`id`, `student_id`, `class_id`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -337,6 +395,8 @@ CREATE TABLE `study_registers` (
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class_s` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avg1` double(8,2) DEFAULT NULL,
+  `avg2` double(8,2) DEFAULT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
   `tutor_id` int(10) UNSIGNED DEFAULT NULL,
@@ -407,6 +467,14 @@ CREATE TABLE `tutors` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `tutors`
+--
+
+INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, `created_at`, `updated_at`) VALUES
+(3, 2, 'HSG', 1, 10.00, 1, NULL, NULL),
+(5, 3, 'HSG', 5, 0.00, 0, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -441,11 +509,11 @@ CREATE TABLE `users` (
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sex` int(11) NOT NULL,
+  `sex` int(11) NOT NULL COMMENT '1: nam, 0: nữ',
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '0: gia sư, 1: admin, 2: thành viên',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -459,7 +527,8 @@ INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`,
 (2, 'Nguyễn Văn B', '2018-04-02', 'KTX khu B', 'Nha Trang', 1, '032566988747', 'kli@gmail.com', 'default.jpg', 1, NULL, NULL),
 (3, 'Nguyễn Văn C', '2018-04-03', 'Nguyễn Văn Cừ', 'Hồ Chí Minh', 0, '09986225446', 'poii@gmail.com', 'default.jpg', 2, NULL, NULL),
 (4, 'Cao Văn Quang', '2018-04-05', 'Củ Chi', 'Củ Chi', 0, '0987998665', 'quang@yahoo.com', 'default.com', 1, NULL, NULL),
-(5, 'Nguyễn Kỳ Duyên', '2018-04-03', 'Dĩ An, Bình Dương', 'Quảng Nam', 0, '01665554449', 'duong@gmail.com', 'default.jpg', 0, NULL, NULL);
+(5, 'Nguyễn Kỳ Duyên', '2018-04-03', 'Dĩ An, Bình Dương', 'Quảng Nam', 0, '01665554449', 'duong@gmail.com', 'default.jpg', 0, NULL, NULL),
+(30, 'Đặng Hoàng Ân', '2018-04-03', 'KTX', 'Khánh Hòa', 1, '0123987654', 'an@gmail.com', 'index.png', 2, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -613,13 +682,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `class_s`
 --
 ALTER TABLE `class_s`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
@@ -667,7 +736,7 @@ ALTER TABLE `question_banks`
 -- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `specializes`
@@ -679,19 +748,19 @@ ALTER TABLE `specializes`
 -- AUTO_INCREMENT cho bảng `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `studies`
 --
 ALTER TABLE `studies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -709,19 +778,19 @@ ALTER TABLE `subject_types`
 -- AUTO_INCREMENT cho bảng `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

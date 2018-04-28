@@ -7,7 +7,12 @@
                 <div class="r3_counter_box">
                     <i class="fa fa-mail-forward"></i>
                     <div class="stats">
-                        <h5>123</h5>
+                        <h5>
+                            <?php
+                                $a = DB::select('CALL getTutorNumber()');
+                                echo($a[0]->number);
+                            ?>
+                        </h5>
                         <div class="grow">
                             <p>Tổng Gia sư</p>
                         </div>
@@ -18,7 +23,12 @@
                 <div class="r3_counter_box">
                     <i class="fa fa-users"></i>
                     <div class="stats">
-                        <h5>321</h5>
+                        <h5>
+                            <?php
+                                $a = DB::select('CALL getStudentNumber()');
+                                echo($a[0]->number);
+                            ?>
+                        </h5>
                         <div class="grow grow1">
                             <p>Tổng học sinh</p>
                         </div>
@@ -29,7 +39,12 @@
                 <div class="r3_counter_box">
                     <i class="fa fa-eye"></i>
                     <div class="stats">
-                        <h5>345</h5>
+                        <h5>
+                            <?php
+                                $a = DB::select('CALL getPostNumber()');
+                                echo($a[0]->number);
+                            ?>
+                        </h5>
                         <div class="grow grow3">
                             <p>Số bài viết</p>
                         </div>
@@ -40,7 +55,12 @@
                 <div class="r3_counter_box">
                     <i class="fa fa-usd"></i>
                     <div class="stats">
-                        <h5>342</h5>
+                        <h5>
+                            <?php
+                                $a = DB::select('CALL getUserNumber()');
+                                echo($a[0]->number);
+                            ?>
+                        </h5>
                         <div class="grow grow2">
                             <p>Số người dùng</p>
                         </div>
