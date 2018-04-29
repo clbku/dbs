@@ -26,62 +26,29 @@
                                 <th>Trường</th>
                                 <th>Lớp</th>
                                 <th>SĐT</th>
-                                <th>Email</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($student as $s)
                             <tr>
                                 <th scope="row">1</th>
 
-                                <td><a href="profile.html">Nguyễn Văn E</a></td>
-                                <td>20-10-2000</td>
-                                <td>Quận 1</td>
-                                <td>Nam</td>
-                                <td>THCS Hoàng Hoa Thám</td>
-                                <td>10</td>
-                                <td>0987654312</td>
-                                <td>E@gmail.com</td>
+                                <td><a href="profile.html">{{$s->name}}</a></td>
+                                <td>{{$s->dob}}</td>
+                                <td>{{$s->address}}</td>
+                                <td>{{$s->sex}}</td>
+                                <td>{{$s->school}}</td>
+                                <td>{{$s->class_s}}</td>
+                                <td>{{$s->phone}}</td>
                                 <td>
                                     <a><i class="fa fa-edit"></i></a>
                                     <a><i class="fa fa-times"></i></a>
                                 </td>
 
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
+                            @endforeach
 
-                                <td><a href="profile.html">Nguyễn Văn D</a></td>
-                                <td>20-10-2000</td>
-                                <td>Quận 1</td>
-                                <td>Nam</td>
-                                <td>THCS Hoàng Hoa Thám</td>
-                                <td>10</td>
-                                <td>0987654312</td>
-                                <td>E@gmail.com</td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-
-                                <td><a href="profile.html">Nguyễn Văn F</a></td>
-                                <td>20-10-2000</td>
-                                <td>Quận 1</td>
-                                <td>Nam</td>
-                                <td>THCS Hoàng Hoa Thám</td>
-                                <td>10</td>
-                                <td>0987654312</td>
-                                <td>E@gmail.com</td>
-                                <td>
-                                    <a><i class="fa fa-edit"></i></a>
-                                    <a><i class="fa fa-times"></i></a>
-                                </td>
-
-                            </tr>
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->

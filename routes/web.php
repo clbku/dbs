@@ -37,7 +37,12 @@ Route::post('/register/{id}', [
     'as' => 'main.mainRegister',
     'uses' => "MainController@postRegister"
 ]);
-
+Route::group(['prefix'=>'tutor'],  function() {
+    Route::get('list/{id}',[
+        'as' => 'main.tutor.getList',
+        'uses' => 'MainController@getTutorList'
+    ]);
+});
 
 Route::get('/admin', function () {
     return view('admin.pages.index');
@@ -202,6 +207,12 @@ Route::group(['prefix'=>'admin'],  function() {
         Route::get('list', [
             'as' => 'admin.question.getList',
             'uses' => 'AdminController@getQuestionList'
+        ]);
+    });
+    Route::group(['prefix'=>'student'], function() {
+        Route::get('list', [
+            'as' => 'admin.students.getList',
+            'uses' => 'AdminController@getStudentList'
         ]);
     });
 });

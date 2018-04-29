@@ -46,12 +46,15 @@ class MainController extends Controller
             $hometown = $request->txtHometown;
             $sex = $request->rdoSex;
             $phone = $request->txtPhone;
-            $email = $request->txtEmail;
             $school = $request->txtSchool;
-            $specialize_id = $request->txtSpecialize;
-            $achievement = $request->txtAchievement;
-            DB::insert('insert into tutor_registers(name, dob, address, hometown,  sex, phone, email, school, specialize_id, achievements)
-                              values (?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $email, $school, $specialize_id, $achievement]);
+            $class = $request->txtClass;
+            $shift = $request->txtTime;
+            $avg1 = $request->txtAvg1;
+            $avg2 = $request->txtAvg2;
+            $subject_id = $request->txtSubject;
+            $tutor_id = $request->txtTutor;
+            DB::insert('insert into study_registers(name, dob, address, hometown,  sex, phone, school, class_s, shift, avg1, avg2, subject_id, tutor_id)
+                              values (?,?,?,?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $school, $class, $shift, $avg1, $avg2, $subject_id, $tutor_id]);
             return redirect()->route('homepage');
         }
     }

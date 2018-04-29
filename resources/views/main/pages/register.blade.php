@@ -13,51 +13,55 @@
                 <h2>Đăng Ký Học Tập</h2>
                 <div class="form-group">
                     <label>Họ và tên</label>
-                    <input class="form-control" type="text" name="txtName" value="account" placeholder="account">
+                    <input class="form-control" type="text" name="txtName" value="account" placeholder="account" required>
                 </div>
                 <div class="form-group">
                     <label>Ngày sinh</label>
-                    <input class="form-control" type="date" name="txtDOB" value="" placeholder="">
+                    <input class="form-control" type="date" name="txtDOB" value="" placeholder="" required>
                 </div>
                 <div class="form-group">
                     <label>Địa chỉ</label>
-                    <input class="form-control" type="text" name="txtAddress" value="" placeholder="account">
+                    <input class="form-control" type="text" name="txtAddress" value="" placeholder="account" required>
                 </div>
                 <div class="form-group">
                     <label>Quê quán</label>
-                    <input class="form-control" type="text" name="txtHomeTown" value="" placeholder="password">
+                    <input class="form-control" type="text" name="txtHometown" value="" placeholder="password" required>
                 </div>
                 <div class="form-group">
                     <label>Giới tính</label><br>
-                    <label class="radio-inline"><input type="radio" value="1" name="txtSex">Nam</label>
-                    <label class="radio-inline"><input type="radio" value="0" name="txtSex">Nữ</label>
+                    <label class="radio-inline"><input type="radio" value="1" name="rdoSex">Nam</label>
+                    <label class="radio-inline"><input type="radio" value="0" name="rdoSex">Nữ</label>
                 </div>
                 <div class="form-group">
                     <label>SĐT</label>
-                    <input class="form-control" type="text" value="" placeholder="password" name="txtPhone">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input class="form-control" type="email" value="" placeholder="password" name="txtEmail">
+                    <input class="form-control" type="text" value="" placeholder="password" name="txtPhone" required>
                 </div>
                 <div class="form-group">
                     <label>Trường</label>
-                    <input class="form-control" type="email" value="" name="txtSchool" placeholder="password">
+                    <input class="form-control" type="text" value="" name="txtSchool" placeholder="password" required>
                 </div>
                 <div class="form-group">
                     <label>Lớp</label>
-                    <input class="form-control" type="email" value="" name="txtClass" placeholder="password">
+                    <input class="form-control" type="text" value="" name="txtClass" placeholder="password" required>
                 </div>
                 <div class="form-group">
                     <label>Thời gian rảnh rỗi</label>
-                    <input class="form-control" type="email" value="" name="txtTime" placeholder="password">
+                    <input class="form-control" type="text" value="" name="txtTime" placeholder="password">
+                </div>
+                <div class="form-group">
+                    <label>Điểm trung bình học kỳ trước</label>
+                    <input class="form-control" type="text" value="" name="txtAvg1" placeholder="password">
+                </div>
+                <div class="form-group">
+                    <label>Điểm trung bình học kỳ trước</label>
+                    <input class="form-control" type="text" value="" name="txtAvg2" placeholder="password">
                 </div>
                 <div class="form-group">
                     <label>Môn học</label>
                     <?php
                     $tutor = DB::select('select id, name from subjects');
                     ?>
-                    <select class="form-control" name="txtTutor">
+                    <select class="form-control" name="txtSubject" required>
                         @foreach($tutor as $t)
                             <option value="{{$t->id}}">{{$t->name}}</option>
                         @endforeach
@@ -68,7 +72,7 @@
                     <?php
                         $tutor = DB::select('select u.name, t.id, s.specialize from users as u, tutors as t, specializes as s where u.id = t.user_id and s.id = t.s_id');
                     ?>
-                    <select name="txtTutor" class="form-control">
+                    <select name="txtTutor" class="form-control" required>
                         @foreach($tutor as $t)
                         <option value="{{$t->id}}">{{$t->name}} - {{$t->specialize}}</option>
                         @endforeach

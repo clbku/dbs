@@ -108,7 +108,8 @@ class AdminController extends Controller
 
     // student page ------------------------------------------------------------
     public function getStudentList() {
-        return view('admin.pages.students');
+        $student = DB::select('CALL getStudentList()');
+        return view('admin.pages.students', compact('student'));
     }
 
 
