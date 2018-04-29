@@ -41,12 +41,12 @@
                     <div class="stats">
                         <h5>
                             <?php
-                                $a = DB::select('CALL getPostNumber()');
+                                $a = DB::select('CALL getClassNumber()');
                                 echo($a[0]->number);
                             ?>
                         </h5>
                         <div class="grow grow3">
-                            <p>Số bài viết</p>
+                            <p>Số lớp</p>
                         </div>
                     </div>
                 </div>
@@ -94,20 +94,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Nguyễn Kỳ Duyên</td>
-                                <td>$a->password</td>
-                               
-                               
-                                <td>
-                                   
-                                </td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
+                            <?php
+                                $data = DB::select('CALL getTutorListSortByPoint()');
+                                $i = 1;
+                            ?>
+                            @foreach($data as $d)
+                                <tr>
+                                    <th><?php echo($i); $i++;?></th>
+                                    <th>{{$d->name}}</th>
+                                    <th>{{$d->username}}</th>
+                                    <th>{{$d->specialize}}</th>
+                                    <th>{{$d->num_class}}</th>
+                                    <th>{{$d->point}}</th>
+
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.table-responsive -->
