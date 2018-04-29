@@ -201,7 +201,8 @@ class AdminController extends Controller
     public function getForm(){
         $tutorform = DB::select('select * from tutor_registers');
         $stuform = DB::select('select * from study_registers');
-        return view('admin.pages.form',compact('tutorform','stuform'));
+        $idea = DB::select('select * from customer_reviews');
+        return view('admin.pages.form',compact('tutorform','stuform', 'idea'));
     }
     public function getTutorFormDetail($id){
         $tutorform = DB::select('select * from tutor_registers where id = ?',[$id]);
@@ -219,7 +220,7 @@ class AdminController extends Controller
     {
         $stuform = "";
         $tutorform = "";
-        $ideaform = "";
+        $ideaform = DB::select('select * from customer_reviews where id = ?',[$id]);;
 
         return view('admin.pages.form-detail',compact('tutorform','stuform','ideaform'));
 

@@ -174,22 +174,22 @@
 
                         <div class="form-group">
                             <label>Họ và tên</label>
-                            <input class="form-control1" type="text" name="txtName" placeholder="Your name here" value="Bill Gates">
+                            <input class="form-control1" type="text" name="txtName" placeholder="Your name here" value="{{$c->name}}" readonly>
                         </div>
 
 
 
                         <div class="form-group">
                             <label>Số điện thoại</label>
-                            <input class="form-control1" type="text" name="txtPhone" placeholder="Your name here" value="Bill Gates">
+                            <input class="form-control1" type="text" name="txtPhone" placeholder="Your name here" value="{{$c->phone}}" readonly>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="Bill Gates">
+                            <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$c->email}}" readonly>
                         </div>
                         <div class="form-group">
                             <label>Ý kiến</label>
-                            <input class="form-control1" type="email" name="txtEmail" placeholder="Your name here" value="Bill Gates">
+                            <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$c->message}}" readonly>
                         </div>
 
                         <div class="form-group">

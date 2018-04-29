@@ -23,10 +23,11 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <?php $i = 1;?>
                             @foreach ($tutorform as $a)
 
                             <tr>
-                                <th scope="row">{{$a->id}}</th>
+                                <th scope="row"><?php echo($i); $i++;?></th>
                                 <td>{{$a->created_at}}</td>
                                 <td>{{$a->name}}</td>
                                 <td>Đăng kí gia sư</td>
@@ -34,12 +35,12 @@
 
                             </tr>
                             @endforeach
-                            
-                             
+
+
                             @foreach ($stuform as $b)
 
                             <tr>
-                                <th scope="row">{{$b->id}}</th>
+                                <th scope="row"><?php echo($i); $i++;?></th>
                                 <td>{{$b->created_at}}</td>
                                 <td>{{$b->name}}</td>
                                 <td>Đăng kí học viên</td>
@@ -47,6 +48,16 @@
 
                             </tr>
                             @endforeach
+                            @foreach ($idea as $b)
+                                <tr>
+                                    <th scope="row"><?php echo($i); $i++;?></th>
+                                    <td>{{$b->created_at}}</td>
+                                    <td>{{$b->name}}</td>
+                                    <td>Ý kiến khách hàng</td>
+                                    <td><a href="{{route('admin.ideaform-detail.getIdeaFormDetail',$b->id)}}">Xem chi tiết</a></td>
+
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div><!-- /.table-responsive -->

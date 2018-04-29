@@ -21,6 +21,22 @@ Route::get('/about', [
         return view('main.pages.about');
     }
 ]);
+Route::get('/contact', [
+    "as" => 'main.getContact',
+    "uses" => "MainController@getContact"
+]);
+Route::post('/contact', [
+    "as" => 'main.postContact',
+    "uses" => "MainController@postContact"
+]);
+Route::get('/register', [
+    'as'=>'main.register',
+    'uses' => "MainController@getRegister"
+]);
+Route::post('/register/{id}', [
+    'as' => 'main.mainRegister',
+    'uses' => "MainController@postRegister"
+]);
 
 
 Route::get('/admin', function () {

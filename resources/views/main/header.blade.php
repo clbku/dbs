@@ -54,7 +54,7 @@
                         <span>0987.654.321</span>
                     </div>
                     <div class="col-sm-4">
-                        <a class="btn btn-success">Đăng ký online <i class="fa fa-play-circle"></i></a>
+                        <a href="{{route('main.register')}}" class="btn btn-success">Đăng ký online <i class="fa fa-play-circle"></i></a>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                 </li>
                 <li><a class="btn btn-secondary">Dịch vụ</a></li>
                 <li><a class="btn btn-secondary">Tin tức</a></li>
-                <li><a class="btn btn-secondary">Liên hệ</a></li>
+                <li><a href="{{route('main.getContact')}}" class="btn btn-secondary">Liên hệ</a></li>
             </ul>
         </div>
     </div>

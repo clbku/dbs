@@ -10,31 +10,29 @@
             <div class="profile_details_left">
                 <ul class="nofitications-dropdown">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
+                        <?php $new = DB::select('CALL getCustomerReview()');?>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">{{count($new)}}</span></a>
 
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="notification_header">
-                                    <h3>Có 3 bài viết mới được đăng</h3>
+                                    <h3>Có {{count($new)}} review mới</h3>
                                 </div>
                             </li>
-                            <?php
-                                $post = DB::select('select * from posts where new = 1');
-                            ?>
-                            @foreach ($post as $a)
-                            <li><a href="{{route('admin.post.list')}}">
+                            @for($i = 0; $i < 4 && $i < count($new); $i++)
+                            <li><a href="{{route('admin.ideaform-detail.getIdeaFormDetail', $new[$i]->id)}}">
                                     <div class="user_img"><img src="assets/images/1.png" alt=""></div>
                                     <div class="notification_desc">
-                                        <p>{{$a->title}}</p>
-                                        <p><span>{{$a->created_at}}</span></p>
+                                        <p>{{$new[$i]->name}}</p>
+                                        <p><span>{{$new[$i]->created_at}}</span></p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </a>
                             </li>
-                            @endforeach
-                            
+                            @endfor
+
                                 <div class="notification_bottom">
-                                    <a href="{{route('admin.post.list')}}">See all messages</a>
+                                    <a href="{{route('admin.form.getForm')}}">See all messages</a>
                                 </div>
                             </li>
                         </ul>
@@ -58,17 +56,18 @@
                         <!-- //search-scripts -->
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">3</span></a>
+                        <?php
+                            $tutor = DB::select('select * from tutor_registers');
+                            $student = DB::select('select * from study_registers');
+                        ?>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">{{count($tutor) + count($student)}}</span></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="notification_header">
-                                    <h3>Có 3 biểu mẫu chưa được xác nhận</h3>
+                                    <h3>Có {{count($tutor) + count($student)}} biểu mẫu chưa được xác nhận</h3>
                                 </div>
                             </li>
-                            <?php 
-                                $tutor = DB::select('select * from tutor_registers');
-                                $student = DB::select('select * from study_registers');
-                            ?>
+
                             @foreach($tutor as $a)
                             <li><a href="{{route('admin.tutorform-detail.getTutorFormDetail',[$a->id])}}">
 
