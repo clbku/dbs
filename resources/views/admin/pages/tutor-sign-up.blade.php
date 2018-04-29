@@ -179,11 +179,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										
 										<br><br>
 										
-										<select name="specializes">
-										  <option value="Toán">Toán</option>
-										  <option value="Vật Lý">Vật Lý</option>
-										  <option value="Hóa học">Hóa học</option>
-										  <option value="Ngữ Văn">Ngữ Văn</option>
+										<select name="specialize_id">
+										  <?php
+										  	$sub = DB::select('select * from subjects')
+										  ?>
+										  @foreach ($sub as $a)
+										  <option value="{{$a->id}}">{{$a->name}}</option>
+										  @endforeach
+										  <option value="2">Toán 5</option>
+										  <option value="3">Văn 5</option>
+										  <option value="4"></option>
 										  <option value="Anh văn">Anh văn</option>
 										  <option value="Sinh học">Sinh học</option>
 										  <option value="Lịch Sử">Lịch Sử</option>

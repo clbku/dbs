@@ -168,7 +168,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										
 										<br><br>
 										
-										<select name="class">
+										<select name="class_s">
 										  <option value="1">1</option>
 										  <option value="2">2</option>
 										  <option value="3">3</option>
@@ -180,7 +180,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										  <option value="9">9</option>
 										  <option value="10">10</option>
 										  <option value="11">11</option>
-										  <option value="12">12</option>
+										 c
 										</select>
 										<br><br>
 										
@@ -188,19 +188,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="clearfix"> </div>
 							</div>
 
-							<div class="sign-u">
-								<div class="sign-up1">
-									<h4>Thời gian rảnh :</h4>
-
-								</div>
-								<div class="sign-up2">
-										
-										<input type="text" placeholder=" " name="free_time" required=" "/>
-										<p>(Nhập vào các ngày giờ rảnh trong tuần)</p>
-										
-								</div>
-								<div class="clearfix"> </div>
-							</div>
+							
 
 							<div class="sign-u">
 								<div class="sign-up1">
@@ -208,9 +196,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 								</div>
 								<div class="sign-up2">
+										<?php 
+											$tutor = DB::select('select * from tutors');
+
+										?>
+										<br><br>
+										<select name="tutor_id">
+										  @foreach ($tutor as $a)
+										  <?php $name = DB::select('select * from users where id = ?',[$a->user_id]); ?>
+										  <option value="{{$a->id}}">{{$name[0]->name}}</option>
+										  @endforeach
+										</select>
 										
-										<input type="text" placeholder=" " name="tutor_id" required=" "/>
-										<p>(Nhập vào mã gia sư) </p>
 								</div>
 								<div class="clearfix"> </div>
 							</div>
@@ -223,17 +220,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="sign-up2">
 										
 										<br><br>
-										
+										<?php
+											$sub = DB::select('select * from subjects')
+										?>
 										<select name="subject_id">
-										  <option value="1">Toán</option>
-										  <option value="2">Vật Lý</option>
-										  <option value="3">Hóa học</option>
-										  <option value="4">Ngữ Văn</option>
-										  <option value="5">Anh văn</option>
-										  <option value="6">Sinh học</option>
-										  <option value="7">Lịch Sử</option>
-										  <option value="8">Địa lí</option>
-										  <option value="9">Tin học</option>
+											@foreach ($sub as $a)
+										  <option value="{{$a->id}}">{{$a->name}}</option>
+										  @endforeach
 										</select>
 										<br><br>
 										

@@ -26,8 +26,9 @@
             <li><a href="{{route('admin.form.getForm')}}"><i class="lnr lnr-database"></i> <span>Request</span></a></li>
             <li class="menu-list act"><a href="#"><i class="lnr lnr-book"></i>  <span>Pages</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="sign-in.html">Sign In</a> </li>
-                    <li><a href="sign-up.html">Sign Up</a></li>
+                    <li><a href="">Đăng nhập</a> </li>
+                    <li><a href="{{route('admin.register.getRegister')}}">Đăng kí gia sư</a></li>
+                    <li><a href="{{route('admin.stu-register.getStuRegister')}}">Đăng kí học tập</a></li>
                     <li><a href="blank_page.html">Blank Page</a></li>
                 </ul>
             </li>

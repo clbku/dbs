@@ -71,10 +71,9 @@ class RegisterController extends Controller
         $stu->sex=$request->sex;
         $stu->phone=$request->phone;
         $stu->school=$request->school;
-        $stu->free_time=$request->free_time;
         $stu->subject_id=$request->subject_id;
         $stu->tutor_id=$request->tutor_id;
-        $stu->class=$request->class;
+        $stu->class_s=$request->class_s;
         $stu->save();
         return view('admin.pages.regist-success');
     }
@@ -98,7 +97,7 @@ class RegisterController extends Controller
         $tutor->school=$request->school;
         $tutor->achievements=$request->achievements;
         $tutor->email=$request->email;
-        $tutor->specializes=$request->specializes;
+        $tutor->specialize_id=$request->specialize_id;
         $tutor->save();
         return view('admin.pages.regist-success');
     }
