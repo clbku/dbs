@@ -12,6 +12,8 @@
     <div class="left-side-inner">
 
         <!--sidebar nav start-->
+        <?php
+        ?>
         <ul class="nav nav-pills nav-stacked custom-nav">
             <li><a href="{{route('admin.pages.index')}}"><i class="lnr lnr-power-switch"></i><span>Dashboard</span></a></li>
             <li><a href="{{route('admin.user.getList')}}"><i class="lnr lnr-user"></i> <span>User</span></a></li>
@@ -24,14 +26,7 @@
             <li><a href="{{route('admin.question.getList')}}"><i class="lnr lnr-database"></i> <span>Question Bank</span></a></li>
             <li><a href="{{route('admin.post.list')}}"><i class="lnr lnr-database"></i> <span>Post</span></a></li>
             <li><a href="{{route('admin.form.getForm')}}"><i class="lnr lnr-database"></i> <span>Request</span></a></li>
-            <li class="menu-list act"><a href="#"><i class="lnr lnr-book"></i>  <span>Pages</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="">Đăng nhập</a> </li>
-                    <li><a href="{{route('admin.register.getRegister')}}">Đăng kí gia sư</a></li>
-                    <li><a href="{{route('admin.stu-register.getStuRegister')}}">Đăng kí học tập</a></li>
-                    <li><a href="blank_page.html">Blank Page</a></li>
-                </ul>
-            </li>
+            <li><a href="{{route('admin.user.getAdd')}}"><i class="lnr lnr-database"></i> <span>Add user</span></a></li>
         </ul>
         <!--sidebar nav end-->
     </div>

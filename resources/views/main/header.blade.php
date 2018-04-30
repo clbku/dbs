@@ -15,17 +15,37 @@
 
                     <ul class="list-inline text-right">
                         <li><a class="btn btn-secondary">Diễn đàn</a></li>
-                        <li><a class="btn btn-secondary">Đăng nhập</a></li>
+
                         <li>
                             <div class="dropdown show">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Lục Nghi
-                                </a>
+                                    @if (Auth::check())
+                                        <?php
+                                            $user = DB::select('CALL getUserByAccountID(?)', [Auth::user()->id]);
+                                            echo($user[0]->name);
+                                        ?>
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Quản lý</a>
-                                </div>
+                                    @else
+                                        <li><a class="btn btn-secondary" href="{{route('getLogin')}}">Đăng nhập</a></li>
+                                    @endif
+                                </a>
+                            @if (Auth::check())
+                                <?php
+                                    $user = DB::select('CALL getUserByAccountID(?)', [Auth::user()->id]);
+                                ?>
+                                @if ($user[0]->type == "2")
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                        <a class="dropdown-item" href="#">Profile</a>
+                                        <a class="dropdown-item" href="{{route('getLogout')}}">Đăng Xuất</a>
+                                    </div>
+                                @else
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                        <a class="dropdown-item" href="#">Profile</a>
+                                        <a class="dropdown-item" href="{{route('admin.pages.index')}}">Quản Lý</a>
+                                        <a class="dropdown-item" href="{{route('getLogout')}}">Đăng Xuất</a>
+                                    </div>
+                                @endif
+                            @endif
                             </div>
 
 

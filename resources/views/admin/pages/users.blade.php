@@ -33,7 +33,7 @@
                             <tr>
                                 <th scope="row">{{$a->id}}</th>
 
-                                <td><a href="{{route('admin.pages.profile',$a->id)}}">{{$a->name}}</a></td>
+                                <td><a href="{{route('admin.pages.profile',['user',$a->id])}}">{{$a->name}}</a></td>
                                 <td>{{$a->dob}}</td>
                                 <td>{{$a->address}}</td>
                                 <td>{{$a->hometown}}</td>

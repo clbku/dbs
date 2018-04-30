@@ -35,7 +35,7 @@
                                     $name = DB::select('select name from users where id = ?', [$item->user_id]); // cach 2
                                     //var_dump($name);
                                 ?>
-                                <td><a href="{{route('admin.pages.profile', $item->user_id )}}">{{ $name[0]->name  }}</a></td>
+                                <td><a href="{{route('admin.pages.profile', ['user', $item->user_id])}}">{{ $name[0]->name  }}</a></td>
                                 <td>
                                     <?php
                                         $a = DB::select('CALL getSpecializeBySID(?)', [$item->s_id]);

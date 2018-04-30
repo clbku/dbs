@@ -107,9 +107,21 @@
                     <li class="dropdown profile_details_drop">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div class="profile_img">
-                                <span style="background:url(assets/images/1.jpg) no-repeat center"> </span>
+                                <span style="background:url({{url(DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->avatar)}}) no-repeat center"> </span>
                                 <div class="user-name">
-                                    <p>Michael<span>Administrator</span></p>
+                                    <p>
+                                        {{DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->name}}
+                                        <span>
+                                    <?php
+                                        $type = DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->type;
+                                        if ($type == '0') {
+                                            echo ('Gia sư');
+                                        }
+                                        else if ($type == '1') {
+                                            echo ('Administrator');
+                                        }
+                                    ?>
+                                        </span></p>
                                 </div>
                                 <i class="lnr lnr-chevron-down"></i>
                                 <i class="lnr lnr-chevron-up"></i>
@@ -118,8 +130,8 @@
                         </a>
                         <ul class="dropdown-menu drp-mnu">
                             <!--<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> -->
-                            <li> <a href="{{route('admin.pages.profile', 1)}}"><i class="fa fa-user"></i>Profile</a> </li>
-                            <li> <a href="sign-up.html"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                            <li> <a href="{{route('admin.pages.profile', ['user', Auth::user()->user_id])}}"><i class="fa fa-user"></i>Profile</a> </li>
+                            <li> <a href="{{route('getLogout')}}"><i class="fa fa-sign-out"></i> Logout</a> </li>
                         </ul>
                     </li>
                     <div class="clearfix"> </div>

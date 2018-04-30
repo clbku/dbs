@@ -38,7 +38,7 @@
                                                            ', [$p->author_id])
                                     ?>
                                     {{--<td><a href="form-detail.html"></a></td>--}}
-                                    <td><a href="{{route('admin.pages.profile', $user[0]->id)}}">{{$user[0]->name}}</a></td>
+                                    <td><a href="{{route('admin.pages.profile', ['user', $user[0]->id])}}">{{$user[0]->name}}</a></td>
                                     <td>
                                         <a href="{{route('admin.post.getEdit', [0, $p->id])}}"><i class="fa fa-edit"></i></a>
                                         <a href="{{route('admin.post.getDelete', $p->id)}}"><i class="fa fa-times"></i></a>
@@ -88,7 +88,7 @@
                                                        ', [$p->author_id])
                                         ?>
                                         {{--<td><a href="form-detail.html"></a></td>--}}
-                                        <td><a href="{{route('admin.pages.profile', $name[0]->id)}}">{{$name[0]->name}}</a></td>
+                                        <td><a href="{{route('admin.pages.profile', ['user', $name[0]->id])}}">{{$name[0]->name}}</a></td>
                                         <td>
                                             <a href="{{route('admin.post.getEdit', [1, $p->id])}}"><i class="fa fa-edit"></i></a>
                                             <a href="{{route('admin.post.getDelete', $p->id)}}"><i class="fa fa-times"></i></a>

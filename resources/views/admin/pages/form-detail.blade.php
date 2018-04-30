@@ -143,10 +143,13 @@
                             <label>Đăng ký gia sư</label>
                             <?php
                                 $temp2 = DB::select('select * from tutors where id = ?',[$b->tutor_id]);
-                                $user = DB::select('select * from users where id = ?',[$temp2[0]->user_id]);
+                                if ($temp2)
+                                    $user = DB::select('select * from users where id = ?',[$temp2[0]->user_id]);
                             ?>
-                            <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$user[0]->name}}" readonly>
-                            <input type="hidden" name="txtTutor" value="{{$b->tutor_id}}">
+                            @if (isset($user))
+                                <input class="form-control1" type="text" name="txtEmail" placeholder="Your name here" value="{{$user[0]->name}}" readonly>
+                                <input type="hidden" name="txtTutor" value="{{$b->tutor_id}}">
+                            @endif
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">
@@ -176,9 +179,6 @@
                             <label>Họ và tên</label>
                             <input class="form-control1" type="text" name="txtName" placeholder="Your name here" value="{{$c->name}}" readonly>
                         </div>
-
-
-
                         <div class="form-group">
                             <label>Số điện thoại</label>
                             <input class="form-control1" type="text" name="txtPhone" placeholder="Your name here" value="{{$c->phone}}" readonly>

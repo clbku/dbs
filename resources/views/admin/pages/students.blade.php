@@ -32,9 +32,9 @@
                             <tbody>
                             @foreach($student as $s)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{$s->id}}</th>
 
-                                <td><a href="profile.html">{{$s->name}}</a></td>
+                                <td><a href="{{route('admin.pages.profile',['student', $s->id])}}">{{$s->name}}</a></td>
                                 <td>{{$s->dob}}</td>
                                 <td>{{$s->address}}</td>
                                 <td>{{$s->sex}}</td>

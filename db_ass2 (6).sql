@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 28, 2018 lúc 10:06 PM
+-- Thời gian đã tạo: Th4 30, 2018 lúc 09:35 PM
 -- Phiên bản máy phục vụ: 10.1.30-MariaDB
 -- Phiên bản PHP: 7.1.14
 
@@ -26,6 +26,13 @@ DELIMITER $$
 --
 -- Thủ tục
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllStudentNameByClassId` (IN `cid` INT(10))  NO SQL
+BEGIN
+	SELECT s.student_id, st.name
+    FROM studies as s, students as st
+    WHERE s.student_id = st.id and s.class_id = cid;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllUser` ()  BEGIN
    SELECT * FROM users;
 END$$
@@ -34,14 +41,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getById` (IN `idVal` INT(11))  BEGI
     SELECT * FROM users WHERE id = idVal;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getPostNumber` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getClassNumber` ()  NO SQL
 BEGIN
-	SELECT COUNT(*) as number FROM posts;
+	SELECT COUNT(*) as number FROM class_s;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustomerReview` ()  NO SQL
+BEGIN 
+	SELECT * FROM customer_reviews;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getSpecializeBySID` (IN `sid` INT)  NO SQL
 BEGIN
 	SELECT * FROM specializes WHERE id = sid;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentList` ()  NO SQL
+BEGIN
+	SELECT * FROM students;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  NO SQL
@@ -52,9 +69,30 @@ BEGIN
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListBySpecializeId` (IN `sid` INT(10))  NO SQL
+BEGIN
+	SELECT u.name, u.avatar, u.id as uid, t.id as tid, s.specialize, t.achievement, t.point 
+    FROM tutors as t, users as u, specializes as s
+    WHERE u.id = t.user_id and t.s_id = s.id AND t.s_id = sid;
+    END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListSortByPoint` ()  NO SQL
+BEGIN
+	SELECT u.name, a.username, s.specialize, t.point, t.num_class
+    FROM tutors as t, users as u, accounts as a, specializes as s 
+    where u.id = t.user_id and u.id = a.user_id and t.s_id = s.id
+    ORDER BY t.point DESC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorNumber` ()  NO SQL
 BEGIN
 	SELECT COUNT(*) as number FROM tutors;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserByAccountID` (IN `id` INT(10))  NO SQL
+BEGIN
+	SELECT * FROM users as u, accounts as a 
+    WHERE u.id = a.user_id and a.id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNameByID` (IN `idVal` INT(10))  BEGIN
@@ -80,6 +118,7 @@ CREATE TABLE `accounts` (
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(1) NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
+  `remember_token` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -88,13 +127,16 @@ CREATE TABLE `accounts` (
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'kyduyen_23', 'ahihi', 1, 5, NULL, NULL),
-(2, 'vanquang.13', 'ahihi', 1, 4, NULL, '2018-04-24 19:10:44'),
-(3, 'vana_123_deptrai', '123456', 1, 1, NULL, '2018-04-27 06:59:17'),
-(4, 'vanb_hocgioi', 'vanb_hocgioi', 1, 2, NULL, NULL),
-(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL),
-(8, 'dang_hoang_an', '$2y$10$dXKzlXn9/KfvIDOBdpZoRutMWd0tc1b0SKkcliWuH4pqYi0b.Say2', 1, 30, NULL, NULL);
+INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'kyduyen_23', 'ahihi', 1, 5, NULL, NULL, NULL),
+(2, 'vanquang.13', 'ahihi', 1, 4, NULL, NULL, '2018-04-24 19:10:44'),
+(3, 'vana_123_deptrai', '123456', 1, 1, NULL, NULL, '2018-04-27 06:59:17'),
+(4, 'vanb_hocgioi', 'vanb_hocgioi', 1, 2, NULL, NULL, NULL),
+(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL, NULL),
+(8, 'dang_hoang_an', '$2y$10$dXKzlXn9/KfvIDOBdpZoRutMWd0tc1b0SKkcliWuH4pqYi0b.Say2', 1, 30, 'gbjg1b8Id5HWE4T4cO75v2SKX199cxySYvKGh6ZSJvep1HMRE7pXgcflf0fH', NULL, NULL),
+(9, 'hoang_cong_ly', 'nghibinh', 1, 31, '4HfblyW9N97tODxNcpBYLit49ldI59DIXJnvDali6wjxrOtslubW3S708NLk', NULL, NULL),
+(12, 'congly1311', '$2y$10$9nBcX1adH.VLGwu1b1SrTOcO9kddRdmMEvpT4hlADYjzfKDZiAFD2', 1, 34, 'hiE9XJpX7axrRkc6kUoZZHTajwPwO5Ii3y4AllXfouvCp6d4FwH1iHdBidaV', NULL, NULL),
+(13, 'hoainam', '$2y$10$c9LxMXkImTG4mWJ5JPDnce6idViT.S4M0k6r335HTaP5XrKNCMofO', 1, 36, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -121,7 +163,8 @@ CREATE TABLE `class_s` (
 --
 
 INSERT INTO `class_s` (`id`, `address`, `level`, `begin_at`, `student_num`, `shift`, `tutor_id`, `subject_id`, `state`, `created_at`, `updated_at`) VALUES
-(1, 'Sài Gòn', 2, NULL, 1, '2-4-6 17h-21h', 3, 4, 0, NULL, NULL);
+(1, 'Sài Gòn', 2, NULL, 1, '2-4-6 17h-21h', 3, 4, 0, NULL, NULL),
+(2, 'KTX', 0, NULL, 3, '12', 7, 2, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -153,6 +196,14 @@ CREATE TABLE `customer_reviews` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Bẫy `customer_reviews`
+--
+DELIMITER $$
+CREATE TRIGGER `ins_sum` BEFORE INSERT ON `customer_reviews` FOR EACH ROW SET @newidea = @newidea + 1
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -304,7 +355,9 @@ CREATE TABLE `scores` (
 --
 
 INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, `created_at`, `updated_at`) VALUES
-(3, 4, 4, 5.50, 5.40, 0.00, NULL, NULL);
+(3, 4, 4, 5.50, 5.40, 0.00, NULL, NULL),
+(4, 5, 2, 1.31, 3.22, 0.00, NULL, NULL),
+(5, 6, 1, 12.00, 12.00, 0.00, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -356,7 +409,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avatar`, `created_at`, `updated_at`) VALUES
-(4, 'Nguyễn Kiều Mai', '2018-04-18', 'Sài Gòn', 'Huế', 'Nữ', '0147852369', 'Huỳnh Thúc Kháng', '10', 'index.png', NULL, NULL);
+(4, 'Nguyễn Kiều Mai', '2018-04-18', 'Sài Gòn', 'Huế', 'Nữ', '0147852369', 'Huỳnh Thúc Kháng', '10', 'index.png', NULL, NULL),
+(5, 'Hoàng Công Lý', '1212-12-12', 'KTX', 'HCM', '1', '0987654331', 'BK', '12', 'index.png', NULL, NULL),
+(6, 'account', '0012-12-12', '1212', '1212', '0', '12', '12', '12', 'index.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -377,7 +432,21 @@ CREATE TABLE `studies` (
 --
 
 INSERT INTO `studies` (`id`, `student_id`, `class_id`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, NULL, NULL);
+(1, 4, 1, NULL, NULL),
+(2, 5, 2, NULL, NULL),
+(3, 5, 1, NULL, NULL),
+(4, 4, 2, NULL, NULL),
+(5, 5, 2, NULL, NULL);
+
+--
+-- Bẫy `studies`
+--
+DELIMITER $$
+CREATE TRIGGER `before_studies_update` BEFORE INSERT ON `studies` FOR EACH ROW BEGIN
+    UPDATE class_s SET student_num = student_num + 1 WHERE id = NEW.class_id;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -403,6 +472,13 @@ CREATE TABLE `study_registers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `study_registers`
+--
+
+INSERT INTO `study_registers` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avg1`, `avg2`, `shift`, `subject_id`, `tutor_id`, `created_at`, `updated_at`) VALUES
+(1, 'account', '0012-12-12', '1212', '1212', '0', '12', '12', '12', 12.00, 12.00, '12', 1, 7, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -463,6 +539,7 @@ CREATE TABLE `tutors` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `point` double(8,2) NOT NULL,
   `count` int(11) NOT NULL,
+  `num_class` int(11) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -471,9 +548,12 @@ CREATE TABLE `tutors` (
 -- Đang đổ dữ liệu cho bảng `tutors`
 --
 
-INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, `created_at`, `updated_at`) VALUES
-(3, 2, 'HSG', 1, 10.00, 1, NULL, NULL),
-(5, 3, 'HSG', 5, 0.00, 0, NULL, NULL);
+INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, `num_class`, `created_at`, `updated_at`) VALUES
+(3, 2, 'HSG', 1, 10.00, 1, 1, NULL, NULL),
+(5, 3, 'HSG', 5, 0.00, 0, 0, NULL, NULL),
+(6, 1, 'asdasd', 31, 0.00, 0, 0, NULL, NULL),
+(7, 1, 'asdasd', 32, 0.00, 0, 0, NULL, NULL),
+(8, 2, 'asdasd', 33, 0.00, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -525,10 +605,15 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `created_at`, `updated_at`) VALUES
 (1, 'Nguyễn Văn A', '2018-04-01', 'KTX khu A', 'Lâm Đồng', 1, '0987654321', 'asd@gmail.com', 'default.jpg', 0, NULL, NULL),
 (2, 'Nguyễn Văn B', '2018-04-02', 'KTX khu B', 'Nha Trang', 1, '032566988747', 'kli@gmail.com', 'default.jpg', 1, NULL, NULL),
-(3, 'Nguyễn Văn C', '2018-04-03', 'Nguyễn Văn Cừ', 'Hồ Chí Minh', 0, '09986225446', 'poii@gmail.com', 'default.jpg', 2, NULL, NULL),
+(3, 'Nguyễn Văn C', '2018-04-03', 'Nguyễn Văn Cừ', 'Hồ Chí Minh', 0, '09986225446', 'poii@gmail.com', 'default.jpg', 0, NULL, NULL),
 (4, 'Cao Văn Quang', '2018-04-05', 'Củ Chi', 'Củ Chi', 0, '0987998665', 'quang@yahoo.com', 'default.com', 1, NULL, NULL),
 (5, 'Nguyễn Kỳ Duyên', '2018-04-03', 'Dĩ An, Bình Dương', 'Quảng Nam', 0, '01665554449', 'duong@gmail.com', 'default.jpg', 0, NULL, NULL),
-(30, 'Đặng Hoàng Ân', '2018-04-03', 'KTX', 'Khánh Hòa', 1, '0123987654', 'an@gmail.com', 'index.png', 2, NULL, NULL);
+(30, 'Đặng Hoàng Ân', '2018-04-03', 'KTX', 'Khánh Hòa', 1, '0123987654', 'an@gmail.com', 'index.png', 2, NULL, NULL),
+(31, 'Hoàng Công Lý', '2018-04-01', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
+(32, 'Hoàng Công Lý', '2018-04-03', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
+(33, 'Hoàng Công Lý', '2018-04-01', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
+(34, 'Nguyễn Hoàng Anh', '2112-02-13', 'hcm', 'hcm', 1, '09876543312', 'libach202@hotmail.com', '', 1, NULL, NULL),
+(36, 'Trần Hoài Nam', '2012-12-12', 'hcm', 'ád', 0, '1234', '1234@d', 'bg6.png', 2, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -682,13 +767,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `class_s`
 --
 ALTER TABLE `class_s`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
@@ -736,7 +821,7 @@ ALTER TABLE `question_banks`
 -- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `specializes`
@@ -748,19 +833,19 @@ ALTER TABLE `specializes`
 -- AUTO_INCREMENT cho bảng `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `studies`
 --
 ALTER TABLE `studies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -778,7 +863,7 @@ ALTER TABLE `subject_types`
 -- AUTO_INCREMENT cho bảng `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `tutor_registers`
@@ -790,7 +875,7 @@ ALTER TABLE `tutor_registers`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

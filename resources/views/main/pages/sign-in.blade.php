@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<p><span>Sign In to</span> <a href="index.html">Admin</a></p>
 						</div>
 						<div class="signin">
-							<form action="{{route('postAdminLogin')}}" method="post">
+							<form action="{{route('postLogin')}}" method="post">
 								<input type="hidden" name="_token" value="{{csrf_token()}}">
 								<div class="log-input">
 									<div class="log-input-left">
@@ -62,6 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								<input type="submit" value="Login to your account">
 							</form>
+							<a href="{{route('getSignUp')}}">Sign Up</a>
 						</div>
 					</div>
 				</div>

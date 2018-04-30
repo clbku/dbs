@@ -20,8 +20,8 @@
                         <tr>
                             <th>#</th>
                             <th>Tên tài khoản</th>
-                            <th>Mật khẩu</th>
                             <th>Người dùng</th>
+                            <th>Chức vụ</th>
                             <th>Trạng thái</th>
                             <th>Action</th>
                         </tr>
@@ -31,11 +31,22 @@
                         <tr>
                             <th scope="row">{{$a->id}}</th>
                             <td>{{$a->username}}</td>
-                            <td>{{$a->password}}</td>
                             <?php
                                 $a_name = DB::select('CALL getUserNameByID(?)', [$a->user_id]);
                             ?>
-                            <td><a href="{{route('admin.pages.profile', $a->user_id)}}">{{$a_name[0]->name}}<a></td>
+                            <td><a href="{{route('admin.pages.profile', ['user',$a->user_id])}}">{{$a_name[0]->name}}</a></td>
+                            <td>
+                                <?php
+                                    $user = DB::select('CALL getUserByAccountId(?)', [$a->id]);
+                                ?>
+                                @if ($user[0]->type == 0)
+                                    {{"Gia sư"}}
+                                @elseif ($user[0]->type == 1)
+                                    {{"Adminstration"}}
+                                @elseif ($user[0]->type == 2)
+                                    {{"Thành Viên"}}
+                                @endif
+                            </td>
                             <td>
                                 @if ($a->state == 0)
                                     {{"Bị khóa"}}

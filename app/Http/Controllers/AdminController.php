@@ -10,6 +10,7 @@ use App\Tutor;
 use App\User;
 use Illuminate\Http\Request;
 use App\Account;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
@@ -47,12 +48,38 @@ class AdminController extends Controller
     public function getUserPage(){
         return view('admin.pages.users');
     }
+    public function getAddUser() {
+        return view('admin.pages.add-user');
+    }
+    public function postAddUser(Request $request) {
+        $name = $request->name;
+        $dob = $request->dob;
+        $address = $request->address;
+        $sex = $request->sex;
+        $hometown = $request->hometown;
+        $phone = $request->phone;
+        $email = $request->email;
+        $type = $request->type;
+        $avatar = $request->file;
+        DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type)
+                          values(?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type]);
+        $username = $request->username;
+        $password = $request->password;
+        $state = 1;
+        $user_id = DB::select('select MAX(id) as id from users')[0]->id;
+        DB::insert('insert into accounts(username, password, state, user_id)
+                  values(?,?,?,?)', [$username, Hash::make($password), $state, $user_id]);
+        return redirect()->route('admin.user.getList');
+    }
 
     //profile page --------------------------------------------------------------
 
-    public function getProfile($id) {
-        $user = DB::select('select * from users where id = ?', [$id]);
-        return view('admin.pages.profile', compact('user'));
+    public function getProfile($type, $id) {
+        if ($type == 'user')
+            $user = DB::select('select * from users where id = ?', [$id]);
+        else if ($type == 'student')
+            $user = DB::select('select * from students where id = ?', [$id]);
+        return view('admin.pages.profile', compact('type','user'));
     }
 
     // subject page --------------------------------------------------------------
@@ -66,10 +93,6 @@ class AdminController extends Controller
         $subject = DB::select('select * from subjects where name LIKE "%' . $request->data . '%"   ');
         return view('admin.pages.subjects',compact('subject'));
     }
-
-
-
-    //class page ----------------------------------------------------------------
 
 
 
@@ -194,7 +217,12 @@ class AdminController extends Controller
         $class = DB::select('select * from class_s');
         return view('admin.pages.class',compact('class'));
     }
-
+    public function postAddStudent(Request $request) {
+        $class = $request->classID;
+        $student = $request->studentID;
+        DB::insert('insert into studies(student_id, class_id) values(?,?)', [$student, $class]);
+        return redirect()->route('admin.class.getList');
+    }
 
 
     // requets page -------------------------------------------
@@ -230,7 +258,7 @@ class AdminController extends Controller
     }
     public function postTutorFormDetail(Request $request, $id) {
         DB::insert("INSERT INTO users(name, dob, address,  hometown, sex, phone, email, avatar, type)
-                          VALUES (?, str_to_date('". $request->txtDOB ."', '%Y-%m-%d'), ?, ?, ?, ?, ?, 'index.png', '2')", [$request->txtName, $request->txtAddress, $request->txtHomeTown, $request->txtSex, $request->txtPhone, $request->txtEmail]);
+                          VALUES (?, str_to_date('". $request->txtDOB ."', '%Y-%m-%d'), ?, ?, ?, ?, ?, 'index.png', '0')", [$request->txtName, $request->txtAddress, $request->txtHomeTown, $request->txtSex, $request->txtPhone, $request->txtEmail]);
 
 
         $username = AdminController::to_slug($request->txtName);
@@ -299,26 +327,41 @@ class AdminController extends Controller
     }
 
 
+    // Login page ---------------------------------------------------
 
+    public function getLogin() {
+        return view('admin.pages.sign-in');
+    }
+    public function postLogin(Request $request) {
+        $credentials = array('username'=>$request->username, 'password'=>$request->password);
 
-
-
-
-
-
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('admin.pages.index');
+        }
+        else {
+            return redirect()->route('getAdminLogin');
+        }
+    }
 
 
 
 
     public function postUpdatePass(PasswordRequest $request,$id){
-        $account = Account::find($id);
-       
-        if($account->password==$request->oldpassword){
-            $account->password=$request->password;
-            $account->save();
-            echo "thành công";    
+//        UPDATE sinhvienk60 SET ten="Huong" WHERE mssv=3;
+//        $account = Account::find($id);
+//
+//        if($account->password==$request->oldpassword){
+//            $account->password=$request->password;
+//            $account->save();
+//            echo "thành công";
+//        }
+//        else return redirect()->route('admin.pages.profile',[$account->user_id]);
+//        if ($request->)
+        if (Hash::check($request->oldpassword, Auth::user()->password)) {
+            DB::update('update accounts set username = ?, password = ? WHERE id = ?', [$request->name, Hash::make($request->password), $id]);
+
         }
-        else return redirect()->route('admin.pages.profile',[$account->user_id]);
+        return redirect()->route('admin.pages.profile', Auth::user()->user_id);
 
     }
 }

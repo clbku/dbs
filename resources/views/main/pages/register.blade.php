@@ -62,6 +62,7 @@
                     $tutor = DB::select('select id, name from subjects');
                     ?>
                     <select class="form-control" name="txtSubject" required>
+
                         @foreach($tutor as $t)
                             <option value="{{$t->id}}">{{$t->name}}</option>
                         @endforeach
@@ -72,7 +73,8 @@
                     <?php
                         $tutor = DB::select('select u.name, t.id, s.specialize from users as u, tutors as t, specializes as s where u.id = t.user_id and s.id = t.s_id');
                     ?>
-                    <select name="txtTutor" class="form-control" required>
+                    <select name="txtTutor" class="form-control" >
+                        <option value="">--</option>
                         @foreach($tutor as $t)
                         <option value="{{$t->id}}">{{$t->name}} - {{$t->specialize}}</option>
                         @endforeach
