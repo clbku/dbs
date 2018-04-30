@@ -58,4 +58,11 @@ class MainController extends Controller
             return redirect()->route('homepage');
         }
     }
+    public function getTutorList($id) {
+        $tutor = DB::select('CALL getTutorListBySpecializeId(?)', [$id]);
+        return view('main.pages.tutor', compact('tutor'));
+    }
+    public function getTutorDetail($id) {
+        return view('main.pages.tutor-detail');
+    }
 }

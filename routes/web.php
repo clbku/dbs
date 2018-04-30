@@ -42,6 +42,10 @@ Route::group(['prefix'=>'tutor'],  function() {
         'as' => 'main.tutor.getList',
         'uses' => 'MainController@getTutorList'
     ]);
+    Route::get('detail/{id}',[
+        'as' => 'main.tutor.getTutorDetail',
+        'uses' => 'MainController@getTutorDetail'
+    ]);
 });
 
 Route::get('/admin', function () {

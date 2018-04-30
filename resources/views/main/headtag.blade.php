@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <meta charset="utf8">
-    <link href="pages/css/bootstrap.min.css" rel="stylesheet">
-    <link href="pages/css/font-awesome.css" rel="stylesheet">
-    <script src="pages/js/jquery-3.3.1.min.js"></script>
-    <script src="pages/js/bootstrap.min.js"></script>
-    <script src="pages/js/jssor.slider-27.1.0.min.js" type="text/javascript"></script>
+    <link href="{{url('pages/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url('pages/css/font-awesome.css')}}" rel="stylesheet">
+    <script src="{{url('pages/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{url('pages/js/bootstrap.min.js')}}"></script>
+    <script src="{{url('pages/js/jssor.slider-27.1.0.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         jssor_1_slider_init = function() {
 
@@ -95,9 +95,9 @@
         .jssora051.jssora051dn {opacity:.5;}
         .jssora051.jssora051ds {opacity:.3;pointer-events:none;}
     </style>
-    <link href="pages/css/footer-distributed-with-address-and-phones.css" rel="stylesheet">
-    <script src="pages/js/itemslide.min.js"></script>
-    <link href="pages/css/mystyle.css" rel="stylesheet">
+    <link href="{{url('pages/css/footer-distributed-with-address-and-phones.css')}}" rel="stylesheet">
+    <script src="{{url('pages/js/itemslide.min.js')}}"></script>
+    <link href="{{url('pages/css/mystyle.css')}}" rel="stylesheet">
     <style>
         #scrolling { /* Carousel Frame */
             overflow: hidden;

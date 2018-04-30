@@ -2,60 +2,36 @@
 @section('content')
     <div class="row">
         <div class="container">
+
             <div class="content col-sm-9">
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="content-title">
-                            Danh sách cấp 1
+                            Chi tiết Gia sư
                         </div>
-
-                        <div class="content-calender">
-                            <i class="fa fa-calendar"></i>12/3/2014
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <form action="" method="">
-                        <!--<input type="hidden" name="_token" value="{{csrf_token()}}">-->
-                            <input type="input" value="" placeholder="anything">
-                            <input type="submit" value="Tìm">
-                        </form>
                     </div>
                 </div>
 
                 <hr>
                 <br>
                 <div class="content-main">
-                    <?php $i = 0 ?>
-                    @foreach($tutor as $t)
-                        @if ($i % 4 == 0)
-                            <div class="row">
-                        @endif
-                        <?php $i++; ?>
-                        <div class="col-sm-4">
-                            <div class="tutor-item">
-                                <div class="tutor-avatar">
-                                    <img src="{{$t->avatar}}" class="img-responsive" alt="gates">
-                                </div>
-                                <div class="tutor-name">
-                                    {{$t->name}}
-                                </div>
-                                <div class="tutor-specializes">
-                                    <span>Chuyên môn: </span>{{$t->specialize}}
-                                </div>
-                                <div class="tutor-achievements">
-                                    <span>Thành tích: </span> {{$t->achievement}}
-                                </div>
-                                <div class="tutor-point">
-                                    <span>Đánh giá: </span>{{$t->point}}/10
-                                </div>
-                                <a class="btn btn-success" style="margin: 10px; " href="{{route('main.tutor.getTutorDetail', $t->uid)}}">Chi tiết <i class="fa fa-play-circle"></i></a>
-                            </div>
-                        </div>
-                        @if ($i % 4 == 0 || $i == count($tutor))
-                            </div>
-                        @endif
-                    @endforeach
+                    <div class="col-sm-4 text-center">
+                        <img src="images/gates.jpg" style="width: 200px" class="img-circle">
+                    </div>
+                    <div class="col-sm-8">
+                        <p><span style="color: green; font-weight: 900;">Họ và tên: </span>Hoàng Công Lý</p>
+                        <p><span style="color: green; font-weight: 900;">Ngày sinh: </span>20/10/1998</p>
+                        <p><span style="color: green; font-weight: 900;">Địa chỉ: </span>Hoàng Công Lý</p>
+                        <p><span style="color: green; font-weight: 900;">Quê quán: </span>20/10/1998</p>
+                        <p><span style="color: green; font-weight: 900;">Giới tính: </span>Hoàng Công Lý</p>
+                        <p><span style="color: green; font-weight: 900;">Email: </span>20/10/1998</p>
+                        <p><span style="color: green; font-weight: 900;">Chuyên môn: </span>Hoàng Công Lý</p>
+                        <p><span style="color: green; font-weight: 900;">Thành tích: </span>20/10/1998</p>
+                        <p><span style="color: green; font-weight: 900;">Đánh giá: </span>10/10</p>
+                    </div>
                 </div>
+
+
 
             </div>
             <div class="right-side col-sm-3">
@@ -146,5 +122,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="header-logo">
-                        <img src="pages/images/logo1.png">
+                        <img src="{{url('pages/images/logo1.png')}}">
                     </div>
                 </div>
                 <div class="col-sm-6">
