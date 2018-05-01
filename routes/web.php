@@ -37,6 +37,8 @@ Route::post('/register/{id}', [
     'as' => 'main.mainRegister',
     'uses' => "MainController@postRegister"
 ]);
+
+
 Route::group(['prefix'=>'tutor'],  function() {
     Route::get('list/{id}',[
         'as' => 'main.tutor.getList',

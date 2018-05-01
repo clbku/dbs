@@ -111,4 +111,6 @@ class MainController extends Controller
                   values(?,?,?,?)', [$username, Hash::make($password), $state, $user_id]);
         return redirect()->route('admin.user.getList');
     }
+
+   
 }

@@ -92,13 +92,13 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Gia sư cấp 1</a>
-                            <a class="dropdown-item" href="#">Gia sư cấp 2</a>
-                            <a class="dropdown-item" href="#">Gia sư cấp 3</a>
-                            <a class="dropdown-item" href="#">Gia sư Tiếng anh</a>
-                            <a class="dropdown-item" href="#">Luyện thi đại học</a>
-                            <a class="dropdown-item" href="#">Gia sư tin học văn phòng</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <?php 
+                                $spec = DB::select('CALL GetSpecialize()');
+                            ?>
+                            @foreach($spec as $a)
+                            <a class="dropdown-item" href="{{route('main.tutor.getList',[$a->id])}}">{{$a->specialize}}</a>
+                            @endforeach
+                           
                         </div>
                     </div>
 

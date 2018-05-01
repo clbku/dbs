@@ -112,7 +112,7 @@
                             <div>
                                 <div class="mo"></div>
                                 <h2>{{$c->specialize}}</h2>
-                                <a class="btn btn-success" href="#">Xem chi tiết</a>
+                                <a class="btn btn-success" href="{{route('main.tutor.getList',[$c->id])}}">Xem chi tiết</a>
                             </div>
 
                         </li>

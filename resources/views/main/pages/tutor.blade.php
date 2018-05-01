@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="content-title">
-                            Danh sách cấp 1
+                            Danh sách gia sư
                         </div>
 
                         <div class="content-calender">
@@ -63,42 +63,20 @@
                 <div class="tutor-list">
                     <div class="right-title">Danh mục gia sư</div>
                     <ul>
+                        <?php 
+                            $spec = DB::select('CALL GetSpecialize()');
+                        ?>
+                        @foreach ($spec as $a)
                         <li>
                             <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 1</span>
-                                <div class="col-sm-2 num">3</div>
+                                <a href="{{route('main.tutor.getList',[$a->id])}}">
+                                    <span class="col-sm-10">{{$a->specialize}}</span>
+                                    <div class="col-sm-2 num">3</div>
+                                </a>
                             </div>
                         </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 2</span>
-                                <div class="col-sm-2 num">1</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 3</span>
-                                <div class="col-sm-2 num">6</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tiếng anh</span>
-                                <div class="col-sm-2 num">10</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư luyện thi đại học</span>
-                                <div class="col-sm-2 num">9</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tin học văn phòng</span>
-                                <div class="col-sm-2 num">5</div>
-                            </div>
-                        </li>
+                        @endforeach
+                        
                     </ul>
                 </div>
                 <div class="news-list">
