@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 02, 2018 lúc 04:14 AM
+-- Thời gian đã tạo: Th5 02, 2018 lúc 04:17 AM
 -- Phiên bản máy phục vụ: 10.1.31-MariaDB
 -- Phiên bản PHP: 7.2.3
 
@@ -139,8 +139,9 @@ INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remem
 (5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL, NULL),
 (8, 'dang_hoang_an', '$2y$10$dXKzlXn9/KfvIDOBdpZoRutMWd0tc1b0SKkcliWuH4pqYi0b.Say2', 1, 30, 'gbjg1b8Id5HWE4T4cO75v2SKX199cxySYvKGh6ZSJvep1HMRE7pXgcflf0fH', NULL, NULL),
 (9, 'hoang_cong_ly', 'nghibinh', 1, 31, '4HfblyW9N97tODxNcpBYLit49ldI59DIXJnvDali6wjxrOtslubW3S708NLk', NULL, NULL),
-(12, 'congly1311', '$2y$10$9nBcX1adH.VLGwu1b1SrTOcO9kddRdmMEvpT4hlADYjzfKDZiAFD2', 1, 34, 'hiE9XJpX7axrRkc6kUoZZHTajwPwO5Ii3y4AllXfouvCp6d4FwH1iHdBidaV', NULL, NULL),
-(13, 'hoainam', '$2y$10$c9LxMXkImTG4mWJ5JPDnce6idViT.S4M0k6r335HTaP5XrKNCMofO', 1, 36, NULL, NULL, NULL);
+(12, 'congly1311', '$2y$10$9nBcX1adH.VLGwu1b1SrTOcO9kddRdmMEvpT4hlADYjzfKDZiAFD2', 1, 34, 'TLeUihma2jU30K9qxjgbBv8ynORGpLFZTlD3PB4sNBV6dMTtf1IYRku5bJGg', NULL, NULL),
+(13, 'hoainam', '$2y$10$c9LxMXkImTG4mWJ5JPDnce6idViT.S4M0k6r335HTaP5XrKNCMofO', 1, 36, NULL, NULL, NULL),
+(14, 'kenshin1010', '$2y$10$uq9/gb58S5xgzuvELVcqfupG8Z606dd9T4doPbq76SM3nfKsFHuR6', 1, 37, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -617,7 +618,8 @@ INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`,
 (32, 'Hoàng Công Lý', '2018-04-03', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
 (33, 'Hoàng Công Lý', '2018-04-01', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
 (34, 'Nguyễn Hoàng Anh', '2112-02-13', 'hcm', 'hcm', 1, '09876543312', 'libach202@hotmail.com', '', 1, NULL, NULL),
-(36, 'Trần Hoài Nam', '2012-12-12', 'hcm', 'ád', 0, '1234', '1234@d', 'bg6.png', 2, NULL, NULL);
+(36, 'Trần Hoài Nam', '2012-12-12', 'hcm', 'ád', 0, '1234', '1234@d', 'bg6.png', 2, NULL, NULL),
+(37, 'Đỗ Tuấn Anh', '1989-02-10', 'HCM', 'DakLak', 1, '0977180085', 'tuananh9h@gmail.com', 'C:\\xampp\\tmp\\php41D4.tmp', 1, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -771,7 +773,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `class_s`
@@ -879,7 +881,7 @@ ALTER TABLE `tutor_registers`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
