@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 02, 2018 lúc 04:17 AM
+-- Thời gian đã tạo: Th5 02, 2018 lúc 04:48 PM
 -- Phiên bản máy phục vụ: 10.1.31-MariaDB
 -- Phiên bản PHP: 7.2.3
 
@@ -185,6 +185,26 @@ CREATE TABLE `comments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Bẫy `comments`
+--
+DELIMITER $$
+CREATE TRIGGER `AutoReduceCommentsNumbers` AFTER DELETE ON `comments` FOR EACH ROW BEGIN
+UPDATE comments
+SET comments.number = (SELECT COUNT(*) FROM comments, deleted WHERE comments.author_id=deleted.author_id)
+WHERE comments.author_id=(SELECT deleted.author_id FROM deleted);
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `AutoSetCommentsNumbers` AFTER INSERT ON `comments` FOR EACH ROW BEGIN
+UPDATE comments
+SET comments.number = (SELECT COUNT(*) FROM comments, inserted WHERE comments.author_id=inserted.author_id)
+WHERE comments.author_id=(SELECT inserted.author_id FROM inserted);
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -622,6 +642,28 @@ INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`,
 (37, 'Đỗ Tuấn Anh', '1989-02-10', 'HCM', 'DakLak', 1, '0977180085', 'tuananh9h@gmail.com', 'C:\\xampp\\tmp\\php41D4.tmp', 1, NULL, NULL);
 
 --
+-- Bẫy `users`
+--
+DELIMITER $$
+CREATE TRIGGER `AuditDeleteUser` AFTER DELETE ON `users` FOR EACH ROW BEGIN
+INSERT INTO aud_user SELECT *,'D',getdate() FROM deleted;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `AuditInsertUser` AFTER INSERT ON `users` FOR EACH ROW BEGIN
+INSERT INTO aud_user SELECT *,'I',getdate() FROM inserted;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `AuditUpdateUser` AFTER UPDATE ON `users` FOR EACH ROW BEGIN
+INSERT INTO aud_user SELECT *,'U',getdate() FROM deleted;
+END
+$$
+DELIMITER ;
+
+--
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -851,7 +893,7 @@ ALTER TABLE `studies`
 -- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -875,7 +917,7 @@ ALTER TABLE `tutors`
 -- AUTO_INCREMENT cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
