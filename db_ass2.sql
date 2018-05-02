@@ -2,10 +2,10 @@
 -- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 01, 2018 at 08:12 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 02, 2018 lúc 04:14 AM
+-- Phiên bản máy phục vụ: 10.1.31-MariaDB
+-- Phiên bản PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,12 +19,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_ass2`
+-- Cơ sở dữ liệu: `db_ass2`
 --
 
 DELIMITER $$
 --
--- Procedures
+-- Thủ tục
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllStudentNameByClassId` (IN `cid` INT(10))  NO SQL
 BEGIN
@@ -113,7 +113,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Cấu trúc bảng cho bảng `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -128,7 +128,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `accounts`
+-- Đang đổ dữ liệu cho bảng `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -145,7 +145,7 @@ INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remem
 -- --------------------------------------------------------
 
 --
--- Table structure for table `class_s`
+-- Cấu trúc bảng cho bảng `class_s`
 --
 
 CREATE TABLE `class_s` (
@@ -163,7 +163,7 @@ CREATE TABLE `class_s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `class_s`
+-- Đang đổ dữ liệu cho bảng `class_s`
 --
 
 INSERT INTO `class_s` (`id`, `address`, `level`, `begin_at`, `student_num`, `shift`, `tutor_id`, `subject_id`, `state`, `created_at`, `updated_at`) VALUES
@@ -173,7 +173,7 @@ INSERT INTO `class_s` (`id`, `address`, `level`, `begin_at`, `student_num`, `shi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Cấu trúc bảng cho bảng `comments`
 --
 
 CREATE TABLE `comments` (
@@ -188,7 +188,7 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_reviews`
+-- Cấu trúc bảng cho bảng `customer_reviews`
 --
 
 CREATE TABLE `customer_reviews` (
@@ -202,7 +202,7 @@ CREATE TABLE `customer_reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Triggers `customer_reviews`
+-- Bẫy `customer_reviews`
 --
 DELIMITER $$
 CREATE TRIGGER `ins_sum` BEFORE INSERT ON `customer_reviews` FOR EACH ROW SET @newidea = @newidea + 1
@@ -212,7 +212,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `exams`
+-- Cấu trúc bảng cho bảng `exams`
 --
 
 CREATE TABLE `exams` (
@@ -228,7 +228,7 @@ CREATE TABLE `exams` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -238,7 +238,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -265,7 +265,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `parents`
+-- Cấu trúc bảng cho bảng `parents`
 --
 
 CREATE TABLE `parents` (
@@ -280,7 +280,7 @@ CREATE TABLE `parents` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Cấu trúc bảng cho bảng `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -292,7 +292,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Cấu trúc bảng cho bảng `posts`
 --
 
 CREATE TABLE `posts` (
@@ -311,7 +311,7 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `posts`
+-- Đang đổ dữ liệu cho bảng `posts`
 --
 
 INSERT INTO `posts` (`id`, `date`, `author_id`, `title`, `description`, `content`, `images`, `files`, `type`, `new`, `created_at`, `updated_at`) VALUES
@@ -321,7 +321,7 @@ INSERT INTO `posts` (`id`, `date`, `author_id`, `title`, `description`, `content
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question_banks`
+-- Cấu trúc bảng cho bảng `question_banks`
 --
 
 CREATE TABLE `question_banks` (
@@ -340,7 +340,7 @@ CREATE TABLE `question_banks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `scores`
+-- Cấu trúc bảng cho bảng `scores`
 --
 
 CREATE TABLE `scores` (
@@ -355,7 +355,7 @@ CREATE TABLE `scores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `scores`
+-- Đang đổ dữ liệu cho bảng `scores`
 --
 
 INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, `created_at`, `updated_at`) VALUES
@@ -366,7 +366,7 @@ INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `specializes`
+-- Cấu trúc bảng cho bảng `specializes`
 --
 
 CREATE TABLE `specializes` (
@@ -377,7 +377,7 @@ CREATE TABLE `specializes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `specializes`
+-- Đang đổ dữ liệu cho bảng `specializes`
 --
 
 INSERT INTO `specializes` (`id`, `specialize`, `created_at`, `updated_at`) VALUES
@@ -390,7 +390,7 @@ INSERT INTO `specializes` (`id`, `specialize`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `students`
+-- Cấu trúc bảng cho bảng `students`
 --
 
 CREATE TABLE `students` (
@@ -409,7 +409,7 @@ CREATE TABLE `students` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `students`
+-- Đang đổ dữ liệu cho bảng `students`
 --
 
 INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avatar`, `created_at`, `updated_at`) VALUES
@@ -420,7 +420,7 @@ INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phon
 -- --------------------------------------------------------
 
 --
--- Table structure for table `studies`
+-- Cấu trúc bảng cho bảng `studies`
 --
 
 CREATE TABLE `studies` (
@@ -432,7 +432,7 @@ CREATE TABLE `studies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `studies`
+-- Đang đổ dữ liệu cho bảng `studies`
 --
 
 INSERT INTO `studies` (`id`, `student_id`, `class_id`, `created_at`, `updated_at`) VALUES
@@ -443,7 +443,7 @@ INSERT INTO `studies` (`id`, `student_id`, `class_id`, `created_at`, `updated_at
 (5, 5, 2, NULL, NULL);
 
 --
--- Triggers `studies`
+-- Bẫy `studies`
 --
 DELIMITER $$
 CREATE TRIGGER `before_studies_update` BEFORE INSERT ON `studies` FOR EACH ROW BEGIN
@@ -455,7 +455,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `study_registers`
+-- Cấu trúc bảng cho bảng `study_registers`
 --
 
 CREATE TABLE `study_registers` (
@@ -478,7 +478,7 @@ CREATE TABLE `study_registers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `study_registers`
+-- Đang đổ dữ liệu cho bảng `study_registers`
 --
 
 INSERT INTO `study_registers` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avg1`, `avg2`, `shift`, `subject_id`, `tutor_id`, `created_at`, `updated_at`) VALUES
@@ -487,7 +487,7 @@ INSERT INTO `study_registers` (`id`, `name`, `dob`, `address`, `hometown`, `sex`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subjects`
+-- Cấu trúc bảng cho bảng `subjects`
 --
 
 CREATE TABLE `subjects` (
@@ -500,7 +500,7 @@ CREATE TABLE `subjects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `subjects`
+-- Đang đổ dữ liệu cho bảng `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`, `subject_type`, `state`, `created_at`, `updated_at`) VALUES
@@ -512,7 +512,7 @@ INSERT INTO `subjects` (`id`, `name`, `subject_type`, `state`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subject_types`
+-- Cấu trúc bảng cho bảng `subject_types`
 --
 
 CREATE TABLE `subject_types` (
@@ -523,7 +523,7 @@ CREATE TABLE `subject_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `subject_types`
+-- Đang đổ dữ liệu cho bảng `subject_types`
 --
 
 INSERT INTO `subject_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -533,7 +533,7 @@ INSERT INTO `subject_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tutors`
+-- Cấu trúc bảng cho bảng `tutors`
 --
 
 CREATE TABLE `tutors` (
@@ -549,7 +549,7 @@ CREATE TABLE `tutors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `tutors`
+-- Đang đổ dữ liệu cho bảng `tutors`
 --
 
 INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, `num_class`, `created_at`, `updated_at`) VALUES
@@ -562,7 +562,7 @@ INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tutor_registers`
+-- Cấu trúc bảng cho bảng `tutor_registers`
 --
 
 CREATE TABLE `tutor_registers` (
@@ -584,7 +584,7 @@ CREATE TABLE `tutor_registers` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -603,7 +603,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `created_at`, `updated_at`) VALUES
@@ -620,18 +620,18 @@ INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`,
 (36, 'Trần Hoài Nam', '2012-12-12', 'hcm', 'ád', 0, '1234', '1234@d', 'bg6.png', 2, NULL, NULL);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `accounts`
+-- Chỉ mục cho bảng `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `accounts_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `class_s`
+-- Chỉ mục cho bảng `class_s`
 --
 ALTER TABLE `class_s`
   ADD PRIMARY KEY (`id`),
@@ -639,7 +639,7 @@ ALTER TABLE `class_s`
   ADD KEY `class_s_subject_id_foreign` (`subject_id`);
 
 --
--- Indexes for table `comments`
+-- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -647,13 +647,13 @@ ALTER TABLE `comments`
   ADD KEY `comments_post_id_foreign` (`post_id`);
 
 --
--- Indexes for table `customer_reviews`
+-- Chỉ mục cho bảng `customer_reviews`
 --
 ALTER TABLE `customer_reviews`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `exams`
+-- Chỉ mục cho bảng `exams`
 --
 ALTER TABLE `exams`
   ADD PRIMARY KEY (`id`),
@@ -661,40 +661,40 @@ ALTER TABLE `exams`
   ADD KEY `exams_class_id_foreign` (`class_id`);
 
 --
--- Indexes for table `migrations`
+-- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `parents`
+-- Chỉ mục cho bảng `parents`
 --
 ALTER TABLE `parents`
   ADD PRIMARY KEY (`id`),
   ADD KEY `parents_student_id_foreign` (`student_id`);
 
 --
--- Indexes for table `password_resets`
+-- Chỉ mục cho bảng `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `posts`
+-- Chỉ mục cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `posts_author_id_foreign` (`author_id`);
 
 --
--- Indexes for table `question_banks`
+-- Chỉ mục cho bảng `question_banks`
 --
 ALTER TABLE `question_banks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `question_banks_subject_id_foreign` (`subject_id`);
 
 --
--- Indexes for table `scores`
+-- Chỉ mục cho bảng `scores`
 --
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`id`),
@@ -702,19 +702,19 @@ ALTER TABLE `scores`
   ADD KEY `scores_subject_id_foreign` (`subject_id`);
 
 --
--- Indexes for table `specializes`
+-- Chỉ mục cho bảng `specializes`
 --
 ALTER TABLE `specializes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `students`
+-- Chỉ mục cho bảng `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `studies`
+-- Chỉ mục cho bảng `studies`
 --
 ALTER TABLE `studies`
   ADD PRIMARY KEY (`id`),
@@ -722,7 +722,7 @@ ALTER TABLE `studies`
   ADD KEY `studies_class_id_foreign` (`class_id`);
 
 --
--- Indexes for table `study_registers`
+-- Chỉ mục cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
   ADD PRIMARY KEY (`id`),
@@ -730,20 +730,20 @@ ALTER TABLE `study_registers`
   ADD KEY `study_registers_tutor_id_foreign` (`tutor_id`);
 
 --
--- Indexes for table `subjects`
+-- Chỉ mục cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`),
   ADD KEY `subjects_subject_type_foreign` (`subject_type`);
 
 --
--- Indexes for table `subject_types`
+-- Chỉ mục cho bảng `subject_types`
 --
 ALTER TABLE `subject_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tutors`
+-- Chỉ mục cho bảng `tutors`
 --
 ALTER TABLE `tutors`
   ADD PRIMARY KEY (`id`),
@@ -751,221 +751,221 @@ ALTER TABLE `tutors`
   ADD KEY `tutors_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `tutor_registers`
+-- Chỉ mục cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `tutor_registers_specialize_id_foreign` (`specialize_id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `class_s`
+-- AUTO_INCREMENT cho bảng `class_s`
 --
 ALTER TABLE `class_s`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `customer_reviews`
+-- AUTO_INCREMENT cho bảng `customer_reviews`
 --
 ALTER TABLE `customer_reviews`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `exams`
+-- AUTO_INCREMENT cho bảng `exams`
 --
 ALTER TABLE `exams`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT for table `parents`
+-- AUTO_INCREMENT cho bảng `parents`
 --
 ALTER TABLE `parents`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `question_banks`
+-- AUTO_INCREMENT cho bảng `question_banks`
 --
 ALTER TABLE `question_banks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `scores`
+-- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `specializes`
+-- AUTO_INCREMENT cho bảng `specializes`
 --
 ALTER TABLE `specializes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `students`
+-- AUTO_INCREMENT cho bảng `students`
 --
 ALTER TABLE `students`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `studies`
+-- AUTO_INCREMENT cho bảng `studies`
 --
 ALTER TABLE `studies`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `study_registers`
+-- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `subjects`
+-- AUTO_INCREMENT cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `subject_types`
+-- AUTO_INCREMENT cho bảng `subject_types`
 --
 ALTER TABLE `subject_types`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tutors`
+-- AUTO_INCREMENT cho bảng `tutors`
 --
 ALTER TABLE `tutors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tutor_registers`
+-- AUTO_INCREMENT cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `accounts`
+-- Các ràng buộc cho bảng `accounts`
 --
 ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `class_s`
+-- Các ràng buộc cho bảng `class_s`
 --
 ALTER TABLE `class_s`
   ADD CONSTRAINT `class_s_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `class_s_tutor_id_foreign` FOREIGN KEY (`tutor_id`) REFERENCES `tutors` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `comments`
+-- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `exams`
+-- Các ràng buộc cho bảng `exams`
 --
 ALTER TABLE `exams`
   ADD CONSTRAINT `exams_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `class_s` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `exams_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `parents`
+-- Các ràng buộc cho bảng `parents`
 --
 ALTER TABLE `parents`
   ADD CONSTRAINT `parents_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `posts`
+-- Các ràng buộc cho bảng `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `question_banks`
+-- Các ràng buộc cho bảng `question_banks`
 --
 ALTER TABLE `question_banks`
   ADD CONSTRAINT `question_banks_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `scores`
+-- Các ràng buộc cho bảng `scores`
 --
 ALTER TABLE `scores`
   ADD CONSTRAINT `scores_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `scores_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `studies`
+-- Các ràng buộc cho bảng `studies`
 --
 ALTER TABLE `studies`
   ADD CONSTRAINT `studies_class_id_foreign` FOREIGN KEY (`class_id`) REFERENCES `class_s` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `studies_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `study_registers`
+-- Các ràng buộc cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
   ADD CONSTRAINT `study_registers_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `study_registers_tutor_id_foreign` FOREIGN KEY (`tutor_id`) REFERENCES `tutors` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `subjects`
+-- Các ràng buộc cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   ADD CONSTRAINT `subjects_subject_type_foreign` FOREIGN KEY (`subject_type`) REFERENCES `subject_types` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `tutors`
+-- Các ràng buộc cho bảng `tutors`
 --
 ALTER TABLE `tutors`
   ADD CONSTRAINT `tutors_s_id_foreign` FOREIGN KEY (`s_id`) REFERENCES `specializes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `tutors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `tutor_registers`
+-- Các ràng buộc cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
   ADD CONSTRAINT `tutor_registers_specialize_id_foreign` FOREIGN KEY (`specialize_id`) REFERENCES `specializes` (`id`) ON DELETE CASCADE;
