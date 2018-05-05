@@ -24,7 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('avatar');
             $table->integer('type');
-            //$table->rememberToken();
+            $table->string('username');
+            $table->string('password');
+            $table->boolean('state');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

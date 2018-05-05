@@ -22,16 +22,13 @@
                                 </div>
                                 <!--account info -->
                                 @if ($type == 'user')
-                                <?php
-                                    $account = DB::select("select * from accounts where user_id = ?", [$user[0]->id]);
-                                ?>
                                 
-                                <form method="post" action="{{route('admin.update-password.postUpdatePass',[$account[0]->id])}}" style="width: 100%;">
+                                <form method="post" action="{{route('admin.update-password.postUpdatePass',[$user[0]->id])}}" style="width: 100%;">
 
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <div class="form-group">
                                         <label>Tên tài khoản</label>
-                                        <input class="form-control1" type="text" name="name" placeholder="Your name here" value="{{$account[0]->username}}">
+                                        <input class="form-control1" type="text" name="name" placeholder="Your name here" value="{{$user[0]->username}}">
                                     </div>
                                     <div class="form-group">
                                         <label>Mật khẩu hiện tại</label>

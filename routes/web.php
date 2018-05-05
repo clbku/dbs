@@ -80,17 +80,43 @@ Route::group(['prefix'=>'admin'],  function() {
             'uses'=>'AdminController@getUserList'
         ])->middleware('auth');
         Route::post('list',[
-            'as'=>'admin.user.postFind',
-            'uses'=>'AdminController@postUserFind'
+            'as'=>'admin.user.postFindUser',
+            'uses'=>'AdminController@postFindUser'
         ])->middleware('auth');
         Route::get('add', [
             'as'=>'admin.user.getAdd',
             'uses'=>'AdminController@getAddUser'
-        ]);
+        ])->middleware('auth');
         Route::post('add', [
             'as'=>'admin.user.postAdd',
             'uses'=>'AdminController@postAddUser'
-        ]);
+        ])->middleware('auth');
+    });
+    Route::group(['prefix'=>'subjects'],function(){
+        Route::get('/list',[
+            'as'=> 'admin.subjects.getList',
+            'uses'=>'AdminController@getSubjectsList'
+        ])->middleware('auth');
+        Route::post('/list', [
+            'as'=> 'admin.subjects.postFind',
+            'uses'=> "AdminController@postSubjectFind"
+        ])->middleware('auth');
+        Route::post('/add', [
+            'as'=> 'admin.subjects.postAddSubject',
+            'uses'=> "AdminController@postAddSubject"
+        ])->middleware('auth');
+        Route::get('lock/{id}/{state}', [
+            'as'=> 'admin.subjects.getSubjectLock',
+            'uses'=> "AdminController@getSubjectLock"
+        ])->middleware('auth');
+        Route::get('lock/{id}/{state}', [
+            'as'=> 'admin.subjects.getSubjectLock',
+            'uses'=> "AdminController@getSubjectLock"
+        ])->middleware('auth');
+        Route::post('list',[
+            'as'=>'admin.user.postFindSubject',
+            'uses'=>'AdminController@postFindSubject'
+        ])->middleware('auth');
     });
 
 
@@ -99,14 +125,8 @@ Route::group(['prefix'=>'admin'],  function() {
         'as'=>'admin.pages.index',
         'uses'=>'AdminController@getHomePage'
     ])->middleware('auth');
-    Route::get('/subjects',[
-        'as'=> 'admin.subjects.getList',
-        'uses'=>'AdminController@getSubjectsList'
-    ])->middleware('auth');
-    Route::post('/subjects', [
-        'as'=> 'admin.subjects.postFind',
-        'uses'=> "AdminController@postSubjectFind"
-    ])->middleware('auth');
+
+
 
     Route::get('class',[
         'as'=>'admin.class.getList',
@@ -255,6 +275,6 @@ Route::post('sign-up', [
     'as' => 'postSignUp',
     'uses' => 'MainController@postSignUp'
 ]);
-
+Route::get('search/autocomplete', 'SearchController@autocomplete');
 
 

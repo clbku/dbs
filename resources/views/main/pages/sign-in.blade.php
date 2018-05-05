@@ -41,6 +41,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <section>
 			<div id="page-wrapper" class="sign-in-wrapper">
 				<div class="graphs">
+					@if (\Illuminate\Support\Facades\Session::has('success'))
+						<div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+					@endif
 					<div class="sign-in-form">
 						<div class="sign-in-form-top">
 							<p><span>Sign In to</span> <a href="index.html">Admin</a></p>

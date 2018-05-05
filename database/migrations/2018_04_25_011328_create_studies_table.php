@@ -19,6 +19,7 @@ class CreateStudiesTable extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->unsignedInteger('class_id');
             $table->foreign('class_id')->references('id')->on('class_s')->onDelete('cascade');
+            $table->date('begin_at');
             $table->timestamps();
         });
     }

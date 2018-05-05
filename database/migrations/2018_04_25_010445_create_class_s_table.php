@@ -17,7 +17,6 @@ class CreateClassSTable extends Migration
             $table->increments('id');
             $table->string('address');
             $table->integer('level')->nullable();
-            $table->date('begin_at');
             $table->integer('student_num');
             $table->string('shift');
             $table->unsignedInteger('tutor_id');

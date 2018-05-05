@@ -107,13 +107,13 @@
                     <li class="dropdown profile_details_drop">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div class="profile_img">
-                                <span style="background:url({{url(DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->avatar)}}) no-repeat center"> </span>
+                                <span style="background:url({{url(Auth::user()->avatar)}}) no-repeat center"> </span>
                                 <div class="user-name">
                                     <p>
-                                        {{DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->name}}
+                                        {{Auth::user()->name}}
                                         <span>
                                     <?php
-                                        $type = DB::select('CALL getUserByAccountId(?)',[Auth::user()->id])[0]->type;
+                                        $type = Auth::user()->type;
                                         if ($type == '0') {
                                             echo ('Gia sư');
                                         }
@@ -130,7 +130,7 @@
                         </a>
                         <ul class="dropdown-menu drp-mnu">
                             <!--<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> -->
-                            <li> <a href="{{route('admin.pages.profile', ['user', Auth::user()->user_id])}}"><i class="fa fa-user"></i>Profile</a> </li>
+                            <li> <a href="{{route('admin.pages.profile', ['user', Auth::user()->id])}}"><i class="fa fa-user"></i>Profile</a> </li>
                             <li> <a href="{{route('getLogout')}}"><i class="fa fa-sign-out"></i> Logout</a> </li>
                         </ul>
                     </li>

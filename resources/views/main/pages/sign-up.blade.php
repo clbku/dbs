@@ -43,8 +43,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="graphs">
             <div class="sign-in-form">
                 <div class="sign-in-form-top">
-                    <p><span>Sign Up</p>
+                    <p><span>Sign Up</span></p>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="signin">
                     <form action="{{route('postSignUp')}}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">

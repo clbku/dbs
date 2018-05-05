@@ -79,6 +79,7 @@
 
                             </tbody>
                         </table>
+
                     </div><!-- /.table-responsive -->
                 </div>
 

@@ -20,10 +20,7 @@
                             <div class="dropdown show">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @if (Auth::check())
-                                        <?php
-                                            $user = DB::select('CALL getUserByAccountID(?)', [Auth::user()->id]);
-                                            echo($user[0]->name);
-                                        ?>
+                                        {{Auth::user()->name}}
 
                                     @else
                                         <li><a class="btn btn-secondary" href="{{route('getLogin')}}">Đăng nhập</a></li>
@@ -31,9 +28,9 @@
                                 </a>
                             @if (Auth::check())
                                 <?php
-                                    $user = DB::select('CALL getUserByAccountID(?)', [Auth::user()->id]);
+                                    $user = Auth::user();
                                 ?>
-                                @if ($user[0]->type == "2")
+                                @if ($user->type == "2")
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                         <a class="dropdown-item" href="#">Profile</a>
                                         <a class="dropdown-item" href="{{route('getLogout')}}">Đăng Xuất</a>
@@ -93,7 +90,7 @@
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <?php 
-                                $spec = DB::select('CALL GetSpecialize()');
+                                $spec = DB::select('CALL getAllSpecialize()');
                             ?>
                             @foreach($spec as $a)
                             <a class="dropdown-item" href="{{route('main.tutor.getList',[$a->id])}}">{{$a->specialize}}</a>

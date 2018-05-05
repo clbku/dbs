@@ -16,6 +16,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\PasswordRequest;
+use Illuminate\Support\Facades\Validator;
 
 
 class AdminController extends Controller
@@ -71,6 +72,11 @@ class AdminController extends Controller
                   values(?,?,?,?)', [$username, Hash::make($password), $state, $user_id]);
         return redirect()->route('admin.user.getList');
     }
+    public function postFindUser(Request $request) {
+        $user = DB::select('select * from users where '.$request->col.' LIKE "%' . $request->data . '%"');
+        return view('admin.pages.users',compact('user'));
+    }
+
 
     //profile page --------------------------------------------------------------
 
@@ -89,11 +95,43 @@ class AdminController extends Controller
                                       where s.subject_type = t.id');
         return view('admin.pages.subjects',compact('subject'));
     }
+    public function getSubjectLock($id, $state) {
+        DB::update('update subjects set state = ? where id = ?', [$state, $id]);
+        return redirect()->route('admin.subjects.getList');
+    }
     public function postSubjectFind(Request $request) {
         $subject = DB::select('select * from subjects where name LIKE "%' . $request->data . '%"   ');
         return view('admin.pages.subjects',compact('subject'));
     }
+    public function postAddSubject(Request $request) {
 
+        $validator = Validator::make($request->all(),
+            [
+                'subject_name'      => 'required',
+            ],
+            [
+                'subject_name.required'     => 'Bạn chưa nhập tên môn học',
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect()->route('admin.subjects.getList')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $name = $request->subject_name;
+        $type = $request->subject_type;
+        $state = 1;
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('insert into subjects(name, subject_type, state, created_at )
+                          values(?,?,?,?)', [$name, $type, $state, $created_at]);
+        return redirect()->route('admin.subjects.getList');
+    }
+    public function postFindSubject(Request $request) {
+        $subject = DB::select('select s.id, s.name as subjectName, t.name as typeName, s.created_at, s.state
+                                      from subjects as s, subject_types as t 
+                                      where s.subject_type = t.id and s.  '.$request->col.' LIKE "%' . $request->data . '%"');
+        return view('admin.pages.subjects',compact('subject'));
+    }
 
 
     //Account page -------------------------------------------------------------
@@ -147,10 +185,7 @@ class AdminController extends Controller
     }
 
     // post page -------------------------------------------------------
-    public function postUserFind(Request $request) {
-        $user = DB::select('select * from users where name LIKE "%' . $request->data . '%"');
-        return view('admin.pages.users',compact('user'));
-    }
+
     public function getListPost() {
         $post = DB::select('select * from posts');
 

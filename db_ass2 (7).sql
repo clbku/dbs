@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 02, 2018 lúc 04:48 PM
--- Phiên bản máy phục vụ: 10.1.31-MariaDB
--- Phiên bản PHP: 7.2.3
+-- Thời gian đã tạo: Th5 05, 2018 lúc 10:39 AM
+-- Phiên bản máy phục vụ: 10.1.30-MariaDB
+-- Phiên bản PHP: 7.1.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,23 +26,17 @@ DELIMITER $$
 --
 -- Thủ tục
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllStudentNameByClassId` (IN `cid` INT(10))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllSpecialize` ()  NO SQL
 BEGIN
-	SELECT s.student_id, st.name
-    FROM studies as s, students as st
-    WHERE s.student_id = st.id and s.class_id = cid;
+	SELECT * FROM specializes;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllUser` ()  BEGIN
-   SELECT * FROM users;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getById` (IN `idVal` INT(11))  BEGIN
-    SELECT * FROM users WHERE id = idVal;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getClassNumber` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllUser` ()  NO SQL
 BEGIN
+	SELECT * FROM users;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getClassNumber` ()  BEGIN
 	SELECT COUNT(*) as number FROM class_s;
 END$$
 
@@ -51,56 +45,27 @@ BEGIN
 	SELECT * FROM customer_reviews;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSpecialize` ()  BEGIN
-   SELECT *  FROM specializes;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getFindUser` (IN `val` VARCHAR(255))  NO SQL
+BEGIN
+	SELECT *
+    FROM users
+    WHERE name LIKE CONCAT('%', @val , '%');
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getSpecializeBySID` (IN `sid` INT)  NO SQL
-BEGIN
-	SELECT * FROM specializes WHERE id = sid;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  BEGIN
+	SELECT COUNT(*) as number FROM students;
 END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentList` ()  NO SQL
-BEGIN
-	SELECT * FROM students;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  NO SQL
-BEGIN
-	SELECT COUNT(*) as number
-    FROM students;
-  
-
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListBySpecializeId` (IN `sid` INT(10))  NO SQL
-BEGIN
-	SELECT u.name, u.avatar, u.id as uid, t.id as tid, s.specialize, t.achievement, t.point 
-    FROM tutors as t, users as u, specializes as s
-    WHERE u.id = t.user_id and t.s_id = s.id AND t.s_id = sid;
-    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListSortByPoint` ()  NO SQL
 BEGIN
-	SELECT u.name, a.username, s.specialize, t.point, t.num_class
-    FROM tutors as t, users as u, accounts as a, specializes as s 
-    where u.id = t.user_id and u.id = a.user_id and t.s_id = s.id
-    ORDER BY t.point DESC;
+	SELECT * 
+    FROM users, tutors
+	WHERE users.id = tutors.user_id 
+    ORDER BY tutors.point DESC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorNumber` ()  NO SQL
-BEGIN
-	SELECT COUNT(*) as number FROM tutors;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserByAccountID` (IN `id` INT(10))  NO SQL
-BEGIN
-	SELECT * FROM users as u, accounts as a 
-    WHERE u.id = a.user_id and a.id = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNameByID` (IN `idVal` INT(10))  BEGIN
-	SELECT name FROM users WHERE id = idVal; 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorNumber` ()  BEGIN
+   SELECT COUNT(*) as number FROM tutors;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNumber` ()  NO SQL
@@ -113,39 +78,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `accounts`
---
-
-CREATE TABLE `accounts` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` tinyint(1) NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `remember_token` varchar(70) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `accounts`
---
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `state`, `user_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'kyduyen_23', 'ahihi', 1, 5, NULL, NULL, NULL),
-(2, 'vanquang.13', 'ahihi', 1, 4, NULL, NULL, '2018-04-24 19:10:44'),
-(3, 'vana_123_deptrai', '123456', 1, 1, NULL, NULL, '2018-04-27 06:59:17'),
-(4, 'vanb_hocgioi', 'vanb_hocgioi', 1, 2, NULL, NULL, NULL),
-(5, 'vanc_boss', 'vanc_boss', 1, 3, NULL, NULL, NULL),
-(8, 'dang_hoang_an', '$2y$10$dXKzlXn9/KfvIDOBdpZoRutMWd0tc1b0SKkcliWuH4pqYi0b.Say2', 1, 30, 'gbjg1b8Id5HWE4T4cO75v2SKX199cxySYvKGh6ZSJvep1HMRE7pXgcflf0fH', NULL, NULL),
-(9, 'hoang_cong_ly', 'nghibinh', 1, 31, '4HfblyW9N97tODxNcpBYLit49ldI59DIXJnvDali6wjxrOtslubW3S708NLk', NULL, NULL),
-(12, 'congly1311', '$2y$10$9nBcX1adH.VLGwu1b1SrTOcO9kddRdmMEvpT4hlADYjzfKDZiAFD2', 1, 34, 'TLeUihma2jU30K9qxjgbBv8ynORGpLFZTlD3PB4sNBV6dMTtf1IYRku5bJGg', NULL, NULL),
-(13, 'hoainam', '$2y$10$c9LxMXkImTG4mWJ5JPDnce6idViT.S4M0k6r335HTaP5XrKNCMofO', 1, 36, NULL, NULL, NULL),
-(14, 'kenshin1010', '$2y$10$uq9/gb58S5xgzuvELVcqfupG8Z606dd9T4doPbq76SM3nfKsFHuR6', 1, 37, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `class_s`
 --
 
@@ -153,7 +85,6 @@ CREATE TABLE `class_s` (
   `id` int(10) UNSIGNED NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` int(11) DEFAULT NULL,
-  `begin_at` date DEFAULT NULL,
   `student_num` int(11) NOT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tutor_id` int(10) UNSIGNED NOT NULL,
@@ -162,14 +93,6 @@ CREATE TABLE `class_s` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `class_s`
---
-
-INSERT INTO `class_s` (`id`, `address`, `level`, `begin_at`, `student_num`, `shift`, `tutor_id`, `subject_id`, `state`, `created_at`, `updated_at`) VALUES
-(1, 'Sài Gòn', 2, NULL, 1, '2-4-6 17h-21h', 3, 4, 0, NULL, NULL),
-(2, 'KTX', 0, NULL, 3, '12', 7, 2, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,26 +109,6 @@ CREATE TABLE `comments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Bẫy `comments`
---
-DELIMITER $$
-CREATE TRIGGER `AutoReduceCommentsNumbers` AFTER DELETE ON `comments` FOR EACH ROW BEGIN
-UPDATE comments
-SET comments.number = (SELECT COUNT(*) FROM comments, deleted WHERE comments.author_id=deleted.author_id)
-WHERE comments.author_id=(SELECT deleted.author_id FROM deleted);
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `AutoSetCommentsNumbers` AFTER INSERT ON `comments` FOR EACH ROW BEGIN
-UPDATE comments
-SET comments.number = (SELECT COUNT(*) FROM comments, inserted WHERE comments.author_id=inserted.author_id)
-WHERE comments.author_id=(SELECT inserted.author_id FROM inserted);
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -221,14 +124,6 @@ CREATE TABLE `customer_reviews` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Bẫy `customer_reviews`
---
-DELIMITER $$
-CREATE TRIGGER `ins_sum` BEFORE INSERT ON `customer_reviews` FOR EACH ROW SET @newidea = @newidea + 1
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -263,25 +158,24 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(20, '2014_10_12_000000_create_users_table', 1),
-(21, '2014_10_12_100000_create_password_resets_table', 1),
-(22, '2018_04_24_235030_create_accounts_table', 1),
-(23, '2018_04_25_001647_create_posts_table', 1),
-(24, '2018_04_25_002747_create_comments_table', 1),
-(25, '2018_04_25_003026_create_specializes_table', 1),
-(26, '2018_04_25_003236_create_tutors_table', 1),
-(27, '2018_04_25_004314_create_students_table', 1),
-(28, '2018_04_25_005121_create_parents_table', 1),
-(29, '2018_04_25_005739_create_subject_types_table', 1),
-(30, '2018_04_25_005952_create_subjects_table', 1),
-(31, '2018_04_25_010445_create_class_s_table', 1),
-(32, '2018_04_25_011328_create_studies_table', 1),
-(33, '2018_04_25_011551_create_scores_table', 1),
-(34, '2018_04_25_011848_create_question_banks_table', 1),
-(35, '2018_04_25_012224_create_exams_table', 1),
-(36, '2018_04_25_012544_create_study_registers_table', 1),
-(37, '2018_04_25_012911_create_tutor_registers_table', 1),
-(38, '2018_04_25_013257_create_customer_reviews_table', 1);
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2018_04_25_001647_create_posts_table', 1),
+(4, '2018_04_25_002747_create_comments_table', 1),
+(5, '2018_04_25_003026_create_specializes_table', 1),
+(6, '2018_04_25_003236_create_tutors_table', 1),
+(7, '2018_04_25_004314_create_students_table', 1),
+(8, '2018_04_25_005121_create_parents_table', 1),
+(9, '2018_04_25_005739_create_subject_types_table', 1),
+(10, '2018_04_25_005952_create_subjects_table', 1),
+(11, '2018_04_25_010445_create_class_s_table', 1),
+(12, '2018_04_25_011328_create_studies_table', 1),
+(13, '2018_04_25_011551_create_scores_table', 1),
+(14, '2018_04_25_011848_create_question_banks_table', 1),
+(15, '2018_04_25_012224_create_exams_table', 1),
+(16, '2018_04_25_012544_create_study_registers_table', 1),
+(17, '2018_04_25_012911_create_tutor_registers_table', 1),
+(18, '2018_04_25_013257_create_customer_reviews_table', 1);
 
 -- --------------------------------------------------------
 
@@ -318,7 +212,6 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `posts` (
   `id` int(10) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -326,18 +219,9 @@ CREATE TABLE `posts` (
   `images` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `files` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` int(11) NOT NULL,
-  `new` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `posts`
---
-
-INSERT INTO `posts` (`id`, `date`, `author_id`, `title`, `description`, `content`, `images`, `files`, `type`, `new`, `created_at`, `updated_at`) VALUES
-(9, '2018-04-25 20:45:40', 1, 'Chào Mừng năm học mới', '<h2>Đ&atilde; sửa</h2>', '<h3><strong>The standard Lorem Ipsum passage, used since the 1500s</strong></h3>\r\n\r\n<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>\r\n\r\n<h3><strong>Section 1.10.32 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?&quot;</p>\r\n\r\n<h3><strong>Section 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot;, written by Cicero in 45 BC</strong></h3>\r\n\r\n<p>&quot;At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&quot;</p>\r\n\r\n<h3><strong>1914 translation by H. Rackham</strong></h3>\r\n\r\n<p>&quot;On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.&quot;</p>', 'upload/images/post/news\\2.jpg', NULL, 0, 1, '2018-04-25 13:45:40', '2018-04-25 15:12:43'),
-(10, '2018-04-25 23:40:49', 1, 'Bài tập làm thêm toán 1', '<p>&aacute;dđ&acirc;sdasdasdsad</p>', '<p>B&agrave;i tập ở file đ&iacute;nh k&egrave;m nh&eacute;</p>', 'upload/file/post\\Favorites.vssx', NULL, 1, 1, '2018-04-25 16:40:49', '2018-04-25 16:40:49');
 
 -- --------------------------------------------------------
 
@@ -375,15 +259,6 @@ CREATE TABLE `scores` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `scores`
---
-
-INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, `created_at`, `updated_at`) VALUES
-(3, 4, 4, 5.50, 5.40, 0.00, NULL, NULL),
-(4, 5, 2, 1.31, 3.22, 0.00, NULL, NULL),
-(5, 6, 1, 12.00, 12.00, 0.00, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -396,17 +271,6 @@ CREATE TABLE `specializes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `specializes`
---
-
-INSERT INTO `specializes` (`id`, `specialize`, `created_at`, `updated_at`) VALUES
-(1, 'Gia sư tiếng anh', NULL, NULL),
-(2, 'Gia sư cấp 1', NULL, NULL),
-(3, 'Gia sư toán cấp 2', NULL, NULL),
-(4, 'Gia sư toán cấp 3', NULL, NULL),
-(5, 'Gia sư ôn thi đại học', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -429,15 +293,6 @@ CREATE TABLE `students` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `students`
---
-
-INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avatar`, `created_at`, `updated_at`) VALUES
-(4, 'Nguyễn Kiều Mai', '2018-04-18', 'Sài Gòn', 'Huế', 'Nữ', '0147852369', 'Huỳnh Thúc Kháng', '10', 'index.png', NULL, NULL),
-(5, 'Hoàng Công Lý', '1212-12-12', 'KTX', 'HCM', '1', '0987654331', 'BK', '12', 'index.png', NULL, NULL),
-(6, 'account', '0012-12-12', '1212', '1212', '0', '12', '12', '12', 'index.png', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -448,30 +303,10 @@ CREATE TABLE `studies` (
   `id` int(10) UNSIGNED NOT NULL,
   `student_id` int(10) UNSIGNED NOT NULL,
   `class_id` int(10) UNSIGNED NOT NULL,
+  `begin_at` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `studies`
---
-
-INSERT INTO `studies` (`id`, `student_id`, `class_id`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, NULL, NULL),
-(2, 5, 2, NULL, NULL),
-(3, 5, 1, NULL, NULL),
-(4, 4, 2, NULL, NULL),
-(5, 5, 2, NULL, NULL);
-
---
--- Bẫy `studies`
---
-DELIMITER $$
-CREATE TRIGGER `before_studies_update` BEFORE INSERT ON `studies` FOR EACH ROW BEGIN
-    UPDATE class_s SET student_num = student_num + 1 WHERE id = NEW.class_id;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -489,21 +324,12 @@ CREATE TABLE `study_registers` (
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class_s` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avg1` double(8,2) DEFAULT NULL,
-  `avg2` double(8,2) DEFAULT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
   `tutor_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `study_registers`
---
-
-INSERT INTO `study_registers` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `school`, `class_s`, `avg1`, `avg2`, `shift`, `subject_id`, `tutor_id`, `created_at`, `updated_at`) VALUES
-(1, 'account', '0012-12-12', '1212', '1212', '0', '12', '12', '12', 12.00, 12.00, '12', 1, 7, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -525,10 +351,10 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `name`, `subject_type`, `state`, `created_at`, `updated_at`) VALUES
-(1, 'Toán 1', 1, 1, NULL, NULL),
-(2, 'Toán 5', 1, 1, NULL, NULL),
-(3, 'Văn 5', 2, 0, NULL, NULL),
-(4, 'Văn 12', 2, 1, NULL, NULL);
+(1, 'Toán 12', 1, 1, '2018-05-04 17:54:10', NULL),
+(2, 'Toán 11', 1, 1, '2018-05-04 17:54:24', NULL),
+(3, 'Văn 11', 4, 1, '2018-05-04 17:54:51', NULL),
+(4, 'Hóa 11', 3, 1, '2018-05-04 17:55:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -548,8 +374,11 @@ CREATE TABLE `subject_types` (
 --
 
 INSERT INTO `subject_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Toán', NULL, NULL),
-(2, 'Văn', NULL, NULL);
+(1, 'Toán học', NULL, NULL),
+(2, 'Vật lý', NULL, NULL),
+(3, 'Hóa học', NULL, NULL),
+(4, 'Văn học', NULL, NULL),
+(5, 'Sinh học', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -564,21 +393,10 @@ CREATE TABLE `tutors` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `point` double(8,2) NOT NULL,
   `count` int(11) NOT NULL,
-  `num_class` int(11) DEFAULT '0',
+  `num_class` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `tutors`
---
-
-INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, `num_class`, `created_at`, `updated_at`) VALUES
-(3, 2, 'HSG', 1, 10.00, 1, 1, NULL, NULL),
-(5, 3, 'HSG', 5, 0.00, 0, 0, NULL, NULL),
-(6, 1, 'asdasd', 31, 0.00, 0, 0, NULL, NULL),
-(7, 1, 'asdasd', 32, 0.00, 0, 0, NULL, NULL),
-(8, 2, 'asdasd', 33, 0.00, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -614,11 +432,15 @@ CREATE TABLE `users` (
   `dob` date NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hometown` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sex` int(11) NOT NULL COMMENT '1: nam, 0: nữ',
+  `sex` int(11) NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL COMMENT '0: gia sư, 1: admin, 2: thành viên',
+  `type` int(11) NOT NULL,
+  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` tinyint(1) NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -627,52 +449,14 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `created_at`, `updated_at`) VALUES
-(1, 'Nguyễn Văn A', '2018-04-01', 'KTX khu A', 'Lâm Đồng', 1, '0987654321', 'asd@gmail.com', 'default.jpg', 0, NULL, NULL),
-(2, 'Nguyễn Văn B', '2018-04-02', 'KTX khu B', 'Nha Trang', 1, '032566988747', 'kli@gmail.com', 'default.jpg', 1, NULL, NULL),
-(3, 'Nguyễn Văn C', '2018-04-03', 'Nguyễn Văn Cừ', 'Hồ Chí Minh', 0, '09986225446', 'poii@gmail.com', 'default.jpg', 0, NULL, NULL),
-(4, 'Cao Văn Quang', '2018-04-05', 'Củ Chi', 'Củ Chi', 0, '0987998665', 'quang@yahoo.com', 'default.com', 1, NULL, NULL),
-(5, 'Nguyễn Kỳ Duyên', '2018-04-03', 'Dĩ An, Bình Dương', 'Quảng Nam', 0, '01665554449', 'duong@gmail.com', 'default.jpg', 0, NULL, NULL),
-(30, 'Đặng Hoàng Ân', '2018-04-03', 'KTX', 'Khánh Hòa', 1, '0123987654', 'an@gmail.com', 'index.png', 2, NULL, NULL),
-(31, 'Hoàng Công Lý', '2018-04-01', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
-(32, 'Hoàng Công Lý', '2018-04-03', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
-(33, 'Hoàng Công Lý', '2018-04-01', 'KTX', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 1, NULL, NULL),
-(34, 'Nguyễn Hoàng Anh', '2112-02-13', 'hcm', 'hcm', 1, '09876543312', 'libach202@hotmail.com', '', 1, NULL, NULL),
-(36, 'Trần Hoài Nam', '2012-12-12', 'hcm', 'ád', 0, '1234', '1234@d', 'bg6.png', 2, NULL, NULL),
-(37, 'Đỗ Tuấn Anh', '1989-02-10', 'HCM', 'DakLak', 1, '0977180085', 'tuananh9h@gmail.com', 'C:\\xampp\\tmp\\php41D4.tmp', 1, NULL, NULL);
-
---
--- Bẫy `users`
---
-DELIMITER $$
-CREATE TRIGGER `AuditDeleteUser` AFTER DELETE ON `users` FOR EACH ROW BEGIN
-INSERT INTO aud_user SELECT *,'D',getdate() FROM deleted;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `AuditInsertUser` AFTER INSERT ON `users` FOR EACH ROW BEGIN
-INSERT INTO aud_user SELECT *,'I',getdate() FROM inserted;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `AuditUpdateUser` AFTER UPDATE ON `users` FOR EACH ROW BEGIN
-INSERT INTO aud_user SELECT *,'U',getdate() FROM deleted;
-END
-$$
-DELIMITER ;
+INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `username`, `password`, `state`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Hoàng Công Lý', '1993-03-01', 'HCM', 'HCM', 1, '0987654321', 'libach202@hotmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'congly1311', '$2y$10$THmSEmgsZuW4g5UO0/T8FOSAj3gxlcQXXqUny8qo.fOsNTJpyurge', 1, '7Y7g6ktgaIvIOQFZIO5XIZLmG67Lx9zlsPRwvvsy9plMmchGKCmZCHKOwEGw', NULL, NULL),
+(2, 'Nguyễn Kỳ Duyên', '1998-12-01', 'HCM', 'HCM', 0, '0987654321', 'wurpro@gmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'kyduyen123', '$2y$10$6tB/1hZe.vuQqbTuE0yA.O5d5OK5eIT/vKVpkQ6KhqXkiBBTIgJZa', 1, NULL, '2018-05-04 15:54:05', NULL),
+(3, 'Dương Quá', '1998-12-01', 'HCM', 'Dương Châu', 1, '0987654321', 'wurpro@gmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'duongqua', '$2y$10$TIkqSRUekYch3u0s9.qiyeyaNi4P6KpKujdEXpKl1vqeWnr7KgieS', 1, NULL, '2018-05-04 16:02:34', NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
-
---
--- Chỉ mục cho bảng `accounts`
---
-ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `accounts_user_id_foreign` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `class_s`
@@ -812,16 +596,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT cho bảng `accounts`
---
-ALTER TABLE `accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
 -- AUTO_INCREMENT cho bảng `class_s`
 --
 ALTER TABLE `class_s`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
@@ -845,7 +623,7 @@ ALTER TABLE `exams`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `parents`
@@ -857,7 +635,7 @@ ALTER TABLE `parents`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `question_banks`
@@ -869,31 +647,31 @@ ALTER TABLE `question_banks`
 -- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `specializes`
 --
 ALTER TABLE `specializes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `studies`
 --
 ALTER TABLE `studies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -905,13 +683,13 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT cho bảng `subject_types`
 --
 ALTER TABLE `subject_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tutor_registers`
@@ -923,17 +701,11 @@ ALTER TABLE `tutor_registers`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `accounts`
---
-ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `class_s`
@@ -946,7 +718,7 @@ ALTER TABLE `class_s`
 -- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
 
 --
@@ -966,7 +738,7 @@ ALTER TABLE `parents`
 -- Các ràng buộc cho bảng `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `posts_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `question_banks`

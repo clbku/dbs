@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class MainController extends Controller
 {
@@ -75,6 +76,21 @@ class MainController extends Controller
         return view('main.pages.sign-in');
     }
     public function postLogin(Request $request) {
+        $validator = Validator::make($request->all(),
+            [
+                'username' => 'required',
+                'password' => 'required|min:6'
+            ],
+            [
+                'username.required' => 'Bạn chưa nhập username',
+                'password.required' => 'Bạn chưa nhập password',
+                'password.min'      => 'Password phải nhiều hơn 5 ký tự'
+            ]);
+        if ($validator->failed()) {
+            return redirect()->route('getLogin')
+                ->withErrors($validator)
+                ->withInput();
+        }
         $credentials = array('username'=>$request->username, 'password'=>$request->password);
 
         if (Auth::attempt($credentials)) {
@@ -92,6 +108,43 @@ class MainController extends Controller
         return view('main.pages.sign-up');
     }
     public function postSignUp(Request $request) {
+        $validator = Validator::make($request->all(),
+            [
+                'name'      => 'required',
+                'dob'       => 'required',
+                'address'   => 'required',
+                'phone'     => 'required',
+                'email'     => 'required|email',
+                'file'      => 'required',
+                'username'  => 'required|unique:users,username',
+                'password'  => 'required|min:6',
+                're-password'   => 'required|same:password'
+            ],
+            [
+                'name.required'     => 'Bạn chưa nhập tên',
+                'dob.required'      => 'Bạn chưa nhập ngày sinh',
+                'address.required'  => 'Bạn chưa nhập địa chỉ',
+                'phone.required'    => 'Bạn chưa nhập SĐT',
+                'email.required'    => 'Bạn chưa nhập email',
+                'email.email'       => 'Không đúng định dạng email',
+                'file.required'     => 'Bạn chưa chọn avatar',
+                'username.required' => 'Bạn chưa nhập tên tài khoản',
+                'username.unique'   => 'Tên tài khoản đã tồn tại',
+                'password.required' => 'Bạn chưa nhập password',
+                'password.min'      => 'Password phải lớn hơn 5 ký tự',
+                're-password.required'=> 'Hai mật khẩu không khớp',
+                're-password.same'=> 'Hai mật khẩu không khớp',
+            ]
+        );
+
+
+
+
+        if ($validator->fails()) {
+            return redirect()->route('getSignUp')
+                ->withErrors($validator)
+                ->withInput();
+        }
         $name = $request->name;
         $dob = $request->dob;
         $address = $request->address;
@@ -99,17 +152,17 @@ class MainController extends Controller
         $hometown = $request->hometown;
         $phone = $request->phone;
         $email = $request->email;
-        $type = $request->type;
         $avatar = $request->file;
-        DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type)
-                          values(?,?,?,?,?,?,?,?,2)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar]);
         $username = $request->username;
-        $password = $request->password;
+        $password = Hash::make($request->password);
         $state = 1;
-        $user_id = DB::select('select MAX(id) as id from users')[0]->id;
-        DB::insert('insert into accounts(username, password, state, user_id)
-                  values(?,?,?,?)', [$username, Hash::make($password), $state, $user_id]);
-        return redirect()->route('admin.user.getList');
+        $type = 2;
+        $date = date('Y-m-d H:i:s');
+        var_dump($date);
+
+        DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type, username, password, state, created_at)
+                          values(?,?,?,?,?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type, $username, $password, $state, $date]);
+        return redirect()->route('getLogin')->with('success', 'Tạo tài khoản thành công');
     }
 
    

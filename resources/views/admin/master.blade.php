@@ -1,9 +1,4 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -40,6 +35,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ url('assets/js/jquery-1.10.2.min.js') }}"></script>
     <!-- Placed js at the end of the document so the pages load faster -->
     <script src="{{url('assets/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{url('assets/js/jquery.autocomplete.js')}}"></script>
 </head>
 
 <body class="sticky-header left-side-collapsed"  onload="initMap()">
