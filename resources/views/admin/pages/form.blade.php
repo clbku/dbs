@@ -11,6 +11,9 @@
                             <span class="sb-icon-search"> </span>
                         </form>
                     </div>
+                    @if (\Illuminate\Support\Facades\Session::has('success'))
+                        <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table">
                             <thead>

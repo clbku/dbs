@@ -196,18 +196,19 @@ class AdminController extends Controller
         return view('admin.pages.add-post',  compact('id'));
     }
     public function postAddPost(AddNewsReq $request, $id) {
-        $post = new Post();
-        $post->date = now();
-        $post->author_id = 1;
-        $post->title = $request->txtTitle;
-        $post->description = $request->txtDescription;
-        $post->content = $request->txtContent;
+
+        $author_id = Auth::user()->id;
+        $title = $request->txtTitle;
+        $description = $request->txtDescription;
+        $content = $request->txtContent;
         $file = $request->txtFile;
-        $post->images = $file->move('upload/images/post/news',$file->getClientOriginalName());
-        $post->type = $id;
+        $images = $file->move('upload/images/post/news',$file->getClientOriginalName());
+        $type = $id;
         $file = $request->txtAsss;
-        if ($file) $post->file = $file->move('upload/file/post',$file->getClientOriginalName());
-        $post->save();
+        if ($file) $file = $file->move('upload/file/post',$file->getClientOriginalName());
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
+        values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $images, $type, $file, $created_at]);
 
         return redirect()->route('admin.post.list');
     }
@@ -346,7 +347,10 @@ class AdminController extends Controller
         DB::delete("delete from study_registers where id = ?" , [$id]);
         return redirect()->route('admin.form.getForm');
     }
-
+    public function getDeleteTutorForm($id) {
+        DB::delete('delete from tutor_registers where id = ?', [$id]);
+        return redirect()->route('admin.form.getForm')->with('success', 'Xóa thành công');
+    }
 
     public function getHomePage(){
         return view('admin.pages.index');

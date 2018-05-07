@@ -23,26 +23,57 @@ class MainController extends Controller
                           values(?, ?, ?, ?)', [$request->txtName, $request->txtPhone, $request->txtEmail, $request->txtMessage]);
         return redirect()->route('main.getContact');
     }
-    public  function getRegister() {
-        return view('main.pages.register');
+    public  function getTutorRegister() {
+        return view('main.pages.tutor-register');
     }
-    public function postRegister(Request $request, $id) {
-        if ($id == 'tutor') {
-            $name = $request->txtName;
-            $dob = $request->txtDOB;
-            $address = $request->txtAddress;
-            $hometown = $request->txtHometown;
-            $sex = $request->rdoSex;
-            $phone = $request->txtPhone;
-            $email = $request->txtEmail;
-            $school = $request->txtSchool;
-            $specialize_id = $request->txtSpecialize;
-            $achievement = $request->txtAchievement;
-            DB::insert('insert into tutor_registers(name, dob, address, hometown,  sex, phone, email, school, specialize_id, achievements)
-                              values (?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $email, $school, $specialize_id, $achievement]);
-            return redirect()->route('homepage');
+
+    public function postTutorRegister(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'txtName' => 'required',
+                'txtDOB' => 'required',
+                'txtAddress' => 'required',
+                'txtHometown' => 'required',
+                'txtPhone' => 'required|numeric',
+                'txtEmail' => 'required|email',
+
+            ],
+            [
+                'txtName.required' => 'Bạn chưa nhập tên',
+                'txtDOB.required' => 'Bạn chưa nhập ngày sinh',
+                'txtAddress.required' => 'Bạn chưa nhập địa chỉ',
+                'txtPhone.required' => 'Bạn chưa nhập SĐT',
+                'txtPhone.numeric' => 'SĐT không đúng',
+                'txtEmail.email' => 'Không đúng định dạng email',
+                'txtEmail.required' => "Bạn chưa nhập email",
+
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return redirect()->route('main.register.tutor')
+                ->withErrors($validator)
+                ->withInput();
         }
-        else if ($id == 'student') {
+        $name = $request->txtName;
+        $dob = $request->txtDOB;
+        $address = $request->txtAddress;
+        $hometown = $request->txtHometown;
+        $sex = $request->rdoSex;
+        $phone = $request->txtPhone;
+        $email = $request->txtEmail;
+        $school = $request->txtSchool;
+        $specialize_id = $request->txtSpecialize;
+        $achievement = $request->txtAchievement;
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('insert into tutor_registers(name, dob, address, hometown,  sex, phone, email, school, specialize_id, achievements, created_at)
+                              values (?,?,?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $school, $specialize_id, $achievement, $created_at]);
+        return redirect()->route('main.register.tutor')->with('success', 'Bạn đã đăng ký thành công');
+    }
+    public function postStudentRegister (Request $request) {
+
             $name = $request->txtName;
             $dob = $request->txtDOB;
             $address = $request->txtAddress;
@@ -63,7 +94,7 @@ class MainController extends Controller
                 DB::insert('insert into study_registers(name, dob, address, hometown,  sex, phone, school, class_s, shift, avg1, avg2, subject_id)
                               values (?,?,?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $school, $class, $shift, $avg1, $avg2, $subject_id]);
             return redirect()->route('homepage');
-        }
+
     }
     public function getTutorList($id) {
         $tutor = DB::select('CALL getTutorListBySpecializeId(?)', [$id]);
@@ -158,12 +189,14 @@ class MainController extends Controller
         $state = 1;
         $type = 2;
         $date = date('Y-m-d H:i:s');
-        var_dump($date);
 
         DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type, username, password, state, created_at)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type, $username, $password, $state, $date]);
         return redirect()->route('getLogin')->with('success', 'Tạo tài khoản thành công');
     }
-
+    public function getNewsDetail($id) {
+        $news = DB::select('CALL getNewsById(?)', [$id])[0];
+        return view('main.pages.detail-page', compact('news'));
+    }
    
 }

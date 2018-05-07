@@ -4,7 +4,7 @@
     <div class="container">
         <form action="{{route('main.postContact')}}" method="post">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <h2>Ý kiến khách hàng</h2>
+            <h2 style="color:  green; border-bottom: 3px solid green;padding-bottom: 18px;"><i class="fa fa-pencil"></i>Ý kiến khách hàng</h2>
             <div class="form-group">
                 <label>Họ và tên</label>
                 <input class="form-control" type="text" name="txtName" value="" placeholder="account" required>

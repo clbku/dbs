@@ -63,6 +63,7 @@
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">
+                            <a href="{{route('admin.form.delete', $a->id)}}" class="btn btn-danger">Xóa</a>
                             <a href="{{route('admin.form.getForm')}}" class="btn btn-danger">Quay lại</a>
                         </div>
                     </form>
@@ -153,6 +154,7 @@
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">
+                            <a href="forms.html" class="btn btn-danger">Xóa</a>
                             <a href="{{route('admin.form.getForm')}}" class="btn btn-danger">Quay lại</a>
                         </div>
                     </form>
@@ -194,7 +196,8 @@
 
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">
-                            <a href="forms.html" class="btn btn-danger">Quay lại</a>
+                            <a href="forms.html" class="btn btn-danger">Xóa</a>
+                            <a href="{{route('admin.form.getForm')}}" class="btn btn-danger">Quay lại</a>
                         </div>
                     </form>
                 </div>

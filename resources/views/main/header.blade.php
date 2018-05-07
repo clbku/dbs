@@ -13,19 +13,19 @@
                 </div>
                 <div class="col-sm-6">
 
-                    <ul class="list-inline text-right">
+                    <ul class="list-inline text-right" style="margin-bottom: 0;text-transform: uppercase;">
                         <li><a class="btn btn-secondary">Diễn đàn</a></li>
 
                         <li>
                             <div class="dropdown show">
-                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @if (Auth::check())
-                                        {{Auth::user()->name}}
 
+                                    @if (Auth::check())
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{Auth::user()->name}}
+                                    </a>
                                     @else
                                         <li><a class="btn btn-secondary" href="{{route('getLogin')}}">Đăng nhập</a></li>
                                     @endif
-                                </a>
                             @if (Auth::check())
                                 <?php
                                     $user = Auth::user();
@@ -54,32 +54,36 @@
         </div>
     </div>
     <div class="header-middle">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="header-logo">
-                        <img src="{{url('pages/images/logo1.png')}}">
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-logo">
+                    <img src="{{url('pages/images/logo1.png')}}">
                 </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-4">
-                        <span>Email</span>
-                        <span>phoenix@gmail.com</span>
-                    </div>
-                    <div class="col-sm-4">
-                        <span>Hotline</span>
-                        <span>0987.654.321</span>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="{{route('main.register')}}" class="btn btn-success">Đăng ký online <i class="fa fa-play-circle"></i></a>
-                    </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="col-sm-4">
+                    <span style="text-transform:  uppercase;color: green;font-weight: 600;">Email</span>
+                    <span>phoenix@gmail.com</span>
+                </div>
+                <div class="col-sm-4">
+                        <span style="
+    color: green;
+    font-weight: 600;
+    text-transform: uppercase;
+">Hotline<br></span>
+                    <span>0987.654.321</span>
+                </div>
+                <div class="col-sm-4">
+                    <a href="http://localhost/dbs/public/register" class="btn btn-success">Đăng ký online <i class="fa fa-play-circle"></i></a>
                 </div>
             </div>
         </div>
     </div>
+</div>
     <div class="header-bottom">
         <div class="container">
-            <ul class="list-inline">
+            <ul class="list-inline" style="text-transform: uppercase;">
                 <li><a href="{{route('homepage')}}" class="btn btn-secondary">Trang Chủ</a></li>
                 <li><a href="{{route('about')}}" class="btn btn-secondary">Giới thiệu</a></li>
                 <li>

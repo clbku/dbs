@@ -28,13 +28,13 @@
                                 @if ($p->type == 0)
                                 <tr>
                                     <th scope="row">{{$p->id}}</th>
-                                    <td>{{$p->date}}</td>
+                                    <td>{{$p->created_at}}</td>
                                     <td>{{$p->title}}</td>
                                     <td>{!! $p->content !!}</td>
                                     <?php
                                         $user = DB::select('select u.name, u.id
-                                                            from users as u,  accounts as a
-                                                            where a.id = ? and u.id = a.user_id
+                                                            from users as u
+                                                            where u.id = ?
                                                            ', [$p->author_id])
                                     ?>
                                     {{--<td><a href="form-detail.html"></a></td>--}}
@@ -78,13 +78,13 @@
                                 @if ($p->type == 1)
                                     <tr>
                                         <th scope="row">{{$p->id}}</th>
-                                        <td>{{$p->date}}</td>
+                                        <td>{{$p->created_at}}</td>
                                         <td>{{$p->title}}</td>
                                         <td>{!! $p->content !!}</td>
                                         <?php
                                         $name = DB::select('select u.name, u.id
-                                                        from users as u,  accounts as a
-                                                        where a.id = ? and u.id = a.user_id
+                                                        from users as u
+                                                        where u.id = ?
                                                        ', [$p->author_id])
                                         ?>
                                         {{--<td><a href="form-detail.html"></a></td>--}}

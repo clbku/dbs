@@ -15,12 +15,18 @@ Route::get('/' , [
     "as"=>"homepage",
     "uses" => 'MainController@getHomePage'
 ]);
-Route::get('/about', [
-    "as" => 'about',
-    function () {
-        return view('main.pages.about');
-    }
-]);
+Route::group(['prefix'=>'detail-page'],  function() {
+    Route::get('/about',[
+        'as' => 'about',
+        function () {
+            return view('main.pages.about');
+        }
+    ]);
+    Route::get('/news/{id}',[
+        'as' => 'main.news.getNewsDetail',
+        'uses' => 'MainController@getNewsDetail'
+    ]);
+});
 Route::get('/contact', [
     "as" => 'main.getContact',
     "uses" => "MainController@getContact"
@@ -29,10 +35,27 @@ Route::post('/contact', [
     "as" => 'main.postContact',
     "uses" => "MainController@postContact"
 ]);
-Route::get('/register', [
-    'as'=>'main.register',
-    'uses' => "MainController@getRegister"
-]);
+Route::group(['prefix'=>'register'],  function() {
+    Route::get('choose', [
+        'as' => "main.register",
+        function () {
+            return view('main.pages.register');
+        }
+    ]);
+    Route::get('tutor', [
+        'as'=>'main.register.tutor',
+        'uses' => "MainController@getTutorRegister"
+    ]);
+    Route::post('tutor', [
+        'as'=>'main.register.tutor',
+        'uses' => "MainController@postTutorRegister"
+    ]);
+    Route::get('student', [
+        'as'=>'main.register.student',
+        'uses' => "MainController@getStudentRegister"
+    ]);
+});
+
 Route::post('/register/{id}', [
     'as' => 'main.mainRegister',
     'uses' => "MainController@postRegister"
@@ -170,11 +193,18 @@ Route::group(['prefix'=>'admin'],  function() {
         'uses' => "AdminController@postFindTutor"
 
     ])->middleware('auth');
+    Route::group(['prefix'=>'form'], function() {
+        Route::get('/list',[
+            'as'=>'admin.form.getForm',
+            'uses'=>'AdminController@getForm'
+        ])->middleware('auth');
+        Route::get('/delete/{id}', [
+            'as' => "admin.form.delete",
+            'uses' => 'AdminController@getDeleteTutorForm'
+        ])->middleware('auth');
+    });
 
-    Route::get('/form',[
-        'as'=>'admin.form.getForm',
-        'uses'=>'AdminController@getForm'
-    ])->middleware('auth');
+
     Route::get('/tutorform-detail/{id}',[
         'as'=>'admin.tutorform-detail.getTutorFormDetail',
         'uses'=>'AdminController@getTutorFormDetail'

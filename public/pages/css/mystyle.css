@@ -3,6 +3,19 @@
     padding: 0;
 }
 
+label {
+    color: green;
+}
+
+ul.list-inline.text-right {
+    margin: 0;
+}
+
+ul.list-inline.text-left {
+    margin: 3px;
+    padding:  0;
+}
+
 .button-div {
     position: fixed;
     top: 50%;
@@ -232,10 +245,14 @@ li.itemslide-active div {
 }
 
 .our-cources {
-    padding: 100px;
+    padding-top: 100px;
     height: 600px;
-    background:  #3498db;
+    /* background:  #3498db; */
     position:  relative;
+    top: 0;
+    left:  0;
+    z-index: 1;
+    overflow:  hidden;
 }
 
 .our-cources a {
@@ -245,12 +262,12 @@ li.itemslide-active div {
 }
 
 .about {
-    margin:  100px;
+    padding:  100px;
 }
 
-.our-link.text-center {background:  #3498db;color: white;}
+.our-link.text-center {background:  #3498db;color: white;position:  relative;top: -36px;height: 178px;}
 
-.our-link.text-center .bg-color-green {background:  #2ecc71;}
+.our-link.text-center .bg-color-green {background:  #2ecc71;height: 178px;}
 
 .our-link.text-center .icon {
     font-size: 88px;
@@ -277,7 +294,7 @@ li.itemslide-active div {
 
 .header-bottom a {
     color: white;
-    font-size:  20px;
+    font-size: 15px;
     text-decoration:  none;
 }
 
@@ -314,6 +331,7 @@ li.itemslide-active div {
 .header-bottom ul li {
     list-style:  none;
     position:  relative;
+    border-right: 1px solid white;
 }
 
 .header-bottom ul li:hover {background:  #27ae60;}
