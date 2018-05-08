@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 05, 2018 lúc 10:39 AM
+-- Thời gian đã tạo: Th5 08, 2018 lúc 07:46 AM
 -- Phiên bản máy phục vụ: 10.1.30-MariaDB
 -- Phiên bản PHP: 7.1.14
 
@@ -50,6 +50,26 @@ BEGIN
 	SELECT *
     FROM users
     WHERE name LIKE CONCAT('%', @val , '%');
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewsById` (IN `newsid` INT(10))  NO SQL
+BEGIN
+	SELECT *
+    FROM posts
+    WHERE type = 0 AND id = newsid;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getNumberOfTutorType` ()  NO SQL
+BEGIN
+	SELECT COUNT(s.specialize)
+    FROM tutors as t, specializes as s, users as u
+    WHERE u.id = t.user_id AND t.s_id = s.id
+    GROUP BY s.specialize;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSpecializeBySID` (IN `sid` INT(10))  NO SQL
+BEGIN
+	SELECT * FROM specializes WHERE id = sid;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  BEGIN
@@ -223,6 +243,13 @@ CREATE TABLE `posts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `posts`
+--
+
+INSERT INTO `posts` (`id`, `author_id`, `title`, `description`, `content`, `images`, `files`, `type`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Bài viết đầu tiên', '<p>Đ&acirc;y l&agrave; b&agrave;o viết đầu ti&ecirc;n, chả c&oacute; g&igrave; đặc biệt</p>', '<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>', 'upload/images/post/news\\31369209_1082634105212560_8349483201575518208_n.jpg', NULL, 0, '2018-05-07 18:12:35', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -271,6 +298,17 @@ CREATE TABLE `specializes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `specializes`
+--
+
+INSERT INTO `specializes` (`id`, `specialize`, `created_at`, `updated_at`) VALUES
+(1, 'Gia sư Toán cấp 3', NULL, NULL),
+(2, 'Gia sư Lý cấp 3', NULL, NULL),
+(3, 'Gia sư Hóa cấp 3', NULL, NULL),
+(4, 'Gia sư tin học văn phòng', NULL, NULL),
+(5, 'Gia sư Anh văn giao tiếp', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -419,6 +457,13 @@ CREATE TABLE `tutor_registers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tutor_registers`
+--
+
+INSERT INTO `tutor_registers` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `school`, `specialize_id`, `achievements`, `created_at`, `updated_at`) VALUES
+(1, 'Nguyễn Kỳ Duyên', '2012-12-12', 'HCM', 'HCM', '0', '0987654331', 'sadasdsad@gamil.ds', 'BK', 1, 'asdasd', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -635,7 +680,7 @@ ALTER TABLE `parents`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `question_banks`
@@ -653,7 +698,7 @@ ALTER TABLE `scores`
 -- AUTO_INCREMENT cho bảng `specializes`
 --
 ALTER TABLE `specializes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `students`
@@ -695,7 +740,7 @@ ALTER TABLE `tutors`
 -- AUTO_INCREMENT cho bảng `tutor_registers`
 --
 ALTER TABLE `tutor_registers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
