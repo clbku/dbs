@@ -157,7 +157,16 @@
 ">Bạn cần gia sư cho môn học nào</h1>
             <div id="scrolling">
                 <ul style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate3d(0px, 0px, 0px);">
-
+                    @foreach($courses as $c)
+                    <li>
+                        <div>
+                            <div class="mo"></div>
+                            <h2>{{$c->specialize}}</h2>
+                            <a class="btn btn-success" href="#">Xem chi tiết</a>
+                            <a class="btn btn-success" href="{{route('main.tutor.getList',[$c->id])}}">Xem chi tiết</a>
+                        </div>
+                    </li>
+                    @endforeach
                 </ul>
             </div>
 
@@ -183,7 +192,7 @@
                             <span class="description">
                                 {!! $n->description !!}
                             </span>
-                            <a href="{{route('main.news.getNewsDetail', $n->id)}}" class="btn btn-success" style="position:  absolute;z-index:  3;bottom: 40px;right: 10px;">Xem chi tiết</a>
+                            <a href="{{route('main.news.getNewsDetail', $n->id)}}" class="btn btn-success" >Xem chi tiết</a>
                         </div>
                     </div>
                     <?php $i++ ?>

@@ -3,6 +3,16 @@
 	<div id="page-wrapper">
 		<div class="graphs">
 			<form action="{{route('admin.user.postAdd')}}" method="post" style="width: 100%;" enctype="multipart/form-data">
+				@if (count($errors)>0)
+					<div class="alert alert-danger">
+						<strong>Lỗi ! </strong>Vui lòng kiểm tra lại thông tin :
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{$error}}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif ()
 				<div class="row">
 					<div class="col-sm-3">
 						<row>

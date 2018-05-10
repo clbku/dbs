@@ -26,7 +26,9 @@ class MainController extends Controller
     public  function getTutorRegister() {
         return view('main.pages.tutor-register');
     }
-
+    public function  getStudentRegister() {
+        return view('main.pages.student-register');
+    }
     public function postTutorRegister(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -73,7 +75,31 @@ class MainController extends Controller
         return redirect()->route('main.register.tutor')->with('success', 'Bạn đã đăng ký thành công');
     }
     public function postStudentRegister (Request $request) {
+        $validator = Validator::make($request->all(),
+            [
+                'txtName' => 'required',
+                'txtDOB' => 'required',
+                'txtAddress' => 'required',
+                'txtHometown' => 'required',
+                'txtPhone' => 'required|numeric',
+                'txtClass' => 'required',
+            ],
+            [
+                'txtName.required' => 'Bạn chưa nhập tên',
+                'txtDOB.required' => 'Bạn chưa nhập ngày sinh',
+                'txtAddress.required' => 'Bạn chưa nhập địa chỉ',
+                'txtPhone.required' => 'Bạn chưa nhập SĐT',
+                'txtPhone.numeric' => 'SĐT không đúng',
+                'txtClass.required' => 'Bạn chưa nhập Lớp'
+            ]
+        );
 
+
+        if ($validator->fails()) {
+            return redirect()->route('main.register.student')
+                ->withErrors($validator)
+                ->withInput();
+        }
             $name = $request->txtName;
             $dob = $request->txtDOB;
             $address = $request->txtAddress;
@@ -196,7 +222,19 @@ class MainController extends Controller
     }
     public function getNewsDetail($id) {
         $news = DB::select('CALL getNewsById(?)', [$id])[0];
-        return view('main.pages.detail-page', compact('news'));
+        $comments = DB::select('CALL getComment');
+        return view('main.pages.detail-page', compact('news', 'comments'));
     }
-   
+    public function postComment(Request $request, $postid) {
+        $author_id = Auth::user()->id;
+        $post_id = $postid;
+        $comment = $request->txtComment;
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('CALL postAddCommentWithPostID(?,?,?,?)', [$post_id, $author_id, $comment, $created_at]);
+        return redirect()->route('main.news.getNewsDetail', $post_id);
+    }
+    public function getDeleteComment($post_id, $id) {
+        DB::delete('DELETE FROM comments WHERE id = ?', [$id]);
+        return redirect()->route('main.news.getNewsDetail', $post_id);
+    }
 }

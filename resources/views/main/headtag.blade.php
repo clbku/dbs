@@ -117,4 +117,5 @@
             float: left;
         }
     </style>
+    <script src="{{url('assets/ckeditor/ckeditor.js')}}"></script>
 </head>

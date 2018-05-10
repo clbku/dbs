@@ -58,7 +58,7 @@
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <div class="form-group">
                                             <label>ID học sinh</label>
-                                            <input class="form-control" name="studentID">
+                                            <input class="form-control" name="studentID" required>
                                         </div>
                                         <input type="hidden" name="classID" value="{{$a->id}}">
                                         <input type="submit" value="Thêm">

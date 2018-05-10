@@ -3,9 +3,21 @@
 
     <div class="form" id="form-student">
         <div class="container">
-            <form method="post" action="{{route('main.mainRegister', 'student')}}">
+            <form method="post" action="{{route('main.register.student')}}">
                 <input name="_token" value="{{csrf_token()}}" type="hidden">
                 <h2 style="color:  green; border-bottom: 3px solid green;padding-bottom: 18px;"><i class="fa fa-pencil"></i>Đăng Ký Học Tập</h2>
+                @if (\Illuminate\Support\Facades\Session::has('success'))
+                    <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="form-group">
                     <label>Họ và tên</label>
                     <input class="form-control" type="text" name="txtName" value="account" placeholder="account" required>

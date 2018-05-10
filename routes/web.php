@@ -54,6 +54,10 @@ Route::group(['prefix'=>'register'],  function() {
         'as'=>'main.register.student',
         'uses' => "MainController@getStudentRegister"
     ]);
+    Route::post('student', [
+        'as'=>'main.register.student',
+        'uses' => "MainController@postStudentRegister"
+    ]);
 });
 
 Route::post('/register/{id}', [
@@ -305,6 +309,14 @@ Route::post('sign-up', [
     'as' => 'postSignUp',
     'uses' => 'MainController@postSignUp'
 ]);
+Route::post('comment/{postid}', [
+    'as' => 'postComment',
+    'uses' => 'MainController@postComment'
+])->middleware('auth');
+Route::get('deleteComment/{post_id}/{id}', [
+    'as' => 'getDeleteComment',
+    'uses' => 'MainController@getDeleteComment'
+])->middleware('auth');
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 
 

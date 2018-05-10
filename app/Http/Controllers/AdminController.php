@@ -53,6 +53,45 @@ class AdminController extends Controller
         return view('admin.pages.add-user');
     }
     public function postAddUser(Request $request) {
+        $validator = Validator::make($request->all(),
+            [
+                'name'      => 'required',
+                'dob'       => 'required',
+                'address'   => 'required',
+                'phone'     => 'required|numeric',
+                'email'     => 'required|email',
+                'file'      => 'required',
+                'username'  => 'required|unique:users,username',
+                'password'  => 'required|min:6',
+                're-password'   => 'required|same:password'
+            ],
+            [
+                'name.required'     => 'Bạn chưa nhập tên',
+                'dob.required'      => 'Bạn chưa nhập ngày sinh',
+                'address.required'  => 'Bạn chưa nhập địa chỉ',
+                'phone.required'    => 'Bạn chưa nhập SĐT',
+                'phone.numeric'     => 'SĐT không đúng',
+                'email.required'    => 'Bạn chưa nhập email',
+                'email.email'       => 'Không đúng định dạng email',
+                'file.required'     => 'Bạn chưa chọn avatar',
+                'username.required' => 'Bạn chưa nhập tên tài khoản',
+                'username.unique'   => 'Tên tài khoản đã tồn tại',
+                'password.required' => 'Bạn chưa nhập password',
+                'password.min'      => 'Password phải lớn hơn 5 ký tự',
+                're-password.required'=> 'Hai mật khẩu không khớp',
+                're-password.same'=> 'Hai mật khẩu không khớp',
+            ]
+        );
+
+
+
+
+        if ($validator->fails()) {
+            return redirect()->route('getSignUp')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $name = $request->name;
         $dob = $request->dob;
         $address = $request->address;
@@ -61,15 +100,13 @@ class AdminController extends Controller
         $phone = $request->phone;
         $email = $request->email;
         $type = $request->type;
-        $avatar = $request->file;
-        DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type)
-                          values(?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type]);
+        $file = $request->file;
+        $avatar = $file->move('upload/images/user/avatar',$file->getClientOriginalName());
         $username = $request->username;
-        $password = $request->password;
+        $password = Hash::make($request->password);
         $state = 1;
-        $user_id = DB::select('select MAX(id) as id from users')[0]->id;
-        DB::insert('insert into accounts(username, password, state, user_id)
-                  values(?,?,?,?)', [$username, Hash::make($password), $state, $user_id]);
+        DB::insert('insert into users(name, dob, address, hometown, sex, phone, email, avatar, type, username, password, state)
+                          values(?,?,?,?,?,?,?,?,?,?,?,?)', [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type, $username, $password, $state]);
         return redirect()->route('admin.user.getList');
     }
     public function postFindUser(Request $request) {
@@ -250,7 +287,7 @@ class AdminController extends Controller
 
     // class page ------------------------------------
     public function getClassList(){
-        $class = DB::select('select * from class_s');
+        $class = DB::select('select * from class_s, studies');
         return view('admin.pages.class',compact('class'));
     }
     public function postAddStudent(Request $request) {
@@ -293,21 +330,27 @@ class AdminController extends Controller
 
     }
     public function postTutorFormDetail(Request $request, $id) {
-        DB::insert("INSERT INTO users(name, dob, address,  hometown, sex, phone, email, avatar, type)
-                          VALUES (?, str_to_date('". $request->txtDOB ."', '%Y-%m-%d'), ?, ?, ?, ?, ?, 'index.png', '0')", [$request->txtName, $request->txtAddress, $request->txtHomeTown, $request->txtSex, $request->txtPhone, $request->txtEmail]);
-
-
+        $name = $request->txtName;
+        $dob = $request->txtDOB;
+        $address = $request->txtAddress;
+        $hometown = $request->txtHomeTown;
+        $sex = $request->txtSex;
+        $phone = $request->txtPhone;
+        $email = $request->txtEmail;
+        $avatar = 'index.png';
+        $type = 0;
         $username = AdminController::to_slug($request->txtName);
         $password = Hash::make($username);
+        $state = 1;
+        DB::insert("INSERT INTO users(name, dob, address,  hometown, sex, phone, email, avatar, type, username, password, state)
+                          VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$name, $dob, $address, $hometown, $sex, $phone, $email, $avatar, $type, $username, $password, $state]);
+
+
+        $s_id = $request->txtSid;
+        $achievement = $request->txtAchievements;
         $user_id = DB::select('select MAX(id) as m from users');
-
-
-        DB::insert("INSERT INTO accounts (username, password, state,  user_id)
-                          VALUES (?, ?, '1', ?)", [$username, $password, $user_id[0]->m]);
-
-
-        DB::insert("INSERT INTO tutors (s_id, achievement, user_id, point, count)
-                          VALUES (?, ?, ?, ?, ?)", [$request->txtSid, $request->txtAchievements, $user_id[0]->m, 0, 0]);
+        DB::insert("INSERT INTO tutors (s_id, achievement,  user_id, point, count)
+                          VALUES (?, ?, ?, ?, ?)", [$s_id, $achievement, $user_id[0]->m, 0, 0]);
 
 
         DB::delete("delete from tutor_registers where id = ?" , [$id]);
@@ -338,8 +381,9 @@ class AdminController extends Controller
             DB::insert("INSERT INTO class_s (address, level, student_num, shift, tutor_id, subject_id,  state)
                           VALUES (?, ?, '1', ?, ?, ?, '0')", [$request->txtAddress, $level, $request->txtShift, $request->txtTutor,  $request->txtSubject]);
             $class_id =  DB::select('select MAX(id) as m from class_s');
-            DB::insert("INSERT INTO studies (student_id, class_id)
-                          VALUES (?, ?)", [$student_id[0]->m, $class_id[0]->m]);
+            $date = date('Y-m-d H:i:s');
+            DB::insert("INSERT INTO studies (student_id, class_id, begin_at)
+                          VALUES (?, ?, ?)", [$student_id[0]->m, $class_id[0]->m, $date]);
         }
 
 

@@ -16,7 +16,48 @@
                 <div class="content-main">
                     {!! $news->content !!}
                 </div>
+                <br>
+                <hr>
+                <br>
+                <div class="comment-area" id="#comment">
+                    <h2>Bình Luận</h2>
+                    <br>
+                    <div class="line"></div>
+                    <div class="other-comment">
+                        @foreach($comments as $c)
+                        <div class="comment-item">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img src="{{url($c->avatar)}}" class="img-responsive">
+                                </div>
+                                <div class="col-sm-10">
+                                    <p><strong>{{$c->name}}</strong> - <i class="fa fa-calendar-o"></i>{{$c->created_at}}</p>
+                                    <p>{!! $c->comment !!}</p>
+                                    @if(Auth::user()->id == $c->id)
+                                    <a href="{{route('getDeleteComment', [$c->post_id, $c->cid])}}" onclick="return confirm('Bạn có chắc muốn xóa không?')"><i class="fa fa-trash-o"></i>Delete</a>
+                                    @endif
+                                    <hr>
+                                </div>
 
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="your-comment">
+                        <form style="width: 100%;" method="post" action="{{route('postComment', $news->id)}}">
+                            <input name="_token" value="{{csrf_token()}}" type="hidden">
+                            <div class="form-group">
+                                <label>Comment</label>
+                                <textarea id="editor1" name="txtComment"></textarea>
+                                <script>
+                                    CKEDITOR.replace( 'editor1' );
+                                </script>
+                            </div>
+                            <input class="btn btn-success" type="submit" value="Bình Luận">
+                        </form>
+
+                    </div>
+                </div>
             </div>
             <div class="right-side col-sm-3">
 

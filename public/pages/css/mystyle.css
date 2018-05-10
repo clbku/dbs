@@ -3,6 +3,8 @@
     padding: 0;
 }
 
+
+
 label {
     color: green;
 }
@@ -13,7 +15,7 @@ ul.list-inline.text-right {
 
 ul.list-inline.text-left {
     margin: 3px;
-    padding:  0;
+    padding: 0;
 }
 
 .button-div {
@@ -26,50 +28,52 @@ ul.list-inline.text-left {
 }
 
 .button-div a {
-    margin:  23px;
+    margin: 23px;
 }
 
 .full {
     position: fixed;
-    width:  100%;
-    height:  1000px;
+    width: 100%;
+    height: 1000px;
     top: 0;
-    left:  0;
+    left: 0;
     background: #ecf0f1;
-    overflow:  hidden;
+    overflow: hidden;
 }
 
 .new-img {
-    position:  absolute;
+    position: absolute;
     z-index: 0;
-    left:  0;
+    left: 0;
     top: 0;
 }
 
 form {
     width: 50%;
-    margin:  auto;
+    margin: auto;
 }
 
 .form {
     margin: 100px;
 }
+
 .forum-content {
     border: 1px solid darkgrey;
     padding: 10px;
     margin: 100px 0;
 }
+
 .comment-list .comment-author {
-    color:  green;
-    font-size:  17px;
+    color: green;
+    font-size: 17px;
 }
 
 .comment-list ul {
-    list-style:  none;
+    list-style: none;
 }
 
 .comment-list ul li {
-    margin:  22px;
+    margin: 22px;
 }
 
 .content form {
@@ -89,9 +93,9 @@ form {
     background: green;
     text-align: center;
     margin: 0;
-    padding:  0;
+    padding: 0;
     border-radius: 10px;
-    width:  30px;
+    width: 30px;
 }
 
 .content-main .row {
@@ -99,35 +103,35 @@ form {
 }
 
 .tutor-achievements span, .tutor-point span, .tutor-specializes span {
-    color:  green;
+    color: green;
     font-weight: 900;
 }
 
 .content .tutor-name {
-    font-size:  23px;
-    color:  green;
+    font-size: 23px;
+    color: green;
     margin: 10px auto;
-    text-align:  center;
+    text-align: center;
     font-weight: bold;
 }
 
 .tutor-avatar {
     width: 200px;
     height: 200px;
-    overflow:  hidden;
+    overflow: hidden;
     border-radius: 100px;
-    text-align:  center;
-    margin:  auto;
+    text-align: center;
+    margin: auto;
 }
 
 .content .tutor-item {
-    width:  100%;
+    width: 100%;
 }
 
 .fanpage {
-    width:  100%;
-    height:  200px;
-    background:  green;
+    width: 100%;
+    height: 200px;
+    background: green;
 }
 
 .content {
@@ -140,105 +144,137 @@ form {
 }
 
 .right-side ul li {
-    padding:  10px;
+    padding: 10px;
     margin: 0 10px;
-    cursor:  pointer;
-    transition:  all 0.4s;
+    cursor: pointer;
+    transition: all 0.4s;
 }
 
 .tutor-list ul li:hover {
     background: green;
-    color:  white;
+    color: white;
 }
 
 div.right-title {
-    font-size:  25px;
-    color:  green;
-    margin:  10px 30px;
+    font-size: 25px;
+    color: green;
+    margin: 10px 30px;
 }
 
 .right-side ul {
-    list-style:  none;
+    list-style: none;
 }
 
-.content-calender {margin-bottom:  60px;}
+.content-calender {
+    margin-bottom: 60px;
+}
 
 .content-title {
-    margin-top:  60px;
-    font-size:  40px;
+    margin-top: 60px;
+    font-size: 40px;
 }
 
 .news .black {
-    position:  absolute;
+    position: absolute;
     width: 500px;
-    height:  700px;
+    height: 700px;
     background: #000000ad;
-    visibility:  hidden;
-    z-index:  0;
+    visibility: hidden;
+    z-index: 0;
+    opacity: 0;
+    transition: all 0.4s;
 }
 
-.black {}
+.black {
+}
 
 .news .line {
-    width:  100px;
+    width: 100px;
     height: 5px;
-    background:  red;
-    position:  absolute;
+    background: red;
+    position: absolute;
     top: 162px;
+    left: -100px;
+    transition:  0.4s;
+}
+
+.new-item:hover .line {
     left:  35px;
 }
 
 .news span.description {
-    position:  absolute;
-    color:  white;
+    position: absolute;
+    color: white;
     right: 10px;
     text-align: right;
-    bottom: 83px;
+    bottom: -100px;
+    transition: all 0.4s;
 }
+
+.new-item:hover span.description {bottom: 100px;}
 
 .news span.title {
     position: absolute;
     right: 0;
-    bottom:  100px;
-    font-size: 19px;
-    text-align:  right;
+    bottom: 100px;
+    font-size: 30px;
+    text-align: right;
     margin: 35px 10px;
+    color: green;
+    font-weight: 700;
+    transition: all 0.4s;
+}
+
+.new-item:hover span.title {
     color: white;
 }
 
 .new-item {
     width: 90%;
     height: 350px;
-
-    position:  relative;
-    overflow:  hidden;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
 }
 
 .new-item:hover .black {
     visibility: visible;
+    opacity: 1;
 }
 
 .news {
-    padding:  100px;
+    padding: 100px;
 }
-
+.new-item a.btn.btn-success {
+    position:  absolute;
+    z-index:  3;
+    bottom: 40px;
+    right: 10px;
+    transition:  all 0.4s;
+    transform: translate(200px, 0px);
+}
+.new-item:hover a.btn.btn-success {
+    transform: translate(0px, 0px);
+}
 div#scrolling li {
     width: 240px;
     height: 300px;
     background: url('../images/course-img1.png') no-repeat;
     background-size: cover;
-    margin:  10px;
-    position:  relative;
+    margin: 10px;
+    position: relative;
+    padding:  12px;
 }
 
 div#scrolling li a {
-    position:  absolute;
-    bottom:  46px;
-    left:  19px;
+    position: absolute;
+    bottom: 46px;
+    left: 19px;
 }
 
 div#scrolling li h2 {
     color: white;
+    font-size: 20px;
 }
 
 li.itemslide-active div {
@@ -248,26 +284,35 @@ li.itemslide-active div {
     padding-top: 100px;
     height: 600px;
     /* background:  #3498db; */
-    position:  relative;
+    position: relative;
     top: 0;
-    left:  0;
+    left: 0;
     z-index: 1;
-    overflow:  hidden;
+    overflow: hidden;
 }
 
 .our-cources a {
-    position:  absolute;
-    bottom:  50px;
+    position: absolute;
+    bottom: 50px;
     left: 200px;
 }
 
 .about {
-    padding:  100px;
+    padding: 100px;
 }
 
-.our-link.text-center {background:  #3498db;color: white;position:  relative;top: -36px;height: 178px;}
+.our-link.text-center {
+    background: #3498db;
+    color: white;
+    position: relative;
+    top: -36px;
+    height: 178px;
+}
 
-.our-link.text-center .bg-color-green {background:  #2ecc71;height: 178px;}
+.our-link.text-center .bg-color-green {
+    background: #2ecc71;
+    height: 178px;
+}
 
 .our-link.text-center .icon {
     font-size: 88px;
@@ -283,19 +328,19 @@ li.itemslide-active div {
 }
 
 .header-top .dropdown-item {
-    display:  block;
+    display: block;
 }
 
 .header-bottom {
-    background:  #2ecc71;
-    padding:  13px;
-    padding-bottom:  0px;
+    background: #2ecc71;
+    padding: 13px;
+    padding-bottom: 0px;
 }
 
 .header-bottom a {
     color: white;
     font-size: 15px;
-    text-decoration:  none;
+    text-decoration: none;
 }
 
 .header-bottom .dropdown-menu {
@@ -306,42 +351,44 @@ li.itemslide-active div {
 
 .header-bottom a.dropdown-item {
     display: block;
-    margin:  10px;
+    margin: 10px;
 }
 
 .header-bottom ul li> ul {
-    position:  absolute;
-    z-index:  10;
-    width:  200px;
+    position: absolute;
+    z-index: 10;
+    width: 200px;
     background: #2ecc71;
     padding: 9px 0px 28px 8px;
     margin: 9px 0px;
-    opacity:  0;
+    opacity: 0;
 }
 
 .header-bottom ul li> ul li {
-    margin:  10px;
+    margin: 10px;
 }
 
 .header-bottom a:hover {
-    cursor:  pointer;
+    cursor: pointer;
     color: antiquewhite;
 }
 
 .header-bottom ul li {
-    list-style:  none;
-    position:  relative;
+    list-style: none;
+    position: relative;
     border-right: 1px solid white;
 }
 
-.header-bottom ul li:hover {background:  #27ae60;}
+.header-bottom ul li:hover {
+    background: #27ae60;
+}
 
 .header-logo {
-    margin-top:  -60px;
+    margin-top: -60px;
 }
 
 .header-middle {
-    margin-top:  60px;
+    margin-top: 60px;
 }
 
 .header-top {
@@ -352,7 +399,7 @@ li.itemslide-active div {
 }
 
 .header-top a {
-    padding:  8px;
+    padding: 8px;
     color: white;
-    font-size:  13px;
+    font-size: 13px;
 }

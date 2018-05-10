@@ -18,7 +18,7 @@
                                         </ul>
                                         </div>
                                     @endif ()
-                                    <img src="{{url($user[0]->avatar)}}" alt="avatar">
+                                    <img class="" style="width: 200px;height: 200px;border-radius: 100px;margin:  auto;text-align:  center;position:  relative;left: -30px;margin-bottom: 34px;" src="{{url($user[0]->avatar)}}" alt="avatar">
                                 </div>
                                 <!--account info -->
                                 @if ($type == 'user')
