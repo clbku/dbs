@@ -17,30 +17,67 @@
                 		<table>
 
                 			<tr>
-                				<th>Tên diễn đàn</th>
-                				<th>Posts</th>
-                				<th>Người tạo</th>
-                				<th>Tin nhắn cuối cùng</th>
+                				<th>Người gửi</th>
+                				<th>Nội dung</th>
+                				
                 			</tr>
-                			
+                			<tr>
+                                
+                                <td>04/18/2018 09:22:43 AM></td>
+                                
+                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
+                                
+                            </tr>
                 			<tr>
                 				
-                				<td><a href ="{{route('getforumpost')}}">[Toán 11]Bài tập về số nguyên tố</a></td>
+                				<td class="post"><a href ="">Đặng Hoàng Ân</a></td>
                 				
-                				<td>5</td>
-                				<td>Đặng Hoàng Ân</td>
-                				<td>04/24/2018 08:22:21 AM <br><a href="">Đặng Hoàng Ân</a></td>
+                				<td class="post">Chứng minh 2 là số nguyên tố</td>
+                				
                 			</tr>
-                			
+                			<tr>
+                                
+                                <td>04/18/2018 09:22:43 AM></td>
+                                
+                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
+                                
+                            </tr>
                 			<tr>
                 				
-                				<td><a href ="{{route('getforumpost')}}">[Hóa 10]Thắc mắc về H2SO4</a></td>
+                				<td class="post"><a href ="">Hoàng Công Lý</a></td>
                 				
-                				<td>5</td>
-                				<td>Đặng Hoàng Ân</td>
-                				<td>04/24/2018 08:22:21 AM <br><a href="">Đặng Hoàng Ân</a></td>
+                				<td class="post">2 auto là số nguyên tố</td>
+                				
                 			</tr>
+                            <tr>
+                                
+                                <td>04/18/2018 09:22:43 AM></td>
+                                
+                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
+                                
+                            </tr>
+                            <tr>
+                                
+                                <td class="post"><a href ="">Đặng Hoàng Ân</a></td>
+                                
+                                <td class="post">Cảm ơn bạn</td>
+                                
+                            </tr>
                 		</table>
+                        <div class="your-comment">
+                        <form style="width: 100%;" method="post" action="">
+                            <input name="_token" value="{{csrf_token()}}" type="hidden">
+                            <div class="form-group">
+                                <label>Comment</label>
+                                <textarea id="editor1" name="txtComment"></textarea>
+                                <script>
+                                    CKEDITOR.replace( 'editor1' );
+                                </script>
+                            </div>
+                            <input class="btn btn-success" type="submit" value="Bình Luận">
+                        </form>
+
+                    </div>
                 	
                
                 <br>

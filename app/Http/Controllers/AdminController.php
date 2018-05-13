@@ -247,7 +247,7 @@ class AdminController extends Controller
         DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
         values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $images, $type, $file, $created_at]);
 
-        return redirect()->route('admin.post.list');
+        return redirect()->route('admin.post.list')->with('success', 'Đăng bài thành c');
     }
     public function getDeletePost($id) {
         $post = DB::table('posts')->where('id', $id)->first();
@@ -287,14 +287,47 @@ class AdminController extends Controller
 
     // class page ------------------------------------
     public function getClassList(){
-        $class = DB::select('select * from class_s, studies');
-        return view('admin.pages.class',compact('class'));
+        $class = DB::select('select * from class_s, studies, students where class_s.id = studies.class_id and students.id = studies.student_id');
+        return view('admin.pages.class.class',compact('class'));
+    }
+    public function getEditClass($id) {
+        $class = DB::select('select * from class_s, studies, students where class_s.id = studies.class_id and students.id = studies.student_id and class_id = ?', [$id])[0];
+        return view('admin.pages.class.edit-class', compact('class'));
     }
     public function postAddStudent(Request $request) {
         $class = $request->classID;
         $student = $request->studentID;
         DB::insert('insert into studies(student_id, class_id) values(?,?)', [$student, $class]);
         return redirect()->route('admin.class.getList');
+    }
+    public function postEditClass($id, Request $request) {
+        $address = $request->address;
+        $date = $request->begin_at;
+        $shift = $request->shift;
+        DB::update('update class_s set address=?, begin_at=?, shift=? where id=?', [$address, $date, $shift, $id]);
+        return redirect()->route('admin.class.getList')->with('success', 'Cập nhật thành công');
+    }
+    public function getDeleteStudent($class_id, $student_id) {
+        DB::delete('delete from studies where class_id=? and student_id=?', [$class_id, $student_id]);
+        return redirect()->route('admin.class.getList')->with('success', 'Xóa thành công!');
+    }
+    public function getAddClass() {
+        return view('admin.pages.class.add-class');
+    }
+    public function postAddClass(Request $request) {
+        $student_id = $request->student_id;
+        $tutor_id = $request->tutor_id;
+        $subject_id = $request->subject_id;
+        $address = $request->address;
+        $shift = $request->shift;
+        $created_at = date('Y-m-d H:i:s');
+        $level = 1;
+        $student_num = 1;
+        $state = 0;
+        DB::insert('insert into class(address, level, student_num, shift, tutor_id, subject_id, state, created_at) VALUES (?,?,?,?,?,?,?,?)',
+            [$address, $level, $student_num, $shift, $tutor_id, $subject_id, $state, $created_at]);
+        DB::insert('insert into studies(tutor_id, student_id ,created_at) VALUES (?,?,?)', [$tutor_id, $student_id, $created_at]);
+        return redirect()->route('admin.class.getList')->with('success', 'Tạo lớp thành công');
     }
 
 
@@ -375,15 +408,15 @@ class AdminController extends Controller
         if ($request->txtAvg1 + $request->txtAvg2 < 5) $level = 0;
         else if ($request->txtAvg1 + $request->txtAvg2 > 7) $level = 2;
         else $level = 1;
-
+        $date = date('Y-m-d H:i:s');
 
         if ($request->txtTutor) {
-            DB::insert("INSERT INTO class_s (address, level, student_num, shift, tutor_id, subject_id,  state)
-                          VALUES (?, ?, '1', ?, ?, ?, '0')", [$request->txtAddress, $level, $request->txtShift, $request->txtTutor,  $request->txtSubject]);
+            DB::insert("INSERT INTO class_s (address, level, student_num, shift, tutor_id, subject_id,  state, created_at)
+                          VALUES (?, ?, '1', ?, ?, ?, '0')", [$request->txtAddress, $level, $request->txtShift, $request->txtTutor,  $request->txtSubject, $date]);
             $class_id =  DB::select('select MAX(id) as m from class_s');
-            $date = date('Y-m-d H:i:s');
-            DB::insert("INSERT INTO studies (student_id, class_id, begin_at)
-                          VALUES (?, ?, ?)", [$student_id[0]->m, $class_id[0]->m, $date]);
+
+            DB::insert("INSERT INTO studies (student_id, class_id)
+                          VALUES (?, ?, ?)", [$student_id[0]->m, $class_id[0]->m]);
         }
 
 

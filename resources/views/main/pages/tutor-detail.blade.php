@@ -39,79 +39,43 @@
                 <div class="tutor-list">
                     <div class="right-title">Danh mục gia sư</div>
                     <ul>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 1</span>
-                                <div class="col-sm-2 num">3</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 2</span>
-                                <div class="col-sm-2 num">1</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 3</span>
-                                <div class="col-sm-2 num">6</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tiếng anh</span>
-                                <div class="col-sm-2 num">10</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư luyện thi đại học</span>
-                                <div class="col-sm-2 num">9</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tin học văn phòng</span>
-                                <div class="col-sm-2 num">5</div>
-                            </div>
-                        </li>
+                        <?php $tutorlist = DB::select('CALL getSpecializeListWithCountNumTutor()') ?>
+                        @foreach($tutorlist as $t)
+                            <li>
+                                <a href="{{route('main.tutor.getList', $t->ids)}}">
+                                    <div class="row">
+                                        <span class="col-sm-10">{{$t->s_name}}</span>
+                                        <div class="col-sm-2 num">{{$t->c}}</div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        @endforeach
                     </ul>
                 </div>
                 <div class="news-list">
 
                     <div class="right-title">Tin tức</div>
                     <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-sm-4 image">
-                                    <img src="images/img1.jpeg" class="img-responsive" alt="hinh1">
-                                </div>
-                                <div class="col-sm-8 detail">
-                                    <div class="title">
-                                        CLB tiếng anh cho trẻ
+                        <?php $newslist = DB::select('CALL getRandomNewsList()') ?>
+                        @foreach( $newslist as $n )
+                            <li>
+                                <div class="row">
+                                    <div class="col-sm-4 image">
+                                        <img src="{{url($n->images)}}" class="img-responsive" alt="hinh1">
                                     </div>
-                                    <div class="time">
-                                        <i class="fa fa-calendar"></i> 12/3/2014
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <div class="col-sm-4 image">
-                                    <img src="images/img1.jpeg" class="img-responsive" alt="hinh1">
-                                </div>
-                                <div class="col-sm-8 detail">
-                                    <div class="title">
-                                        Giảm học phí cho học sinh
-                                    </div>
-                                    <div class="time">
-                                        <i class="fa fa-calendar"></i> 12/3/2014
+                                    <div class="col-sm-8 detail">
+                                        <div class="title">
+                                            <a href="{{route('main.news.getNewsDetail', $n->id)}}" >{!! $n->title !!}</a>
+                                        </div>
+                                        <div class="time" style="font-size: 10px;">
+                                            <i class="fa fa-calendar"></i> {!! $n->created_at !!}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
                 <div class="right-title">Fanpages</div>
                 <div class="fanpage">

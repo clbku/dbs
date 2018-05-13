@@ -4,6 +4,10 @@
             <div class="graphs">
                 
                 <div class="content-box-wrapper">
+
+                    @if (\Illuminate\Support\Facades\Session::has('success'))
+                        <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+                    @endif
                     <div class="row">
                         <h3 id="h3" class="col-sm-7">Danh sách Lớp học</h3>
                         <form class="col-sm-5">
@@ -32,44 +36,46 @@
 
                             @foreach ($class as $a)
                             <tr>
-                                <th scope="row">{{$a->id}}</th>
+                                <th scope="row">{{$a->class_id}}</th>
 
                                 <td>{{$a->address}}</td>
-                                <td></td>
+                                <td>{{$a->class_s}}</td>
                                 <td>{{$a->begin_at}}</td>
                                 <td>{{$a->student_num}}</td>
+
                                 <td>{{$a->level}}</td>
                                 <td>{{$a->shift}}</td>
 
                                 <?php 
-                                    $b=DB::select('select u.name from tutors as t, users as u where t.user_id = u.id and t.id = ?',[$a->tutor_id]);
+                                    $b=DB::select('select u.name, u.id from tutors as t, users as u where t.user_id = u.id and t.id = ?',[$a->tutor_id]);
                                 ?>
-                                <td><a href="{{route('admin.pages.profile',['user', $a->tutor_id])}}">{{$b[0]->name}}</a></td>
+                                <td><a href="{{route('admin.pages.profile',['user', $b[0]->id])}}">{{$b[0]->name}}</a></td>
                                 <td>
                                     <?php
-                                        $student=DB::select('CALL getAllStudentNameByClassId(?)', [$a->id]);
+                                        $student=DB::select('CALL getAllStudentNameByClassId(?)', [$a->class_id]);
                                     ?>
                                     @foreach($student as $s)
-                                        <a href="{{route('admin.pages.profile', ['student', $s->student_id])}}">{{$s->name}}</a> <br>
+                                        <a href="{{route('admin.pages.profile', ['student', $s->sid])}}">{{$s->name}}</a> <a href="{{route('admin.class.getDelete', [$a->class_id, $s->sid])}}"><i class="fa fa-times"></i></a><br>
                                     @endforeach
                                 </td>
-                                <td id="add-{{$a->id}}" class="hidden">
+                                <td id="add-{{$a->class_id}}" class="hidden">
                                     <form action="{{route('admin.class.addStudent')}}" method="post">
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <div class="form-group">
                                             <label>ID học sinh</label>
                                             <input class="form-control" name="studentID" required>
                                         </div>
-                                        <input type="hidden" name="classID" value="{{$a->id}}">
+                                        <input type="hidden" name="classID" value="{{$a->class_id}}">
                                         <input type="submit" value="Thêm">
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="#" id="addstudent-{{$a->id}}"><i class="fa fa-plus"></i>Thêm học sinh</a>
+                                    <a href="{{route('admin.class.getEdit', $a->class_id)}}"><i class="fa fa-edit"></i></a>
+                                    <a href="#" id="addstudent-{{$a->class_id}}"><i class="fa fa-plus"></i></a>
                                 </td>
                                 <script>
-                                    $('#addstudent-{{$a->id}}').click(function () {
-                                        $('#add-{{$a->id}}').removeClass('hidden');
+                                    $('#addstudent-{{$a->class_id}}').click(function () {
+                                        $('#add-{{$a->class_id}}').removeClass('hidden');
                                     })
                                 </script>
                             </tr>
@@ -79,8 +85,8 @@
 
                             </tbody>
                         </table>
-
                     </div><!-- /.table-responsive -->
+                    <a href="{{route('admin.class.addClass')}}" class="btn btn-success">Create Class</a>
                 </div>
 
             </div>

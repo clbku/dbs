@@ -3,60 +3,43 @@
     <div class="row">
         <div class="container">
             <div class="content col-sm-9">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div class="content-title">
-                            Danh sách gia sư
-                        </div>
-
-                        <div class="content-calender">
-                            <i class="fa fa-calendar"></i>12/3/2014
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <form action="" method="">
-                        <!--<input type="hidden" name="_token" value="{{csrf_token()}}">-->
-                            <input type="input" value="" placeholder="anything">
-                            <input type="submit" value="Tìm">
-                        </form>
-                    </div>
-                </div>
-
-                <hr>
-                <br>
-                <div class="content-main">
-                    <?php $i = 0 ?>
-                    @foreach($tutor as $t)
-                        @if ($i % 4 == 0)
+                <h2 style="font-weight:  600;color:  green;margin-bottom: 100px;border-bottom:  2px solid green;padding-bottom: 28px;">Tin tức - News</h2>
+                <ul>
+                    @foreach($news as $n)
+                    <li>
+                        <div class="news-item-list">
                             <div class="row">
-                        @endif
-                        <?php $i++; ?>
-                        <div class="col-sm-4">
-                            <div class="tutor-item">
-                                <div class="tutor-avatar">
-                                    <img src="{{$t->avatar}}" class="img-responsive" alt="gates">
+                                <div class="col-sm-3">
+                                    <img src="{{url($n->images)}}">
                                 </div>
-                                <div class="tutor-name">
-                                    {{$t->name}}
+                                <div class="col-sm-9">
+                                    <div class="news-item-title">
+                                        {!! $n->title !!}
+                                    </div>
+                                    <span style="font-size: 10px;"><i class="fa fa-calendar"></i> {{$n->created_at}}</span>
+                                    <div class="news-item-description">
+                                        {!! $n->description !!}
+                                    </div>
+                                    <a class="btn btn-success" href="{{route('main.news.getNewsDetail', $n->id)}}">Xem chi tiết</a>
                                 </div>
-                                <div class="tutor-specializes">
-                                    <span>Chuyên môn: </span>{{$t->specialize}}
-                                </div>
-                                <div class="tutor-achievements">
-                                    <span>Thành tích: </span> {{$t->achievement}}
-                                </div>
-                                <div class="tutor-point">
-                                    <span>Đánh giá: </span>{{$t->point}}/10
-                                </div>
-                                <a class="btn btn-success" style="margin: 10px; " href="{{route('main.tutor.getTutorDetail', $t->user_id)}}">Chi tiết <i class="fa fa-play-circle"></i></a>
                             </div>
                         </div>
-                        @if ($i % 4 == 0 || $i == count($tutor))
-                            </div>
-                        @endif
+                    </li>
                     @endforeach
-                </div>
-
+                </ul>
+                <?php
+                    $c = count(DB::select('CALL getAllNews()'));
+                    $dem = 1;
+                ?>
+                <ul class="pagination">
+                    @for ($i=0; $i< $c; $i+=$num)
+                        @if ($i == $offset)
+                            <li class="active"><a href="{{route('main.getNews', [$num, $num*$i])}}">{{$dem++}}</a></li>
+                        @else
+                            <li><a href="{{route('main.getNews', [$num, $num*$i])}}">{{$dem++}}</a></li>
+                        @endif
+                    @endfor
+                </ul>
             </div>
             <div class="right-side col-sm-3">
 
@@ -110,5 +93,4 @@
             </div>
         </div>
     </div>
-
 @endsection
