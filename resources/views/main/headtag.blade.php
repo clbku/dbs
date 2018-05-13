@@ -98,6 +98,7 @@
     <link href="{{url('pages/css/footer-distributed-with-address-and-phones.css')}}" rel="stylesheet">
     <script src="{{url('pages/js/itemslide.min.js')}}"></script>
     <link href="{{url('pages/css/mystyle.css')}}" rel="stylesheet">
+     <link href="{{url('pages/css/table.css')}}" rel="stylesheet">
     <style>
         #scrolling { /* Carousel Frame */
             overflow: hidden;
