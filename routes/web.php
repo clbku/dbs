@@ -189,12 +189,12 @@ Route::group(['prefix'=>'admin'],  function() {
 
 
     Route::get('/tutor' , [
-        'as' => "admin.tutor",
+        'as'=> "admin.tutor",
         'uses' => "AdminController@getTutorList"
     ])->middleware('auth');
     Route::post('/tutor', [
         'as' => "admim.post",
-        'uses' => "AdminController@postFindTutor"
+        'uses'=> "AdminController@postFindTutor"
 
     ])->middleware('auth');
     Route::group(['prefix'=>'form'], function() {
