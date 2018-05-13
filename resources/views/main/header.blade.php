@@ -105,7 +105,7 @@
 
 
                 </li>
-                <li><a class="btn btn-secondary">Tin tức</a></li>
+                <li><a class="btn btn-secondary" href="{{route('main.getNews', [5, 0])}}">Tin tức</a></li>
                 <li><a class="btn btn-secondary">Forum</a></li>
                 <li><a href="{{route('main.getContact')}}" class="btn btn-secondary">Liên hệ</a></li>
             </ul>

@@ -3,6 +3,9 @@
 		<div id="page-wrapper">
             <div class="graphs">
                 <div class="content-box-wrapper">
+                    @if (\Illuminate\Support\Facades\Session::has('success'))
+                        <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+                    @endif
                     <div class="row">
                         <h3 id="h3" class="col-sm-7">Danh sách tin tức</h3>
                         <form class="col-sm-5">
