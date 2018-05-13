@@ -248,4 +248,7 @@ class MainController extends Controller
     public function getforumpost(){
         return view('main.pages.forrum-post');
     }
+    public function getUserDetail(){
+        return view('main.pages.user-detail');
+    }
 }

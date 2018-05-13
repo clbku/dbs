@@ -352,4 +352,8 @@ Route::get('/forum-post',[
     'as'=>'getforumpost',
     'uses'=>'MainController@getforumpost'
 ]);
+Route::get('/user-detail',[
+    'as'=>'getUserDetail',
+    'uses'=>'MainController@getUserDetail'
+]);
 
