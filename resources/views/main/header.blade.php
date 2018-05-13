@@ -32,12 +32,12 @@
                                 ?>
                                 @if ($user->type == "2")
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                        <a class="dropdown-item" href="#">Profile</a>
+                                        <a class="dropdown-item" href="{{route('getUserDetail')}}">Profile</a>
                                         <a class="dropdown-item" href="{{route('getLogout')}}">Đăng Xuất</a>
                                     </div>
                                 @else
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                        <a class="dropdown-item" href="#">Profile</a>
+                                        <a class="dropdown-item" href="{{route('getUserDetail')}}">Profile</a>
                                         <a class="dropdown-item" href="{{route('admin.pages.index')}}">Quản Lý</a>
                                         <a class="dropdown-item" href="{{route('getLogout')}}">Đăng Xuất</a>
                                     </div>
@@ -105,8 +105,13 @@
 
 
                 </li>
+
                 <li><a class="btn btn-secondary">Tin tức</a></li>
-                <li><a class="btn btn-secondary">Forum</a></li>
+                <li><a class="btn btn-secondary" href={{route('getforum')}}>Forum</a></li>
+
+                <li><a class="btn btn-secondary" href="{{route('main.getNews', [5, 0])}}">Tin tức</a></li>
+               
+
                 <li><a href="{{route('main.getContact')}}" class="btn btn-secondary">Liên hệ</a></li>
             </ul>
         </div>

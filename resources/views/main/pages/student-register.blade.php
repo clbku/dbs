@@ -20,7 +20,7 @@
                 @endif
                 <div class="form-group">
                     <label>Họ và tên</label>
-                    <input class="form-control" type="text" name="txtName" value="account" placeholder="account" required>
+                    <input class="form-control" type="text" name="txtName" value="" placeholder="account" required>
                 </div>
                 <div class="form-group">
                     <label>Ngày sinh</label>
@@ -53,6 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label>Thời gian rảnh rỗi</label>
+                    <p>(vd: thứ 3-5-7, 17h-21h)</p>
                     <input class="form-control" type="text" value="" name="txtTime" placeholder="password">
                 </div>
                 <div class="form-group">

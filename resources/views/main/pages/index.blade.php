@@ -200,6 +200,8 @@
                     </div>
                 @endif
             @endforeach
+            <a href="{{route('main.getNews', [5, 0])}}" class="btn btn-success" style="margin-top: 30px;">Xem thêm <i class="fa fa-play-circle"></i></a>
+
         </div>
     </div>
 @endsection

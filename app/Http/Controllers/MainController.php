@@ -12,21 +12,21 @@ class MainController extends Controller
 {
     public function getHomePage() {
         $courses = DB::select('select * from specializes');
-        $news = DB::select('select * from posts where type = 0');
+        $news =  DB::select('CALL getAllNewsWithPaging(?,?)', [3, 0]);
         return view('main.pages.index', compact('courses', 'news'));
     }
     public function getContact() {
         return view('main.pages.contact');
     }
     public function postContact(Request $request) {
-        DB::insert('insert into customer_reviews(name, phone, email, message)
-                          values(?, ?, ?, ?)', [$request->txtName, $request->txtPhone, $request->txtEmail, $request->txtMessage]);
-        return redirect()->route('main.getContact');
+        DB::insert('insert into customer_reviews(name, phone, email, message, created_at)
+                          values(?, ?, ?, ?, ?)', [$request->txtName, $request->txtPhone, $request->txtEmail, $request->txtMessage, date('Y-m-d H:i:s')]);
+        return redirect()->route('main.getContact')->with('success', 'Phản hồi của bạn đã được chúng tôi ghi nhận!');
     }
-    public  function getTutorRegister() {
+    public function getTutorRegister() {
         return view('main.pages.tutor-register');
     }
-    public function  getStudentRegister() {
+    public function getStudentRegister() {
         return view('main.pages.student-register');
     }
     public function postTutorRegister(Request $request)
@@ -119,7 +119,7 @@ class MainController extends Controller
             else
                 DB::insert('insert into study_registers(name, dob, address, hometown,  sex, phone, school, class_s, shift, avg1, avg2, subject_id)
                               values (?,?,?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $school, $class, $shift, $avg1, $avg2, $subject_id]);
-            return redirect()->route('homepage');
+            return redirect()->route('main.register.student')->with('success', "Bạn đã đăng ký thành công");
 
     }
     public function getTutorList($id) {
@@ -222,7 +222,7 @@ class MainController extends Controller
     }
     public function getNewsDetail($id) {
         $news = DB::select('CALL getNewsById(?)', [$id])[0];
-        $comments = DB::select('CALL getComment');
+        $comments = DB::select('CALL getCommentByPostId(?)', [$id]);
         return view('main.pages.detail-page', compact('news', 'comments'));
     }
     public function postComment(Request $request, $postid) {
@@ -236,5 +236,19 @@ class MainController extends Controller
     public function getDeleteComment($post_id, $id) {
         DB::delete('DELETE FROM comments WHERE id = ?', [$id]);
         return redirect()->route('main.news.getNewsDetail', $post_id);
+    }
+    public function getNews($num, $offset)
+    {
+        $news = DB::select('CALL getAllNewsWithPaging(?,?)', [$num, $offset]);
+        return view('main.pages.news', compact('news', 'offset', 'num'));
+    }
+    public function getforum(){
+        return view('main.pages.forum');
+    }
+    public function getforumpost(){
+        return view('main.pages.forrum-post');
+    }
+    public function getUserDetail(){
+        return view('main.pages.user-detail');
     }
 }
