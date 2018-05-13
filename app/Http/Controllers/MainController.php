@@ -237,17 +237,15 @@ class MainController extends Controller
         DB::delete('DELETE FROM comments WHERE id = ?', [$id]);
         return redirect()->route('main.news.getNewsDetail', $post_id);
     }
-<<<<<<< HEAD
-    public function getNews($num, $offset) {
+    public function getNews($num, $offset)
+    {
         $news = DB::select('CALL getAllNewsWithPaging(?,?)', [$num, $offset]);
         return view('main.pages.news', compact('news', 'offset', 'num'));
-=======
-
+    }
     public function getforum(){
         return view('main.pages.forum');
     }
     public function getforumpost(){
         return view('main.pages.forrum-post');
->>>>>>> 31b147823650e9376e08ae851ee4bc06338a0867
     }
 }
