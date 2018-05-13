@@ -237,4 +237,11 @@ class MainController extends Controller
         DB::delete('DELETE FROM comments WHERE id = ?', [$id]);
         return redirect()->route('main.news.getNewsDetail', $post_id);
     }
+
+    public function getforum(){
+        return view('main.pages.forum');
+    }
+    public function getforumpost(){
+        return view('main.pages.forrum-post');
+    }
 }

@@ -559,7 +559,7 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
-  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,  
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(1) NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

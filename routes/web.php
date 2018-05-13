@@ -318,5 +318,12 @@ Route::get('deleteComment/{post_id}/{id}', [
     'uses' => 'MainController@getDeleteComment'
 ])->middleware('auth');
 Route::get('search/autocomplete', 'SearchController@autocomplete');
-
+Route::get('/forum',[
+    'as'=>'getforum',
+    'uses'=>'MainController@getforum'
+]);
+Route::get('/forum-post',[
+    'as'=>'getforumpost',
+    'uses'=>'MainController@getforumpost'
+]);
 
