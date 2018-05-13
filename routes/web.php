@@ -15,6 +15,10 @@ Route::get('/' , [
     "as"=>"homepage",
     "uses" => 'MainController@getHomePage'
 ]);
+Route::get('/news/{id}/{offset}', [
+    'as' => 'main.getNews',
+    'uses' => 'MainController@getNews'
+]);
 Route::group(['prefix'=>'detail-page'],  function() {
     Route::get('/about',[
         'as' => 'about',
@@ -154,11 +158,33 @@ Route::group(['prefix'=>'admin'],  function() {
     ])->middleware('auth');
 
 
+    Route::group(['prefix'=>'class'],function(){
+        Route::get('list',[
+            'as'=>'admin.class.getList',
+            'uses'=>'AdminController@getClassList'
+        ])->middleware('auth');
+        Route::get('edit/{id}', [
+            'as' => 'admin.class.getEdit',
+            'uses' =>'AdminController@getEditClass'
+        ])->middleware('auth');
+        Route::post('edit/{id}', [
+            'as' => 'admin.class.postEdit',
+            'uses' =>'AdminController@postEditClass'
+        ])->middleware('auth');
+        Route::get('edit/{class_id}/{student_id}', [
+            'as' => 'admin.class.getDelete',
+            'uses' =>'AdminController@getDeleteStudent'
+        ])->middleware('auth');
+        Route::get('add', [
+            'as' => 'admin.class.addClass',
+            'uses' => 'AdminController@getAddClass'
+        ])->middleware('auth');
+        Route::post('add', [
+            'as' => 'admin.class.postAddClass',
+            'uses' => 'AdminController@postAddClass'
+        ])->middleware('auth');
+    });
 
-    Route::get('class',[
-        'as'=>'admin.class.getList',
-        'uses'=>'AdminController@getClassList'
-    ])->middleware('auth');
     Route::get('tutors/{id}',[
         'as'=>'admin.tutors.getProfile',
         'uses'=>'AdminController@getProfile'

@@ -9,6 +9,7 @@
                         <h3 id="h3" class="col-sm-7">Đăng tin tức</h3>
 
                     </div>
+
                     @if (count($errors)>0)
                         <div class="alert alert-danger">
                             <strong>Lỗi ! </strong>Vui lòng kiểm tra lại thông tin :
@@ -19,7 +20,7 @@
                             </ul>
                         </div>
                     @endif ()
-                    <form action="{{route('admin.post.postAdd', 1)}}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                    <form action="{{route('admin.post.postAdd', 0)}}" method="post" enctype="multipart/form-data" style="width: 100%;">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="form-group">
                             <label>Tiêu đề</label>
