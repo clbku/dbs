@@ -242,13 +242,43 @@ class MainController extends Controller
         $news = DB::select('CALL getAllNewsWithPaging(?,?)', [$num, $offset]);
         return view('main.pages.news', compact('news', 'offset', 'num'));
     }
-    public function getforum(){
-        return view('main.pages.forum');
+    public function getForumList(){
+        $data = DB::select('CALL getAllForumPost()');
+        return view('main.pages.forum', compact('data'));
     }
-    public function getforumpost(){
-        return view('main.pages.forrum-post');
+    public function getForumPostDetail($id){
+        $data = DB::select('CALL getForumPostById(?)', [$id])[0];
+        $comments = DB::select('CALL getCommentByPostId(?)', [$data->pid]);
+        return view('main.pages.forrum-post', compact('data', 'comments'));
     }
     public function getUserDetail(){
         return view('main.pages.user-detail');
+    }
+    public function getAddForumPost() {
+        return view('main.pages.add-post');
+    }
+    public function postAddForumPost(Request $request) {
+        $author_id = Auth::user()->id;
+        $title = $request->txtTitle;
+        $description = $request->txtDescription;
+        $content = $request->txtContent;
+        $file = $request->txtFile;
+        if ($file) $images = $file->move('upload/images/post/forum',$file->getClientOriginalName());
+        $type = 1;
+        $file = $request->txtAsss;
+        if ($file) $file = $file->move('upload/file/post',$file->getClientOriginalName());
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
+        values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $images, $type, $file, $created_at]);
+
+        return redirect()->route('admin.forum.getList')->with('success', 'Đăng bài thành công');
+    }
+    public function postForumComment(Request $request, $postid) {
+        $author_id = Auth::user()->id;
+        $post_id = $postid;
+        $comment = $request->txtComment;
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('CALL postAddCommentWithPostID(?,?,?,?)', [$post_id, $author_id, $comment, $created_at]);
+        return redirect()->route('admin.forum.getForumPost', $post_id);
     }
 }

@@ -179,7 +179,7 @@ Route::group(['prefix'=>'admin'],  function() {
             'as' => 'admin.class.addClass',
             'uses' => 'AdminController@getAddClass'
         ])->middleware('auth');
-        Route::post('add', [
+        Route::post('add-class', [
             'as' => 'admin.class.postAddClass',
             'uses' => 'AdminController@postAddClass'
         ])->middleware('auth');
@@ -343,15 +343,29 @@ Route::get('deleteComment/{post_id}/{id}', [
     'as' => 'getDeleteComment',
     'uses' => 'MainController@getDeleteComment'
 ])->middleware('auth');
-Route::get('search/autocomplete', 'SearchController@autocomplete');
-Route::get('/forum',[
-    'as'=>'getforum',
-    'uses'=>'MainController@getforum'
-]);
-Route::get('/forum-post',[
-    'as'=>'getforumpost',
-    'uses'=>'MainController@getforumpost'
-]);
+Route::group(['prefix'=>'forum'], function() {
+    Route::get('list', [
+        'as' => 'admin.forum.getList',
+        'uses' => 'MainController@getForumList'
+    ])->middleware('auth');
+    Route::get('/forum-post/{id}',[
+        'as'=>'admin.forum.getForumPost',
+        'uses'=>'MainController@getForumPostDetail'
+    ])->middleware('auth');
+    Route::get('add', [
+        'as' => 'main.forum.addPost',
+        'uses' => 'MainController@getAddForumPost'
+    ])->middleware('auth');
+    Route::post('add', [
+        'as' => 'postAddForumPost',
+        'uses' => 'MainController@postAddForumPost'
+    ])->middleware('auth');
+    Route::post('comment/{id}', [
+        'as' => 'main.forum.addComment',
+        'uses' => 'MainController@postForumComment'
+    ])->middleware('auth');
+});
+
 Route::get('/user-detail',[
     'as'=>'getUserDetail',
     'uses'=>'MainController@getUserDetail'

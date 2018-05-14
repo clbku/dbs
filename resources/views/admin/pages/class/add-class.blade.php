@@ -7,7 +7,7 @@
                             <h3 id="h3" class="col-sm-7">Thông tin Lớp học</h3>
 
                         </div>
-                        <form action="#" style="width: 100%;" method="post" action="{{route('admin.class.postAddClass')}}">
+                        <form style="width: 100%;" method="post" action="{{route('admin.class.postAddClass')}}">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="form-group" >
                                 <label>Tên học sinh</label>
@@ -24,10 +24,10 @@
                                 <label>Tên gia sư</label>
                                 <select name="tutor_id" class="form-control">
                                     <?php
-                                    $tutors = DB::select('select users.name, tutors.id from tutors, users WHERE tutors.user_id = users.id');
+                                    $tutors = DB::select('select users.name, tutors.id, specialize from tutors, users, specializes WHERE tutors.user_id = users.id and tutors.s_id = specializes.id');
                                     ?>
                                     @foreach($tutors as $t)
-                                        <option value="{{$t->id}}"> Mã Số {{$t->id}} - {{$t->name}}</option>
+                                        <option value="{{$t->id}}"> Mã Số {{$t->id}} - {{$t->name}} - {{$t->specialize}}</option>
                                     @endforeach
                                 </select>
                             </div>

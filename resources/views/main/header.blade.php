@@ -14,7 +14,7 @@
                 <div class="col-sm-6">
 
                     <ul class="list-inline text-right" style="margin-bottom: 0;text-transform: uppercase;">
-                        <li><a class="btn btn-secondary">Diễn đàn</a></li>
+                        <li><a class="btn btn-secondary"  href="{{route('admin.forum.getList')}}">Diễn đàn</a></li>
 
                         <li>
                             <div class="dropdown show">
@@ -107,7 +107,7 @@
                 </li>
 
                 <li><a class="btn btn-secondary">Tin tức</a></li>
-                <li><a class="btn btn-secondary" href={{route('getforum')}}>Forum</a></li>
+                <li><a class="btn btn-secondary" href="{{route('admin.forum.getList')}}">Forum</a></li>
 
                 <li><a class="btn btn-secondary" href="{{route('main.getNews', [5, 0])}}">Tin tức</a></li>
                

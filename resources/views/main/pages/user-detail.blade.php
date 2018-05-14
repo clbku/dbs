@@ -4,25 +4,20 @@
         <div class="container">
             <div class="content col-sm-9">
                 <div class="content-title">
-                    
-                </div>
-                <div class="content-calender">
-                    <i class="fa fa-calendar"></i>
+                    Thông tin người dùng
                 </div>
                 <div class="content-main">
                     <div class="col-sm-4 text-center">
-                        <img src="images/gates.jpg" style="width: 200px" class="img-circle">
+                        <img src="{{url('pages/images/gates.jpg')}}" style="width: 200px" class="img-circle">
                     </div>
                     <div class="col-sm-8">
-                        <p><span style="color: green; font-weight: 900;">Họ và tên: </span></p>
+                        <p><span style="color: green; font-weight: 900;">Họ và tên: </span>Hoàng Công Lý</p>
                         <p><span style="color: green; font-weight: 900;">Ngày sinh: </span>20/10/1998</p>
                         <p><span style="color: green; font-weight: 900;">Địa chỉ: </span>Hoàng Công Lý</p>
                         <p><span style="color: green; font-weight: 900;">Quê quán: </span>20/10/1998</p>
                         <p><span style="color: green; font-weight: 900;">Giới tính: </span>Hoàng Công Lý</p>
                         <p><span style="color: green; font-weight: 900;">Email: </span>20/10/1998</p>
-                        <p><span style="color: green; font-weight: 900;">Chuyên môn: </span>Hoàng Công Lý</p>
-                        <p><span style="color: green; font-weight: 900;">Thành tích: </span>20/10/1998</p>
-                        <p><span style="color: green; font-weight: 900;">Đánh giá: </span>10/10</p>
+
                     </div>
                 </div>
 

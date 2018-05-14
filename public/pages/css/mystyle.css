@@ -3,6 +3,31 @@
     padding: 0;
 }
 
+.forum-post-item-content p {
+    font-size:  15px;
+    margin:  10px 0;
+}
+
+p {}
+
+.forum-post-item-avatar img {
+    width:  100px;
+    height:  100px;
+}
+
+.forum-post-item-author .name {
+    color: green;
+    font-weight: 600;
+    font-size:  24px;
+}
+
+.forum-post-item-author .time {
+    padding-top:  10px;
+}
+
+.forum-post-item-author {
+}
+
 .news-item-list {
     margin-bottom:  50px;
     transition: all 0.4s;
@@ -202,8 +227,10 @@ div.right-title {
 }
 
 .content-title {
-    margin-top: 60px;
+    margin: 60px;
     font-size: 40px;
+    color:  green;
+    border-bottom: 4px solid;
 }
 
 .news .black {

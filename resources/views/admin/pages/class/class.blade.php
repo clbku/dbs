@@ -36,7 +36,7 @@
 
                             @foreach ($class as $a)
                             <tr>
-                                <th scope="row">{{$a->class_id}}</th>
+                                <th scope="row">{{$a->id}}</th>
 
                                 <td>{{$a->address}}</td>
                                 <td>{{$a->class_s}}</td>
@@ -46,38 +46,43 @@
                                 <td>{{$a->level}}</td>
                                 <td>{{$a->shift}}</td>
 
-                                <?php 
-                                    $b=DB::select('select u.name, u.id from tutors as t, users as u where t.user_id = u.id and t.id = ?',[$a->tutor_id]);
-                                ?>
-                                <td><a href="{{route('admin.pages.profile',['user', $b[0]->id])}}">{{$b[0]->name}}</a></td>
-                                <td>
-                                    <?php
-                                        $student=DB::select('CALL getAllStudentNameByClassId(?)', [$a->class_id]);
-                                    ?>
-                                    @foreach($student as $s)
-                                        <a href="{{route('admin.pages.profile', ['student', $s->sid])}}">{{$s->name}}</a> <a href="{{route('admin.class.getDelete', [$a->class_id, $s->sid])}}"><i class="fa fa-times"></i></a><br>
-                                    @endforeach
-                                </td>
-                                <td id="add-{{$a->class_id}}" class="hidden">
-                                    <form action="{{route('admin.class.addStudent')}}" method="post">
-                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                        <div class="form-group">
-                                            <label>ID học sinh</label>
-                                            <input class="form-control" name="studentID" required>
-                                        </div>
-                                        <input type="hidden" name="classID" value="{{$a->class_id}}">
-                                        <input type="submit" value="Thêm">
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="{{route('admin.class.getEdit', $a->class_id)}}"><i class="fa fa-edit"></i></a>
-                                    <a href="#" id="addstudent-{{$a->class_id}}"><i class="fa fa-plus"></i></a>
-                                </td>
-                                <script>
-                                    $('#addstudent-{{$a->class_id}}').click(function () {
-                                        $('#add-{{$a->class_id}}').removeClass('hidden');
-                                    })
-                                </script>
+                                <td><a href="{{route('admin.pages.profile',['user', $a->tid])}}">{{$a->tutor_name}}</a></td>
+                                {{--<td>--}}
+                                    {{--<?php--}}
+                                        {{--$student=DB::select('CALL getAllStudentNameByClassId(?)', [$a->class_id]);--}}
+                                    {{--?>--}}
+                                    {{--@foreach($student as $s)--}}
+                                        {{--<a href="{{route('admin.pages.profile', ['student', $s->sid])}}">{{$s->name}}</a> <a href="{{route('admin.class.getDelete', [$a->class_id, $s->sid])}}"><i class="fa fa-times"></i></a><br>--}}
+                                    {{--@endforeach--}}
+                                {{--</td>--}}
+                                {{--<td id="add-{{$a->class_id}}" class="hidden">--}}
+                                    {{--<form action="{{route('admin.class.addStudent')}}" method="post">--}}
+                                        {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
+                                        {{--<div class="form-group">--}}
+                                            {{--<label>Chọn học sinh</label>--}}
+                                            {{--<select name="studentID" class="form-control">--}}
+                                                {{--<?php--}}
+                                                    {{--$students = DB::select('select * from students');--}}
+                                                {{--?>--}}
+                                                {{--@foreach($students as $s)--}}
+                                                {{--<option value="{{$s->id}}">{{$s->id}} - {{$s->name}} - {{$s->class_s}}</option>--}}
+                                                {{--@endforeach--}}
+                                            {{--</select>--}}
+                                            {{--<input class="form-control" name="studentID" required>--}}
+                                        {{--</div>--}}
+                                        {{--<input type="hidden" name="classID" value="{{$a->class_id}}">--}}
+                                        {{--<input type="submit" value="Thêm">--}}
+                                    {{--</form>--}}
+                                {{--</td>--}}
+                                {{--<td>--}}
+                                    {{--<a href="{{route('admin.class.getEdit', $a->class_id)}}"><i class="fa fa-edit"></i></a>--}}
+                                    {{--<a href="#" id="addstudent-{{$a->class_id}}"><i class="fa fa-plus"></i></a>--}}
+                                {{--</td>--}}
+                                {{--<script>--}}
+                                    {{--$('#addstudent-{{$a->class_id}}').click(function () {--}}
+                                        {{--$('#add-{{$a->class_id}}').removeClass('hidden');--}}
+                                    {{--})--}}
+                                {{--</script>--}}
                             </tr>
                             @endforeach
 

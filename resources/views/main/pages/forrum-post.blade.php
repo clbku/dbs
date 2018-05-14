@@ -1,176 +1,81 @@
 @extends('main.master')
 @section('content')
-	<div class="row">
+    <div class="row">
         <div class="container">
-            <div class="content col-sm-9">
-            	<caption><h1> Diễn đàn</h1></caption>
-                <div class="content-title">
-                   
-                </div>
-               
-
-
+            <div class="content">
+                <p class="fa fa-home"> Forum </p>
                 <hr>
-                <br>
-                
-                	
-                		<table>
-
-                			<tr>
-                				<th>Người gửi</th>
-                				<th>Nội dung</th>
-                				
-                			</tr>
-                			<tr>
-                                
-                                <td>04/18/2018 09:22:43 AM></td>
-                                
-                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
-                                
-                            </tr>
-                			<tr>
-                				
-                				<td class="post"><a href ="">Đặng Hoàng Ân</a></td>
-                				
-                				<td class="post">Chứng minh 2 là số nguyên tố</td>
-                				
-                			</tr>
-                			<tr>
-                                
-                                <td>04/18/2018 09:22:43 AM></td>
-                                
-                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
-                                
-                            </tr>
-                			<tr>
-                				
-                				<td class="post"><a href ="">Hoàng Công Lý</a></td>
-                				
-                				<td class="post">2 auto là số nguyên tố</td>
-                				
-                			</tr>
-                            <tr>
-                                
-                                <td>04/18/2018 09:22:43 AM></td>
-                                
-                                <td><strong>Subject :</strong> [Toán 11] Bài tập về số nguyên tố</td>
-                                
-                            </tr>
-                            <tr>
-                                
-                                <td class="post"><a href ="">Đặng Hoàng Ân</a></td>
-                                
-                                <td class="post">Cảm ơn bạn</td>
-                                
-                            </tr>
-                		</table>
-                        <div class="your-comment">
-                        <form style="width: 100%;" method="post" action="">
-                            <input name="_token" value="{{csrf_token()}}" type="hidden">
-                            <div class="form-group">
-                                <label>Comment</label>
-                                <textarea id="editor1" name="txtComment"></textarea>
-                                <script>
-                                    CKEDITOR.replace( 'editor1' );
-                                </script>
+                <div class="post-title">
+                    <h2>{!! $data->title !!}</h2>
+                    <p><i class="fa fa-square"></i>{!! $data->description  !!}</p>
+                </div>
+                <div class="post-content">
+                    <div class="row">
+                        <div class="forum-post-item-avatar col-sm-2">
+                            <img src="{{url($data->avatar)}}">
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="forum-post-item-author">
+                                <div class="row">
+                                    <div class="col-sm-8 name">
+                                        {{$data->name}} - {{$data->username}}
+                                    </div>
+                                    <div class="col-sm-4 time">
+                                        {{$data->created_at}}
+                                    </div>
+                                </div>
                             </div>
-                            <input class="btn btn-success" type="submit" value="Bình Luận">
-                        </form>
-
+                            <div class="forum-post-item-content">
+                                <p>{!! $data->content !!}</p>
+                                @if($data->images)
+                                    <label>Hình ảnh: </label> <br>
+                                    <img style="width: 200px;" src="{{url($data->images)}}">
+                                @endif
+                                @if($data->files)
+                                <label>File : </label> <br>
+                                <a href="{{url($data->file)}}">download</a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                	
-               
-                <br>
-                <hr>
-                <br>
-                
+                    <hr>
+                    @foreach($comments as $c)
+                    <div class="row">
+                        <div class="forum-post-item-avatar col-sm-2">
+                            <img src="{{url($c->avatar)}}">
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="forum-post-item-author">
+                                <div class="row">
+                                    <div class="col-sm-8 name">
+                                        {{$c->name}} - {{$c->username}}
+                                    </div>
+                                    <div class="col-sm-4 time">
+                                        {{$c->created_at}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="forum-post-item-content">
+                                {!! $c->comment !!}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    @endforeach
+                </div>
             </div>
-            <div class="right-side col-sm-3">
-
-                <div class="tutor-list">
-                    <div class="right-title">Danh mục gia sư</div>
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 1</span>
-                                <div class="col-sm-2 num">3</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 2</span>
-                                <div class="col-sm-2 num">1</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư cấp 3</span>
-                                <div class="col-sm-2 num">6</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tiếng anh</span>
-                                <div class="col-sm-2 num">10</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư luyện thi đại học</span>
-                                <div class="col-sm-2 num">9</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <span class="col-sm-10">Gia sư tin học văn phòng</span>
-                                <div class="col-sm-2 num">5</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="news-list">
-
-                    <div class="right-title">Tin tức</div>
-                    <ul>
-                        <li>
-                            <div class="row">
-                                <div class="col-sm-4 image">
-                                    <img src="images/img1.jpeg" class="img-responsive" alt="hinh1">
-                                </div>
-                                <div class="col-sm-8 detail">
-                                    <div class="title">
-                                        CLB tiếng anh cho trẻ
-                                    </div>
-                                    <div class="time">
-                                        <i class="fa fa-calendar"></i> 12/3/2014
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="row">
-                                <div class="col-sm-4 image">
-                                    <img src="images/img1.jpeg" class="img-responsive" alt="hinh1">
-                                </div>
-                                <div class="col-sm-8 detail">
-                                    <div class="title">
-                                        Giảm học phí cho học sinh
-                                    </div>
-                                    <div class="time">
-                                        <i class="fa fa-calendar"></i> 12/3/2014
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                </div>
-                <div class="right-title">Fanpages</div>
-                <div class="fanpage">
-
-
-                </div>
-
-            </div>
+            <form method="post" action="{{route('main.forum.addComment', $data->pid)}}">
+                {!! csrf_field() !!}
+                <label>Trả lời câu hỏi này</label>
+                <textarea id="box" name="txtComment">
+                </textarea>
+                <script>
+                    CKEDITOR.replace( 'box' );
+                </script>
+                <br>
+                <input type="submit" class="btn btn-success" value="Gửi">
+            </form>
         </div>
     </div>
 @endsection

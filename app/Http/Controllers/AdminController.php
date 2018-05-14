@@ -247,7 +247,7 @@ class AdminController extends Controller
         DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
         values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $images, $type, $file, $created_at]);
 
-        return redirect()->route('admin.post.list')->with('success', 'Đăng bài thành c');
+        return redirect()->route('admin.post.list')->with('success', 'Đăng bài thành công');
     }
     public function getDeletePost($id) {
         $post = DB::table('posts')->where('id', $id)->first();
@@ -287,7 +287,7 @@ class AdminController extends Controller
 
     // class page ------------------------------------
     public function getClassList(){
-        $class = DB::select('select * from class_s, studies, students where class_s.id = studies.class_id and students.id = studies.student_id');
+        $class = DB::select('CALL getCLassList()');
         return view('admin.pages.class.class',compact('class'));
     }
     public function getEditClass($id) {
@@ -324,9 +324,10 @@ class AdminController extends Controller
         $level = 1;
         $student_num = 1;
         $state = 0;
-        DB::insert('insert into class(address, level, student_num, shift, tutor_id, subject_id, state, created_at) VALUES (?,?,?,?,?,?,?,?)',
+        DB::insert('insert into class_s(address, level, student_num, shift, tutor_id, subject_id, state, created_at) VALUES (?,?,?,?,?,?,?,?)',
             [$address, $level, $student_num, $shift, $tutor_id, $subject_id, $state, $created_at]);
-        DB::insert('insert into studies(tutor_id, student_id ,created_at) VALUES (?,?,?)', [$tutor_id, $student_id, $created_at]);
+        $class_id = DB::select('select MAX(id) as m from class_s')[0]->m;
+        DB::insert('insert into studies(class_id, student_id ,created_at) VALUES (?,?,?)', [$class_id, $student_id, $created_at]);
         return redirect()->route('admin.class.getList')->with('success', 'Tạo lớp thành công');
     }
 
