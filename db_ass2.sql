@@ -1,11 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
+<<<<<<< HEAD
+-- Thời gian đã tạo: Th5 07, 2018 lúc 05:23 PM
+-- Phiên bản máy phục vụ: 10.1.31-MariaDB
+-- Phiên bản PHP: 7.2.3
+=======
 -- Thời gian đã tạo: Th5 13, 2018 lúc 10:04 AM
 -- Phiên bản máy phục vụ: 10.1.30-MariaDB
 -- Phiên bản PHP: 7.1.14
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,6 +52,8 @@ BEGIN
 	SELECT * FROM specializes;
 END$$
 
+<<<<<<< HEAD
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllStudentNameByClassId` (IN `cid` INT(10))  NO SQL
 BEGIN
 	SELECT students.name, students.id as sid, class_s.id 
@@ -55,6 +63,7 @@ BEGIN
     	AND students.id = studies.student_id;
 END$$
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllUser` ()  NO SQL
 BEGIN
 	SELECT * FROM users;
@@ -71,6 +80,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getClassNumber` ()  BEGIN
 	SELECT COUNT(*) as number FROM class_s;
 END$$
 
+<<<<<<< HEAD
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getCommentByPostId` (IN `pid` INT(10))  NO SQL
 BEGIN
 	SELECT users.name, comments.author_id, comments.post_id, comments.id as cid, comments.comment, comments.created_at, users.avatar, users.id
@@ -78,6 +89,7 @@ BEGIN
     WHERE users.id = comments.author_id AND post_id = pid;
 END$$
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustomerReview` ()  NO SQL
 BEGIN 
 	SELECT * FROM customer_reviews;
@@ -90,6 +102,8 @@ BEGIN
     WHERE name LIKE CONCAT('%', @val , '%');
 END$$
 
+<<<<<<< HEAD
+=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getNewsById` (IN `newsid` INT(10))  NO SQL
 BEGIN
 	SELECT *
@@ -137,22 +151,16 @@ BEGIN
 	select * FROM students;
 END$$
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getStudentNumber` ()  BEGIN
 	SELECT COUNT(*) as number FROM students;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListBySpecializeId` (IN `sid` INT(10))  NO SQL
-BEGIN
-	SELECT *
-    FROM specializes as s, tutors as t, users as u
-    WHERE s.id = t.s_id AND u.id = t.user_id AND s.id = sid;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getTutorListSortByPoint` ()  NO SQL
 BEGIN
 	SELECT * 
-    FROM users, tutors, specializes
-	WHERE users.id = tutors.user_id and tutors.s_id = specializes.id 
+    FROM users, tutors
+	WHERE users.id = tutors.user_id 
     ORDER BY tutors.point DESC;
 END$$
 
@@ -163,12 +171,6 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserNumber` ()  NO SQL
 BEGIN
 	SELECT COUNT(*) as number FROM users;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `postAddCommentWithPostID` (IN `post` INT(10), IN `author` INT(10), IN `comment` TEXT CHARSET utf8, IN `created_at` DATETIME)  NO SQL
-BEGIN
-	INSERT INTO comments(author_id, post_id, comment, created_at)
-    VALUES (author, post, comment, created_at);
 END$$
 
 DELIMITER ;
@@ -193,6 +195,8 @@ CREATE TABLE `class_s` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `class_s`
 --
@@ -202,6 +206,7 @@ INSERT INTO `class_s` (`id`, `address`, `level`, `student_num`, `shift`, `tutor_
 (2, 'Số nhà 12, Trần Hưng Đạo', 2, 1, '3-5-7, 19h-20h30', 2, 1, 0, '2018-05-19', NULL, NULL),
 (3, 'KTX khu A', 2, 1, 'Thứ 2-4-6, 7h đến 9h tối', 5, 2, 0, NULL, NULL, NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -217,6 +222,8 @@ CREATE TABLE `comments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `comments`
 --
@@ -226,6 +233,7 @@ INSERT INTO `comments` (`id`, `author_id`, `post_id`, `comment`, `created_at`, `
 (5, 4, 1, '<p>Đ&acirc;y l&agrave; comment</p>', '2018-05-09 19:58:18', NULL),
 (6, 8, 5, '<p>Ch&uacute;c mừng</p>', '2018-05-12 14:55:28', NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -349,6 +357,8 @@ CREATE TABLE `posts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `posts`
 --
@@ -361,6 +371,7 @@ INSERT INTO `posts` (`id`, `author_id`, `title`, `description`, `content`, `imag
 (5, 8, 'Chúc mừng sinh nhật lazada 6 năm', '<h2>Where can I get some?</h2>', '<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>', 'upload/images/post/news\\Capture.PNG', NULL, 0, '2018-05-12 14:30:57', NULL),
 (6, 8, 'Thành lập CLB tiếng anh tại trung tâm', '<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>\r\n\r\n<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>', '<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>\r\n\r\n<p>&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</p>', 'upload/images/post/news\\clb.jpg', NULL, 0, '2018-05-12 14:33:16', NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -397,6 +408,8 @@ CREATE TABLE `scores` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `scores`
 --
@@ -407,6 +420,7 @@ INSERT INTO `scores` (`id`, `student_id`, `subject_id`, `avg1`, `avg2`, `avg3`, 
 (3, 3, 2, 3.40, 4.50, 0.00, NULL, NULL),
 (4, 4, 2, 6.50, 5.60, 0.00, NULL, NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -420,6 +434,8 @@ CREATE TABLE `specializes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `specializes`
 --
@@ -433,6 +449,7 @@ INSERT INTO `specializes` (`id`, `specialize`, `created_at`, `updated_at`) VALUE
 (6, 'Gia sư sinh học cấp 3', NULL, NULL),
 (7, 'Gia sư ôn thi đại học', NULL, NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -454,6 +471,8 @@ CREATE TABLE `students` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `students`
 --
@@ -464,6 +483,7 @@ INSERT INTO `students` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phon
 (3, 'Ngô Anh Tài', '2001-01-08', 'quận 1, hcm', 'HCM', '1', '09778887765', 'THPT Thủ Đức', '12', 'index.png', NULL, NULL),
 (4, 'Đỗ Mình Phương', '2001-02-23', 'KTX khu A', 'Nam Định', '0', '0991234637', 'THPT Lý Tự Trọng', '12', 'index.png', NULL, NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -495,8 +515,6 @@ CREATE TABLE `study_registers` (
   `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class_s` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avg1` float DEFAULT NULL,
-  `avg2` float DEFAULT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
   `tutor_id` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -578,11 +596,13 @@ CREATE TABLE `tutors` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `point` double(8,2) NOT NULL,
   `count` int(11) NOT NULL,
-  `num_class` int(11) NOT NULL DEFAULT '0',
+  `num_class` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- Đang đổ dữ liệu cho bảng `tutors`
 --
@@ -593,6 +613,7 @@ INSERT INTO `tutors` (`id`, `s_id`, `achievement`, `user_id`, `point`, `count`, 
 (4, 7, NULL, 10, 0.00, 0, 0, NULL, NULL),
 (5, 1, 'Chuyên toán, giải 3 cấp tỉnh', 11, 0.00, 0, 0, NULL, NULL);
 
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 -- --------------------------------------------------------
 
 --
@@ -657,15 +678,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `dob`, `address`, `hometown`, `sex`, `phone`, `email`, `avatar`, `type`, `username`, `password`, `state`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Hoàng Công Lý', '1993-03-01', 'HCM', 'HCM', 1, '0987654321', 'libach202@hotmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'congly1311', '$2y$10$THmSEmgsZuW4g5UO0/T8FOSAj3gxlcQXXqUny8qo.fOsNTJpyurge', 1, 'TVnu1oduwgBFuSm7rhKBE11ihg6eMzktNCYydChaxyl5y60uOgckE98OV8sg', NULL, NULL),
+(1, 'Hoàng Công Lý', '1993-03-01', 'HCM', 'HCM', 1, '0987654321', 'libach202@hotmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'congly1311', '$2y$10$THmSEmgsZuW4g5UO0/T8FOSAj3gxlcQXXqUny8qo.fOsNTJpyurge', 1, '7Y7g6ktgaIvIOQFZIO5XIZLmG67Lx9zlsPRwvvsy9plMmchGKCmZCHKOwEGw', NULL, NULL),
 (2, 'Nguyễn Kỳ Duyên', '1998-12-01', 'HCM', 'HCM', 0, '0987654321', 'wurpro@gmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'kyduyen123', '$2y$10$6tB/1hZe.vuQqbTuE0yA.O5d5OK5eIT/vKVpkQ6KhqXkiBBTIgJZa', 1, NULL, '2018-05-04 15:54:05', NULL),
 (3, 'Dương Quá', '1998-12-01', 'HCM', 'Dương Châu', 1, '0987654321', 'wurpro@gmail.com', 'C13009A1-77CF-43FA-B9F9-9A79E6617D81.jpeg', 2, 'duongqua', '$2y$10$TIkqSRUekYch3u0s9.qiyeyaNi4P6KpKujdEXpKl1vqeWnr7KgieS', 1, NULL, '2018-05-04 16:02:34', NULL),
+<<<<<<< HEAD
+(4, 'Đỗ Tuấn Anh', '1989-10-02', 'HCM', 'DakLak', 1, '0977180085', 'tuananh9h@gmail.com', '27869.jpg', 2, 'kenshin1010', '$2y$10$xIMSa2d.VPcd1PEig2zWkOV1g7BQ2B8La5Gpo8HjK2TmODFLbj9TC', 1, NULL, '2018-05-07 15:22:07', NULL);
+=======
 (4, 'Nghi BInh', '1998-11-13', 'HCM', 'Liên Đầm', 0, '0987654321', 'libach202@hotmail.com', 'C:\\xampp\\tmp\\php1922.tmp', 1, 'baruver', '$2y$10$IAhGYmYlG58mwArKLA7S5.yhKa7A2CRhY3VsIFEoZ/99RgBmUTKJO', 1, 'I8Zefo0CJbqVfnNrjSkdjtms647teZNAiaBezboRfxhXmeIBMsumgi4RMF5A', NULL, NULL),
 (7, 'Nguyễn Kỳ Duyên', '2223-02-01', 'HCM', 'HCM', 0, '0987654331', 'sadasdsad@gamil.ds', 'index.png', 0, 'nguyen_ky_duyen', '$2y$10$WaiwBU3QkaE90ce3Zpccqe.ybYulCQM7R6A1aXgB6JQckr7tQ3TeO', 1, NULL, NULL, NULL),
 (8, 'Sỳ Nghi Bình', '1998-11-13', 'HCM', 'HCM', 0, '1234567890', 'libach202@hotmail.com', 'upload/images/user/avatar\\31488528_956981631133542_8411825549525123072_n.jpg', 1, 'cankuro.19', '$2y$10$YjrKdI2BAjFZ7RWPLaq1K.PyrkFAn.Lsu5whJcqGiN.24yYx9leZe', 1, '3v4d3d3rLF7Krx9eZNZGQ5l1c7HNvhrberVA2wKNMRoAa2aC6mEpMiV3dWWX', NULL, NULL),
 (9, 'Charlton Mully', '1996-01-01', '1 Garrison Trail', '1320 Fordem Street', 0, '4133682106', 'cmully0@wikipedia.org', 'index.png', 0, 'charlton_mully', '$2y$10$Q3DkGuczZvlXrtehbNtcxun1Hb7jBLbpsQ6YDx0B0BWGt/GbZdrVu', 1, NULL, NULL, NULL),
 (10, 'Phạm Thị Thanh Huyền', '1997-08-09', 'KTX khu A', 'Hà Nội', 0, '2569766739', 'thanhhuyen@abc.com', 'index.png', 0, 'pham_thi_thanh_huyen', '$2y$10$wCqulQdcWvLhgltt.rqgPuDKUX2zFa6.dxxFDcGjjqtcBtT/PPXt2', 1, NULL, NULL, NULL),
 (11, 'Judas Walsh', '1999-06-02', '041 Lotheville Lane', '98145 Hanson Alley', 0, '8729481244', 'jwalsh0@dailymail.co.uk', 'index.png', 0, 'judas_walsh', '$2y$10$KUdIIa0SNGw5LyUFYRFrJOnNpu.1lMF5Yqaw2hrb76Zx.MRR2LwZG', 1, NULL, NULL, NULL);
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -812,13 +837,21 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `class_s`
 --
 ALTER TABLE `class_s`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `customer_reviews`
@@ -848,7 +881,11 @@ ALTER TABLE `parents`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `question_banks`
@@ -860,19 +897,31 @@ ALTER TABLE `question_banks`
 -- AUTO_INCREMENT cho bảng `scores`
 --
 ALTER TABLE `scores`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `specializes`
 --
 ALTER TABLE `specializes`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `students`
 --
 ALTER TABLE `students`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `studies`
@@ -884,7 +933,11 @@ ALTER TABLE `studies`
 -- AUTO_INCREMENT cho bảng `study_registers`
 --
 ALTER TABLE `study_registers`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -902,7 +955,11 @@ ALTER TABLE `subject_types`
 -- AUTO_INCREMENT cho bảng `tutors`
 --
 ALTER TABLE `tutors`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- AUTO_INCREMENT cho bảng `tutor_registers`
@@ -914,7 +971,11 @@ ALTER TABLE `tutor_registers`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
+<<<<<<< HEAD
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+=======
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+>>>>>>> cd8b5bd90ee049550ce1cf396136244af67ea8fc
 
 --
 -- Các ràng buộc cho các bảng đã đổ
