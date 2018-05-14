@@ -33,7 +33,7 @@
                                     <th scope="row">{{$p->id}}</th>
                                     <td>{{$p->created_at}}</td>
                                     <td>{{$p->title}}</td>
-                                    <td>{!! $p->content !!}</td>
+                                    <td>{!! $p->description !!}</td>
                                     <?php
                                         $user = DB::select('select u.name, u.id
                                                             from users as u
@@ -41,8 +41,8 @@
                                                            ', [$p->author_id])
                                     ?>
                                     {{--<td><a href="form-detail.html"></a></td>--}}
-                                    <td><a href="{{route('admin.pages.profile', ['user', $user[0]->id])}}">{{$user[0]->name}}</a></td>
-                                    <td>
+                                    <td width="10%"><a href="{{route('admin.pages.profile', ['user', $user[0]->id])}}">{{$user[0]->name}}</a></td>
+                                    <td width="7%">
                                         <a href="{{route('admin.post.getEdit', [0, $p->id])}}"><i class="fa fa-edit"></i></a>
                                         <a href="{{route('admin.post.getDelete', $p->id)}}"><i class="fa fa-times"></i></a>
                                     </td>
@@ -78,7 +78,7 @@
                             </thead>
                             <tbody>
                             @foreach($post as $p)
-                                @if ($p->type == 1)
+                                @if ($p->type != 0)
                                     <tr>
                                         <th scope="row">{{$p->id}}</th>
                                         <td>{{$p->created_at}}</td>
@@ -91,19 +91,87 @@
                                                        ', [$p->author_id])
                                         ?>
                                         {{--<td><a href="form-detail.html"></a></td>--}}
-                                        <td><a href="{{route('admin.pages.profile', ['user', $name[0]->id])}}">{{$name[0]->name}}</a></td>
-                                        <td>
-                                            <a href="{{route('admin.post.getEdit', [1, $p->id])}}"><i class="fa fa-edit"></i></a>
+                                        <td  width="10%"><a href="{{route('admin.pages.profile', ['user', $name[0]->id])}}">{{$name[0]->name}}</a></td>
+                                        <td width="7%">
+                                            <a onclick="return false;" id="reply-{{$p->id}}"><i class="fa fa-reply"></i></a>
                                             <a href="{{route('admin.post.getDelete', $p->id)}}"><i class="fa fa-times"></i></a>
+                                            <a href="{{route('admin.forum.getForumPost', $p->id)}}"><i class="fa fa-sign-out"></i></a>
                                         </td>
                                     </tr>
+                                    <tr class="add-{{$p->id}} hidden">
+                                       <td colspan="6">
+                                           <form action="{{route('admin.post.postReply', $p->id)}}" method="post">
+                                               {!! csrf_field() !!}
+                                               <textarea id="editor-{{$p->id}}" name="txtComment"></textarea>
+                                               <script>
+                                                   CKEDITOR.replace("editor-{{$p->id}}");
+                                               </script>
+                                               <br>
+                                               <input type="submit" value="Xác nhận" class="btn btn-success">
+                                           </form>
+                                       </td>
+                                    </tr>
                                 @endif
+                                <script>
+                                    $("#reply-{{$p->id}}").click(function () {
+                                        $('.add-{{$p->id}}').toggleClass('hidden');
+                                    })
+                                </script>
                             @endforeach
                             </tbody>
+
                         </table>
 
                     </div><!-- /.table-responsive -->
                 </div>
+                <div class="content-box-wrapper ">
+                    <h3 id="h3" class="">Thêm bài viết</h3>
+                    <form action="{{route('postForumPost')}}" method="post" enctype="multipart/form-data" class="add hidden">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label>Chọn khu vực</label>
+                            <select class="form-control" name="type">
+                                <option value="1">Khu vực chia sẻ, trao đổi</option>
+                                <option value="2">Khu vực tài liệu học tập</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tiêu đề</label>
+                            <input class="form-control" type="text" name="txtTitle" placeholder="Your name here" value="Bill Gates">
+                        </div>
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <input type="text" class="form-control" name="txtDescription">
+                        </div>
+                        <div class="form-group">
+                            <label>Nội dung</label>
+                            <textarea id="editor1" name="txtContent"></textarea>
+                            <script>
+                                CKEDITOR.replace( 'editor1' );
+                            </script>
+                        </div>
+                        <div class="form-group">
+                            <label>Hình ảnh</label>
+                            <input type="file" class="custom-file-input" name="image">
+                        </div>
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="custom-file-input" name="file">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-default" type="submit" value="Đăng">
+
+                        </div>
+                    </form>
+                    <label class="btn btn-success" id="addbtn">Thêm bài viết</label>
+                </div>
+                <br>
+
+                <script>
+                    $('#addbtn').click(function () {
+                        $('.add').toggleClass('hidden');
+                    })
+                </script>
             </div>
 
         </div>

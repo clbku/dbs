@@ -24,11 +24,11 @@
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh</label>
-                        <input type="file" class="custom-file-input" name="txtFile">
+                        <input type="file" class="custom-file-input" name="image">
                     </div>
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" class="custom-file-input" name="txtAsss">
+                        <input type="file" class="custom-file-input" name="file">
                     </div>
                     <div class="form-group">
                         <input class="btn btn-default" type="submit" value="Duyệt">

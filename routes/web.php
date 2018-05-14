@@ -43,7 +43,7 @@ Route::group(['prefix'=>'register'],  function() {
     Route::get('choose', [
         'as' => "main.register",
         function () {
-            return view('main.pages.register');
+            return view('main.pages.register.register');
         }
     ]);
     Route::get('tutor', [
@@ -183,6 +183,14 @@ Route::group(['prefix'=>'admin'],  function() {
             'as' => 'admin.class.postAddClass',
             'uses' => 'AdminController@postAddClass'
         ])->middleware('auth');
+        Route::get('complete/{id}', [
+            'as' => 'admin.class.getComplete',
+            'uses' => 'AdminController@getComplete'
+        ])->middleware('auth');
+        Route::post('list',[
+            'as'=>'admin.user.postFindClass',
+            'uses'=>'AdminController@postFindClass'
+        ])->middleware('auth');
     });
 
     Route::get('tutors/{id}',[
@@ -284,11 +292,32 @@ Route::group(['prefix'=>'admin'],  function() {
             'as' => "admin.post.getDelete",
             'uses' => 'AdminController@getDeletePost'
         ])->middleware('auth');
+
+        Route::post('reply/{id}', [
+            'as' => "admin.post.postReply",
+            'uses' => 'AdminController@postReply'
+        ])->middleware('auth');
+        Route::post('addforum', [
+            'as' => 'postForumPost',
+            'uses' => 'AdminController@postAddForumPost'
+        ])->middleware('auth');
     });
     Route::group(['prefix'=>'student', 'middleware'=>'auth'], function() {
         Route::get('list', [
             'as' => 'admin.students.getList',
             'uses' => 'AdminController@getStudentList'
+        ])->middleware('auth');
+        Route::get('delete/{id}', [
+            'as' => 'admin.students.getDelete',
+            'uses' => 'AdminController@getDeleteStudentWithStudentID'
+        ])->middleware('auth');
+        Route::post('insert/{id}', [
+            'as' => 'admin.students.postInsertParent',
+            'uses' => 'AdminController@postInsertParent'
+        ])->middleware('auth');
+        Route::post('list',[
+            'as'=>'admin.user.postFindStudent',
+            'uses'=>'AdminController@postFindStudent'
         ])->middleware('auth');
     });
     Route::group(['prefix'=>'test'], function() {

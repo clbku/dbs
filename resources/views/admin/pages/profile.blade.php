@@ -50,7 +50,7 @@
                             </div>
                         </row>
                         <br>
-                        @if ($type == "student")
+                        @if ($type == "student" && $parent)
 
                             <row>
                                 <div class="content-box-wrapper position-center" style="width: 100%;">
@@ -59,20 +59,11 @@
 
                                         <div class="form-group">
                                             <label>Tên phụ huynh</label>
-                                            <input class="form-control1" type="text" placeholder="Your name here" value="Bill Gates">
+                                            <input class="form-control1" type="text" placeholder="Your name here" value="{{$parent[0]->name}}">
                                         </div>
                                         <div class="form-group">
                                             <label>Số điện thoại</label>
-                                            <input class="form-control1" type="text" placeholder="Your name here" value="Bill Gates">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Tên phụ huynh</label>
-                                            <input class="form-control1" type="text" placeholder="Your name here" value="Bill Gates">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Số điện thoại</label>
-                                            <input class="form-control1" type="text" placeholder="Your name here" value="Bill Gates">
+                                            <input class="form-control1" type="text" placeholder="Your name here" value="{{$parent[0]->phone}}">
                                         </div>
 
                                     </form>
@@ -131,11 +122,11 @@
                                 <form action="#" style="width: 100%;">
                                     <div class="form-group">
                                         <label>Trường</label>
-                                        <input class="form-control1" type="text" name="txtSchool" placeholder="Your name here" value="Bill Gates">
+                                        <input class="form-control1" type="text" name="txtSchool" placeholder="Your name here" value="{{$user[0]->school}}">
                                     </div>
                                     <div class="form-group">
                                         <label>Lớp</label>
-                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="Bill Gates">
+                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="{{$user[0]->class_s}}">
                                     </div>
                                 </form>
                             </div>
@@ -146,15 +137,15 @@
                                 <form action="#" style="width: 100%;">
                                     <div class="form-group">
                                         <label>Chuyên môn</label>
-                                        <input class="form-control1" type="text" name="txtSchool" placeholder="Your name here" value="Toán 5, Lý 5, Hóa 5">
+                                        <input class="form-control1" type="text" name="txtSchool" placeholder="Your name here" value="{{$tutor[0]->specialize}}">
                                     </div>
                                     <div class="form-group">
                                         <label>Thành tích</label>
-                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="Học sinh giỏi hóa cấp quốc tê :)">
+                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="{{$tutor[0]->achievement}}">
                                     </div>
                                     <div class="form-group">
                                         <label>Điểm đánh giá</label>
-                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="10/10 (15 lượt đánh giá)">
+                                        <input class="form-control1" type="text" name="txtClass" placeholder="Your name here" value="{{$tutor[0]->point}}">
                                     </div>
                                 </form>
                             </div>

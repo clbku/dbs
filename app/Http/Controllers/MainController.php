@@ -24,10 +24,10 @@ class MainController extends Controller
         return redirect()->route('main.getContact')->with('success', 'Phản hồi của bạn đã được chúng tôi ghi nhận!');
     }
     public function getTutorRegister() {
-        return view('main.pages.tutor-register');
+        return view('main.pages.register.tutor-register');
     }
     public function getStudentRegister() {
-        return view('main.pages.student-register');
+        return view('main.pages.register.student-register');
     }
     public function postTutorRegister(Request $request)
     {
@@ -83,6 +83,8 @@ class MainController extends Controller
                 'txtHometown' => 'required',
                 'txtPhone' => 'required|numeric',
                 'txtClass' => 'required',
+                'txtParentName' => 'required',
+                'txtParentPhone' => 'required'
             ],
             [
                 'txtName.required' => 'Bạn chưa nhập tên',
@@ -90,7 +92,9 @@ class MainController extends Controller
                 'txtAddress.required' => 'Bạn chưa nhập địa chỉ',
                 'txtPhone.required' => 'Bạn chưa nhập SĐT',
                 'txtPhone.numeric' => 'SĐT không đúng',
-                'txtClass.required' => 'Bạn chưa nhập Lớp'
+                'txtClass.required' => 'Bạn chưa nhập Lớp',
+                'txtParentName.required' => 'Bạn Chưa nhập tên phụ huynh',
+                'txtParentPhone.required' => 'Bạn chưa Nhập sđt phụ huynh'
             ]
         );
 
@@ -113,6 +117,7 @@ class MainController extends Controller
             $avg2 = $request->txtAvg2;
             $subject_id = $request->txtSubject;
             $tutor_id = $request->txtTutor;
+
             if ($tutor_id)
                 DB::insert('insert into study_registers(name, dob, address, hometown,  sex, phone, school, class_s, shift, avg1, avg2, subject_id, tutor_id)
                               values (?,?,?,?,?,?,?,?,?,?,?,?,?)', [$name,  $dob, $address, $hometown, $sex, $phone, $school, $class, $shift, $avg1, $avg2, $subject_id, $tutor_id]);
@@ -262,14 +267,14 @@ class MainController extends Controller
         $title = $request->txtTitle;
         $description = $request->txtDescription;
         $content = $request->txtContent;
-        $file = $request->txtFile;
-        if ($file) $images = $file->move('upload/images/post/forum',$file->getClientOriginalName());
+        $image = $request->image;
+        if ($image) $image = $image->move('upload/images/post/forum',$image->getClientOriginalName());
         $type = 1;
-        $file = $request->txtAsss;
+        $file = $request->file;
         if ($file) $file = $file->move('upload/file/post',$file->getClientOriginalName());
         $created_at = date('Y-m-d H:i:s');
         DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
-        values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $images, $type, $file, $created_at]);
+        values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $image, $type, $file, $created_at]);
 
         return redirect()->route('admin.forum.getList')->with('success', 'Đăng bài thành công');
     }

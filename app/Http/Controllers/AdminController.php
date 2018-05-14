@@ -118,11 +118,19 @@ class AdminController extends Controller
     //profile page --------------------------------------------------------------
 
     public function getProfile($type, $id) {
-        if ($type == 'user')
+        if ($type == 'user'){
             $user = DB::select('select * from users where id = ?', [$id]);
-        else if ($type == 'student')
+            $class= DB::select('CALL getClassInfoByTutorId(?)', [$id]);
+            $tutor = DB::select('CALL getTutorInfo(?)', [$id]);
+            return view('admin.pages.profile', compact('type','user', 'class', 'tutor'));
+        }
+
+        else if ($type == 'student') {
             $user = DB::select('select * from students where id = ?', [$id]);
-        return view('admin.pages.profile', compact('type','user'));
+            $parent = DB::select('select * from parents where student_id = ?', [$id]);
+            return view('admin.pages.profile', compact('type','user', 'parent'));
+        }
+
     }
 
     // subject page --------------------------------------------------------------
@@ -207,7 +215,23 @@ class AdminController extends Controller
     // student page ------------------------------------------------------------
     public function getStudentList() {
         $student = DB::select('CALL getStudentList()');
-        return view('admin.pages.students', compact('student'));
+        return view('admin.pages.student.students', compact('student'));
+    }
+    public function getDeleteStudentWithStudentID($id) {
+        DB::delete('CALL getDeleteStudentById(?)', [$id]);
+        return redirect()->route('admin.students.getList')->with('success', 'Xóa thành công');
+    }
+    public function postFindStudent(Request $request) {
+        $student = DB::select('select * from students where '.$request->col.' LIKE "%' . $request->data . '%"');
+        return view('admin.pages.student.students',compact('student'));
+    }
+    public function postInsertParent(Request $request,  $id) {
+        $student_id = $id;
+        $name = $request->parentName;
+        $phone = $request->parentPhone;
+        $created_at = date('Y-m-d H:i:s');
+        $student = DB::select('insert into parents(student_id, name, phone, created_at) values (?,?,?,?)', [$student_id, $name, $phone ,$created_at]);
+        return view('admin.pages.student.students', compact('student'));
     }
 
 
@@ -225,12 +249,11 @@ class AdminController extends Controller
 
     public function getListPost() {
         $post = DB::select('select * from posts');
-
-        return view('admin.pages.posts', compact('post'));
+        return view('admin.pages.post.posts', compact('post'));
     }
     public function getAddPost($id) {
 
-        return view('admin.pages.add-post',  compact('id'));
+        return view('admin.pages.post.add-post',  compact('id'));
     }
     public function postAddPost(AddNewsReq $request, $id) {
 
@@ -250,13 +273,14 @@ class AdminController extends Controller
         return redirect()->route('admin.post.list')->with('success', 'Đăng bài thành công');
     }
     public function getDeletePost($id) {
-        $post = DB::table('posts')->where('id', $id)->first();
+        
+        $post = DB::select('select * from posts WHERE id=?' , [$id])[0];
 
-        if (file_exists(public_path() . '/' . $post->images)) {
+        if ($post->images && file_exists(public_path() . '/' . $post->images)) {
             unlink(public_path() . '/' . $post->images );
         };
-        if (file_exists(public_path() . '/' . $post->file)) {
-            unlink(public_path() . '/' . $post->file );
+        if ($post->files && file_exists(public_path() . '/' . $post->files)) {
+            unlink(public_path() . '/' . $post->files );
         };
         DB::table('posts')->where('id', $id)->delete();
 
@@ -265,11 +289,11 @@ class AdminController extends Controller
     }
     public function getEditPost($id, $id_post) {
         $post = DB::select('select * from posts where id = ? ',  [$id_post]);
-        return view('admin.pages.edit-post', compact('id','post'));
+        return view('admin.pages.post.edit-post', compact('id','post'));
     }
     public function postEditPost(EditNewsReq $request, $id) {
         $post = Post::find($id);
-        $post->author_id = 1;
+        $post->author_id = Auth::user()->id;
         $post->title = $request->txtTitle;
         $post->description = $request->txtDescription;
         $post->content = $request->txtContent;
@@ -281,6 +305,30 @@ class AdminController extends Controller
         Session::flash('deleted_user','The user has been deleted');
         return redirect()->route('admin.post.list');
 
+    }
+    public function postReply(Request $request, $postid) {
+        $author_id = Auth::user()->id;
+        $post_id = $postid;
+        $comment = $request->txtComment;
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('CALL postAddCommentWithPostID(?,?,?,?)', [$post_id, $author_id, $comment, $created_at]);
+        return redirect()->route('admin.post.list', $post_id)->with('success', 'Trả lời thành công');
+    }
+    public function postAddForumPost(Request $request) {
+        $author_id = Auth::user()->id;
+        $title = $request->txtTitle;
+        $description = $request->txtDescription;
+        $content = $request->txtContent;
+        $image = $request->image;
+        if ($image) $image = $image->move('upload/images/post/forum',$image->getClientOriginalName());
+        $type = $request->type;
+        $file = $request->file;
+        if ($file) $file = $file->move('upload/file/post',$file->getClientOriginalName());
+        $created_at = date('Y-m-d H:i:s');
+        DB::insert('insert into posts(author_id, title, description, content, images, type, files, created_at) 
+        values(?,?,?,?,?,?,?,?)', [$author_id, $title, $description, $content, $image, $type, $file, $created_at]);
+
+        return redirect()->route('admin.post.list')->with('success', 'Đăng bài thành công');
     }
 
 
@@ -303,8 +351,9 @@ class AdminController extends Controller
     public function postEditClass($id, Request $request) {
         $address = $request->address;
         $date = $request->begin_at;
+        $level = $request->level;
         $shift = $request->shift;
-        DB::update('update class_s set address=?, begin_at=?, shift=? where id=?', [$address, $date, $shift, $id]);
+        DB::update('update class_s set address=?, begin_at=?, shift=?, level=? where id=?', [$address, $date, $shift, $level,  $id]);
         return redirect()->route('admin.class.getList')->with('success', 'Cập nhật thành công');
     }
     public function getDeleteStudent($class_id, $student_id) {
@@ -322,13 +371,40 @@ class AdminController extends Controller
         $shift = $request->shift;
         $created_at = date('Y-m-d H:i:s');
         $level = 1;
-        $student_num = 1;
+        $student_num = 0;
         $state = 0;
         DB::insert('insert into class_s(address, level, student_num, shift, tutor_id, subject_id, state, created_at) VALUES (?,?,?,?,?,?,?,?)',
             [$address, $level, $student_num, $shift, $tutor_id, $subject_id, $state, $created_at]);
         $class_id = DB::select('select MAX(id) as m from class_s')[0]->m;
         DB::insert('insert into studies(class_id, student_id ,created_at) VALUES (?,?,?)', [$class_id, $student_id, $created_at]);
         return redirect()->route('admin.class.getList')->with('success', 'Tạo lớp thành công');
+    }
+    public function getComplete($id) {
+        DB::update('update class_s set state = 1 WHERE id = ?', [$id]);
+        return redirect()->route('admin.class.getList')->with('Thành công');
+    }
+    public function postFindClass(Request $request) {
+        $class = DB::select('
+	select DISTINCT
+    	class_s.id, 
+        class_s.address, 
+        students.class_s, 
+        class_s.begin_at, 
+        class_s.student_num, 
+        class_s.level, 
+        class_s.shift, 
+        class_s.tutor_id as tid, 
+        (	SELECT users.name FROM tutors, users 
+        	WHERE tutors.id = tid and tutors.user_id = users.id
+    	) as tutor_name, 
+        class_s.subject_id as sid, 
+        (	SELECT name FROM subjects 
+         	WHERE subjects.id = sid
+    	) as subject_name , 
+        class_s.state
+    from class_s, studies, students
+    WHERE class_s.id = studies.class_id AND studies.student_id = students.id and class_s.'.$request->col.' LIKE "%' . $request->data . '%"');
+        return view('admin.pages.class.class',compact('class'));
     }
 
 

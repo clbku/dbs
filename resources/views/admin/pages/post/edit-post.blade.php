@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label>Hình ảnh</label>
-                            <input type="file" class="custom-file-input" name="txtFile"  ="{{public_path() . '/' . $post[0]->images}}">
+                            <input type="file" class="custom-file-input" name="txtFile"  value="{{public_path() . '/' . $post[0]->images}}">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-default" type="submit" value="Duyệt">

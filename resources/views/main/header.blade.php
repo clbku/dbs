@@ -105,8 +105,6 @@
 
 
                 </li>
-
-                <li><a class="btn btn-secondary">Tin tức</a></li>
                 <li><a class="btn btn-secondary" href="{{route('admin.forum.getList')}}">Forum</a></li>
 
                 <li><a class="btn btn-secondary" href="{{route('main.getNews', [5, 0])}}">Tin tức</a></li>

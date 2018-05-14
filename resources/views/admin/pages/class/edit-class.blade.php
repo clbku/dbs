@@ -31,7 +31,12 @@
                             </div>
                             <div class="form-group" >
                                 <label>Cấp độ</label>
-                                <input class="form-control1" type="text" name="level" placeholder="Your name here" value="{{$class->level}}" readonly>
+                                <select name="level" required>
+                                    <option value="{{$class->level}}">{{$class->level}}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
                             </div>
                             <div class="form-group" >
                                 <label>Ca học</label>

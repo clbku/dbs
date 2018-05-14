@@ -33,7 +33,7 @@
                                 @endif
                                 @if($data->files)
                                 <label>File : </label> <br>
-                                <a href="{{url($data->file)}}">download</a>
+                                <a href="{{url($data->files)}}">{{$data->files}}</a>
                                 @endif
                             </div>
                         </div>
