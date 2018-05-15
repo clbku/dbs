@@ -83,8 +83,6 @@ class MainController extends Controller
                 'txtHometown' => 'required',
                 'txtPhone' => 'required|numeric',
                 'txtClass' => 'required',
-                'txtParentName' => 'required',
-                'txtParentPhone' => 'required'
             ],
             [
                 'txtName.required' => 'Bạn chưa nhập tên',
@@ -93,8 +91,6 @@ class MainController extends Controller
                 'txtPhone.required' => 'Bạn chưa nhập SĐT',
                 'txtPhone.numeric' => 'SĐT không đúng',
                 'txtClass.required' => 'Bạn chưa nhập Lớp',
-                'txtParentName.required' => 'Bạn Chưa nhập tên phụ huynh',
-                'txtParentPhone.required' => 'Bạn chưa Nhập sđt phụ huynh'
             ]
         );
 
